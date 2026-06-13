@@ -24,6 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Packages
 - State management: `bloc` + `flutter_bloc`
+- Navigation: `go_router`
 
 ### Testing
 - no unit, integration or e2e test needed for this app 
@@ -144,6 +145,38 @@ Text('items_count'.plural(count))    // plural forms
 **Adding a new language:**
 1. Create `assets/translations/{locale}.json` with all keys
 2. Add `Locale('xx')` to the `supportedLocales` list in `main.dart`
+
+## Navigation
+
+Package: `go_router`
+
+**Router config:** `lib/core/router/app_router.dart`
+- `appRouter` — the `GoRouter` instance used by `MaterialApp.router`
+- `AppRoutes` — `const` string identifiers for every named route
+
+**Adding a new screen:**
+1. Create the widget under `lib/features/<name>/presentation/<name>_page.dart`
+2. Add a constant to `AppRoutes`
+3. Register a `GoRoute` in `app_router.dart`
+
+```dart
+// AppRoutes
+static const profile = 'profile';
+
+// app_router.dart routes list
+GoRoute(
+  path: '/profile',
+  name: AppRoutes.profile,
+  builder: (context, state) => const ProfilePage(),
+),
+```
+
+**Navigating:**
+```dart
+context.goNamed(AppRoutes.profile);        // replace current
+context.pushNamed(AppRoutes.profile);      // push onto stack
+context.go('/profile');                    // by path
+```
 
 ## Architecture Notes
 
