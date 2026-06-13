@@ -25,6 +25,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Packages
 - State management: `bloc` + `flutter_bloc`
 - Navigation: `go_router`
+- Networking: `dio`
+- JSON: `json_annotation` + `json_serializable` (codegen via `build_runner`)
 
 ### Testing
 - no unit, integration or e2e test needed for this app 
@@ -177,6 +179,72 @@ context.goNamed(AppRoutes.profile);        // replace current
 context.pushNamed(AppRoutes.profile);      // push onto stack
 context.go('/profile');                    // by path
 ```
+
+## Networking
+
+Package: `dio`
+
+**Config:** `lib/core/network/`
+- `dio_client.dart` — `dioClient`, the single shared `Dio` instance. Base URL,
+  timeouts, default headers, and a debug-only `LogInterceptor` are configured here.
+- `api_config.dart` — `ApiConfig`: base URL and timeout constants. Change the
+  base URL / environment values here, not inline in repositories.
+
+**Rules:**
+- Repositories use the shared `dioClient` — never construct their own `Dio`.
+- Remote repos live in the repository layer (`features/<name>/data/`) and depend
+  on `dioClient`. Don't call Dio directly from UI or BLoC.
+- Add cross-cutting concerns (auth tokens, retries, error mapping) as Dio
+  interceptors in `dio_client.dart`, not per-call.
+
+```dart
+import 'package:mh_salun/core/network/dio_client.dart';
+
+final response = await dioClient.get('/users/$id');
+final user = User.fromJson(response.data as Map<String, dynamic>);
+```
+
+## JSON Serialization
+
+Packages: `json_annotation` (runtime) + `json_serializable` + `build_runner` (dev, codegen)
+
+Models are plain Dart classes annotated with `@JsonSerializable`. Generated
+`*.g.dart` files hold the `fromJson` / `toJson` implementations and are excluded
+from analysis in `analysis_options.yaml`.
+
+**Adding a model:**
+1. Create the class with `@JsonSerializable()`, a `part '<file>.g.dart';` directive,
+   and `fromJson` / `toJson` wired to the generated `_$...` functions.
+2. Run codegen (see below).
+3. Use `@JsonKey(name: 'api_field')` to map snake_case API fields to Dart names.
+
+```dart
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user.g.dart';
+
+@JsonSerializable()
+class User {
+  const User({required this.id, required this.name});
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  final int id;
+
+  @JsonKey(name: 'display_name')
+  final String name;
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+}
+```
+
+**Code generation:**
+```bash
+dart run build_runner build          # one-off generation
+dart run build_runner watch          # regenerate on save during development
+```
+Run after adding or editing any `@JsonSerializable` class. Commit the generated
+`*.g.dart` files alongside their source.
 
 ## Architecture Notes
 
