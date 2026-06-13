@@ -1,11 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/router/app_router.dart';
+import 'package:mh_salun/core/storage/local_storage.dart';
 import 'package:mh_salun/core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   await EasyLocalization.ensureInitialized();
+  await LocalStorage.init();
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],

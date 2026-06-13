@@ -1,15 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
+import '../utils/app_logger.dart';
 import 'api_config.dart';
 
-/// Single shared [Dio] instance for the whole app.
-///
-/// Repositories should depend on [dioClient] rather than constructing their
-/// own [Dio] — this keeps base URL, timeouts, and interceptors consistent.
-final Dio dioClient = _createDio();
-
-Dio _createDio() {
+Dio createDioClient() {
   final dio = Dio(
     BaseOptions(
       baseUrl: ApiConfig.baseUrl,
@@ -23,16 +17,7 @@ Dio _createDio() {
     ),
   );
 
-  if (kDebugMode) {
-    dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        requestHeader: false,
-        responseHeader: false,
-      ),
-    );
-  }
+  dio.interceptors.add(DioLogInterceptor());
 
   return dio;
 }

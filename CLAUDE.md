@@ -27,6 +27,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Navigation: `go_router`
 - Networking: `dio`
 - JSON: `json_annotation` + `json_serializable` (codegen via `build_runner`)
+- Local storage: `shared_preferences`
+- Dependency injection: `get_it` + `injectable` (codegen via `build_runner`)
 
 ### Testing
 - no unit, integration or e2e test needed for this app 
@@ -180,28 +182,118 @@ context.pushNamed(AppRoutes.profile);      // push onto stack
 context.go('/profile');                    // by path
 ```
 
+## Dependency Injection
+
+Packages: `get_it` (service locator) + `injectable` (annotations) + `injectable_generator` + `build_runner` (dev, codegen)
+
+**Config:** `lib/core/di/`
+- `injection.dart` — `getIt`, the shared `GetIt` instance, and
+  `configureDependencies()` (annotated `@InjectableInit`). `main()` calls
+  `configureDependencies()` before `runApp`.
+- `register_module.dart` — `RegisterModule` (`@module`): registers third-party
+  types we can't annotate (e.g. `Dio`). Add accessors here for any external
+  type that needs to be injectable.
+- `injection.config.dart` — **generated**. Don't edit by hand; commit it.
+
+**Registering your own classes:**
+Annotate the class and let the generator wire its constructor dependencies.
+```dart
+@injectable          // new instance per resolve
+class FooService { FooService(this._dio); final Dio _dio; }
+
+@lazySingleton       // single instance, created on first resolve
+class BarRepository { BarRepository(this._dio); final Dio _dio; }
+
+// Bind an interface to an implementation:
+@LazySingleton(as: AuthRepository)
+class AuthRepositoryImpl implements AuthRepository { ... }
+```
+
+**Registering third-party types:** add an accessor to `RegisterModule`.
+```dart
+@module
+abstract class RegisterModule {
+  @lazySingleton
+  Dio get dio => createDioClient();
+}
+```
+
+**Resolving:**
+```dart
+final repo = getIt<BarRepository>();
+```
+BLoCs and repos that take only injectable dependencies are best resolved via
+`getIt<MyBloc>()` rather than constructing them inline.
+
+**Code generation:** run after adding/editing any `@injectable`/`@module`.
+```bash
+dart run build_runner build          # one-off
+dart run build_runner watch          # regenerate on save
+```
+
 ## Networking
 
 Package: `dio`
 
 **Config:** `lib/core/network/`
-- `dio_client.dart` — `dioClient`, the single shared `Dio` instance. Base URL,
-  timeouts, default headers, and a debug-only `LogInterceptor` are configured here.
+- `dio_client.dart` — `createDioClient()`, which builds the single shared `Dio`
+  instance. Base URL, timeouts, default headers, and the log interceptor are
+  configured here. The DI container registers the result as a `@lazySingleton`
+  (see Dependency Injection below); don't call this directly.
 - `api_config.dart` — `ApiConfig`: base URL and timeout constants. Change the
   base URL / environment values here, not inline in repositories.
 
 **Rules:**
-- Repositories use the shared `dioClient` — never construct their own `Dio`.
-- Remote repos live in the repository layer (`features/<name>/data/`) and depend
-  on `dioClient`. Don't call Dio directly from UI or BLoC.
+- Repositories receive `Dio` via constructor injection — never construct their
+  own `Dio`. The container hands every repo the same shared instance.
+- Remote repos live in the repository layer (`features/<name>/data/`), are
+  annotated `@injectable`, and take `Dio` as a constructor parameter. Don't call
+  Dio directly from UI or BLoC.
 - Add cross-cutting concerns (auth tokens, retries, error mapping) as Dio
   interceptors in `dio_client.dart`, not per-call.
 
 ```dart
-import 'package:mh_salun/core/network/dio_client.dart';
+@injectable
+class UserRepository {
+  UserRepository(this._dio);
 
-final response = await dioClient.get('/users/$id');
-final user = User.fromJson(response.data as Map<String, dynamic>);
+  final Dio _dio;
+
+  Future<User> fetch(int id) async {
+    final response = await _dio.get('/users/$id');
+    return User.fromJson(response.data as Map<String, dynamic>);
+  }
+}
+```
+
+## Local Storage
+
+Package: `shared_preferences`
+
+For small, non-sensitive key/value data only — flags, IDs, cached primitives,
+user preferences. Not for secrets (use secure storage) or large/structured data
+(use a database).
+
+**Config:** `lib/core/storage/`
+- `local_storage.dart` — `LocalStorage`, a thin wrapper around a single shared
+  `SharedPreferences` instance.
+
+**Setup in `main.dart`:**
+- `main()` calls `await LocalStorage.init()` after `EasyLocalization.ensureInitialized()`
+  and before `runApp`. This resolves the async `SharedPreferences.getInstance()`
+  once so the rest of the app reads/writes synchronously.
+
+**Rules:**
+- Access through `LocalStorage.prefs` — never call `SharedPreferences.getInstance()`
+  directly elsewhere.
+- Reads/writes belong in the repository layer (local side of a repo), not in UI
+  or BLoC. Keep keys defined as constants in the repo that owns them.
+
+```dart
+import 'package:mh_salun/core/storage/local_storage.dart';
+
+await LocalStorage.prefs.setString('auth_token', token);
+final token = LocalStorage.prefs.getString('auth_token');
 ```
 
 ## JSON Serialization
