@@ -17,8 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Repository** — data access, splits into local (if needed) and remote internally
 
 ### Rules
-- Skip BLoC if state doesn't survive navigation and isn't shared across widgets and call repo directly from UI
-- BLoC is added when: state survives navigation, or is shared across multiple widgets, or has complex transitions or state manipulation needed
+- BLoC vs. direct repo call is a decision rule, not an always-on invariant → `add-bloc`
 - Repos are split by domain — no god repo objects
 
 
@@ -48,10 +47,7 @@ Open boundary rules to settle per project:
 - Strictness of inter-layer dependency rule
 - Whether anemic features collapse `domain/`
 - Promotion rule for moving code into `shared/` (guard against `core/` becoming a junk drawer)
-```
 
-
-```markdown
 ## Responsive Sizing Strategy (Mobile-only, v1)
 
 We do NOT use proportional/screen-scaling libraries (e.g. flutter_screenutil). 
@@ -118,225 +114,62 @@ abstraction layer around MediaQuery.
 No breakpoints, no tablet/desktop layouts, no adaptive scaffolds. Will be introduced 
 when tablet/desktop support is added — retrofitted around real layout decisions, 
 not the token values above.
-```
 
-## Localization
+## Skills — recipes loaded on demand
 
-Package: `easy_localization ^3.0.7` + `flutter_localizations` (Flutter SDK)
+Per-package, step-by-step **recipes** live in `.claude/skills/`, loaded only when
+relevant instead of always sitting in this file. This file keeps the always-true
+**rules**; the skills carry the how-to and code snippets. Invoke a skill via the
+Skill tool when its task comes up.
 
-**Supported locales:** `ar` (Arabic — default & fallback), `en` (English)
+**Feature work composes three phase skills** (matching how a feature is built —
+e.g. a login flow):
+1. `build-presentation` — build the screen / UI
+2. `build-data-layer` — build the client/repository for an endpoint
+3. `integrate-feature` — wire UI ↔ data (capture input, loading, request, navigate-or-error)
 
-**Translation files:** `assets/translations/{locale}.json`
-- `assets/translations/ar.json` — Arabic strings
-- `assets/translations/en.json` — English strings
+Each phase orchestrates smaller single-concern skills:
 
-**Setup in `main.dart`:**
-- `main()` calls `EasyLocalization.ensureInitialized()` before `runApp`
-- Root widget is wrapped with `EasyLocalization(supportedLocales, path, fallbackLocale)`
-- `MaterialApp` receives `context.localizationDelegates`, `context.supportedLocales`, and `context.locale`
+| Skill | Use it when |
+|---|---|
+| `build-presentation` | building a screen / UI for a feature |
+| `build-data-layer` | building a client/repo for an endpoint |
+| `integrate-feature` | wiring a screen to an endpoint |
+| `add-screen` | creating a page/widget |
+| `add-route` | registering a screen in go_router |
+| `add-localized-string` | adding/using translated text |
+| `add-json-model` | creating a JSON-serializable model |
+| `add-repo` | creating a Dio repository |
+| `add-local-storage` | caching a primitive (token/id/flag) |
+| `add-di-dependency` | registering a class/type with `getIt` |
+| `add-bloc` | adding event-driven shared state |
 
-**Using translations in widgets:**
-```dart
-Text('my_key'.tr())
-Text('greeting'.tr(args: ['Ahmed']))  // with arguments
-Text('items_count'.plural(count))    // plural forms
-```
+## Conventions & where things live (invariants)
 
-**Adding a new string:**
-1. Add the key/value to both `ar.json` and `en.json`
-2. Use `'your_key'.tr()` in the widget
+These rules always hold. For the *how-to*, invoke the linked skill.
 
-**Adding a new language:**
-1. Create `assets/translations/{locale}.json` with all keys
-2. Add `Locale('xx')` to the `supportedLocales` list in `main.dart`
-
-## Navigation
-
-Package: `go_router`
-
-**Router config:** `lib/core/router/app_router.dart`
-- `appRouter` — the `GoRouter` instance used by `MaterialApp.router`
-- `AppRoutes` — `const` string identifiers for every named route
-
-**Adding a new screen:**
-1. Create the widget under `lib/features/<name>/presentation/<name>_page.dart`
-2. Add a constant to `AppRoutes`
-3. Register a `GoRoute` in `app_router.dart`
-
-```dart
-// AppRoutes
-static const profile = 'profile';
-
-// app_router.dart routes list
-GoRoute(
-  path: '/profile',
-  name: AppRoutes.profile,
-  builder: (context, state) => const ProfilePage(),
-),
-```
-
-**Navigating:**
-```dart
-context.goNamed(AppRoutes.profile);        // replace current
-context.pushNamed(AppRoutes.profile);      // push onto stack
-context.go('/profile');                    // by path
-```
-
-## Dependency Injection
-
-Packages: `get_it` (service locator) + `injectable` (annotations) + `injectable_generator` + `build_runner` (dev, codegen)
-
-**Config:** `lib/core/di/`
-- `injection.dart` — `getIt`, the shared `GetIt` instance, and
-  `configureDependencies()` (annotated `@InjectableInit`). `main()` calls
-  `configureDependencies()` before `runApp`.
-- `register_module.dart` — `RegisterModule` (`@module`): registers third-party
-  types we can't annotate (e.g. `Dio`). Add accessors here for any external
-  type that needs to be injectable.
-- `injection.config.dart` — **generated**. Don't edit by hand; commit it.
-
-**Registering your own classes:**
-Annotate the class and let the generator wire its constructor dependencies.
-```dart
-@injectable          // new instance per resolve
-class FooService { FooService(this._dio); final Dio _dio; }
-
-@lazySingleton       // single instance, created on first resolve
-class BarRepository { BarRepository(this._dio); final Dio _dio; }
-
-// Bind an interface to an implementation:
-@LazySingleton(as: AuthRepository)
-class AuthRepositoryImpl implements AuthRepository { ... }
-```
-
-**Registering third-party types:** add an accessor to `RegisterModule`.
-```dart
-@module
-abstract class RegisterModule {
-  @lazySingleton
-  Dio get dio => createDioClient();
-}
-```
-
-**Resolving:**
-```dart
-final repo = getIt<BarRepository>();
-```
-BLoCs and repos that take only injectable dependencies are best resolved via
-`getIt<MyBloc>()` rather than constructing them inline.
-
-**Code generation:** run after adding/editing any `@injectable`/`@module`.
-```bash
-dart run build_runner build          # one-off
-dart run build_runner watch          # regenerate on save
-```
-
-## Networking
-
-Package: `dio`
-
-**Config:** `lib/core/network/`
-- `dio_client.dart` — `createDioClient()`, which builds the single shared `Dio`
-  instance. Base URL, timeouts, default headers, and the log interceptor are
-  configured here. The DI container registers the result as a `@lazySingleton`
-  (see Dependency Injection below); don't call this directly.
-- `api_config.dart` — `ApiConfig`: base URL and timeout constants. Change the
-  base URL / environment values here, not inline in repositories.
-
-**Rules:**
-- Repositories receive `Dio` via constructor injection — never construct their
-  own `Dio`. The container hands every repo the same shared instance.
-- Remote repos live in the repository layer (`features/<name>/data/`), are
-  annotated `@injectable`, and take `Dio` as a constructor parameter. Don't call
-  Dio directly from UI or BLoC.
-- Add cross-cutting concerns (auth tokens, retries, error mapping) as Dio
-  interceptors in `dio_client.dart`, not per-call.
-
-```dart
-@injectable
-class UserRepository {
-  UserRepository(this._dio);
-
-  final Dio _dio;
-
-  Future<User> fetch(int id) async {
-    final response = await _dio.get('/users/$id');
-    return User.fromJson(response.data as Map<String, dynamic>);
-  }
-}
-```
-
-## Local Storage
-
-Package: `shared_preferences`
-
-For small, non-sensitive key/value data only — flags, IDs, cached primitives,
-user preferences. Not for secrets (use secure storage) or large/structured data
-(use a database).
-
-**Config:** `lib/core/storage/`
-- `local_storage.dart` — `LocalStorage`, a thin wrapper around a single shared
-  `SharedPreferences` instance.
-
-**Setup in `main.dart`:**
-- `main()` calls `await LocalStorage.init()` after `EasyLocalization.ensureInitialized()`
-  and before `runApp`. This resolves the async `SharedPreferences.getInstance()`
-  once so the rest of the app reads/writes synchronously.
-
-**Rules:**
-- Access through `LocalStorage.prefs` — never call `SharedPreferences.getInstance()`
-  directly elsewhere.
-- Reads/writes belong in the repository layer (local side of a repo), not in UI
-  or BLoC. Keep keys defined as constants in the repo that owns them.
-
-```dart
-import 'package:mh_salun/core/storage/local_storage.dart';
-
-await LocalStorage.prefs.setString('auth_token', token);
-final token = LocalStorage.prefs.getString('auth_token');
-```
-
-## JSON Serialization
-
-Packages: `json_annotation` (runtime) + `json_serializable` + `build_runner` (dev, codegen)
-
-Models are plain Dart classes annotated with `@JsonSerializable`. Generated
-`*.g.dart` files hold the `fromJson` / `toJson` implementations and are excluded
-from analysis in `analysis_options.yaml`.
-
-**Adding a model:**
-1. Create the class with `@JsonSerializable()`, a `part '<file>.g.dart';` directive,
-   and `fromJson` / `toJson` wired to the generated `_$...` functions.
-2. Run codegen (see below).
-3. Use `@JsonKey(name: 'api_field')` to map snake_case API fields to Dart names.
-
-```dart
-import 'package:json_annotation/json_annotation.dart';
-
-part 'user.g.dart';
-
-@JsonSerializable()
-class User {
-  const User({required this.id, required this.name});
-
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  final int id;
-
-  @JsonKey(name: 'display_name')
-  final String name;
-
-  Map<String, dynamic> toJson() => _$UserToJson(this);
-}
-```
-
-**Code generation:**
-```bash
-dart run build_runner build          # one-off generation
-dart run build_runner watch          # regenerate on save during development
-```
-Run after adding or editing any `@JsonSerializable` class. Commit the generated
-`*.g.dart` files alongside their source.
+- **Localization** (`easy_localization`) — no hardcoded user-facing strings; every
+  string is a key in **both** `assets/translations/ar.json` and `en.json`, used via
+  `.tr()`. `ar` is default & fallback. → `add-localized-string`
+- **Navigation** (`go_router`) — router in `lib/core/router/app_router.dart`;
+  navigate by **named** route (`AppRoutes.x`), never raw paths in app code.
+  → `add-route`
+- **Networking** (`dio`) — repos **never** construct their own `Dio`; they receive
+  the shared instance by constructor injection, and Dio is never called from UI or
+  BLoC. Base URL/timeouts in `lib/core/network/api_config.dart`; cross-cutting
+  concerns as interceptors in `lib/core/network/dio_client.dart`. → `add-repo`
+- **DI** (`get_it` + `injectable`) — annotate your own classes; register third-party
+  types in `RegisterModule`. `lib/core/di/injection.config.dart` is generated,
+  committed, never hand-edited. Run `build_runner` after changes. → `add-di-dependency`
+- **Local storage** (`shared_preferences`) — small, non-sensitive key/value only;
+  always through `LocalStorage.prefs`, never `SharedPreferences.getInstance()`
+  directly; reads/writes live in the repo's local side. → `add-local-storage`
+- **JSON** (`json_serializable`) — models are `@JsonSerializable` plain classes with
+  a `part '*.g.dart';`; run `build_runner` and commit the generated file.
+  → `add-json-model`
+- **State management** (`bloc` + `flutter_bloc`) — add a BLoC only when its
+  decision rule calls for it; otherwise use `setState` and call the repo directly.
+  → `add-bloc`
 
 ## Architecture Notes
 

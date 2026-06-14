@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Edit(/.claude/skills/add-localized-string/**)",
+      "Edit(/.claude/skills/add-route/**)",
+      "Edit(/.claude/skills/add-screen/**)",
+      "Edit(/.claude/skills/add-json-model/**)",
+      "Edit(/.claude/skills/add-repo/**)",
+      "Edit(/.claude/skills/add-local-storage/**)",
+      "Edit(/.claude/skills/add-di-dependency/**)",
+      "Edit(/.claude/skills/add-bloc/**)",
+      "Edit(/.claude/skills/build-presentation/**)",
+      "Edit(/.claude/skills/build-data-layer/**)",
+      "Edit(/.claude/skills/integrate-feature/**)"
+    ]
+  }
+}

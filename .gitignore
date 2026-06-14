@@ -63,6 +63,3 @@ app.*.map.json
 .env.*
 *.env
 secrets.dart
-
-# Claude Code
-.claude/
