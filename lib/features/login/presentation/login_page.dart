@@ -7,12 +7,12 @@ import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/auth/presentation/bloc/login_bloc.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/auth_switch_link.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/email_text_field.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/login/forgot_password_button.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/login/login_button.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/password_text_field.dart';
+import 'package:mh_salun/core/presentation/widgets/auth_switch_link.dart';
+import 'package:mh_salun/core/presentation/widgets/email_text_field.dart';
+import 'package:mh_salun/core/presentation/widgets/password_text_field.dart';
+import 'package:mh_salun/features/login/bloc/login_bloc.dart';
+import 'package:mh_salun/features/login/presentation/widgets/forgot_password_button.dart';
+import 'package:mh_salun/features/login/presentation/widgets/login_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

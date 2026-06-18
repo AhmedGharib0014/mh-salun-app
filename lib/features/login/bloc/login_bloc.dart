@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/auth_exception.dart';
-import '../../data/auth_repository.dart';
+import '../../../core/data/auth_exception.dart';
+import '../data/login_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -14,7 +14,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginSubmitted>(_onSubmitted);
   }
 
-  final AuthRepository _repo;
+  final LoginRepository _repo;
 
   Future<void> _onSubmitted(
     LoginSubmitted event,
