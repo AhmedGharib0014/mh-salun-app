@@ -10,7 +10,9 @@ Models are plain Dart classes annotated `@JsonSerializable`; the generated
 `*.g.dart` file holds `fromJson`/`toJson` and is committed alongside the source.
 
 ## Where it goes
-`lib/features/<feature>/data/<model>.dart` (models live in the data layer).
+`lib/features/<feature>/model/<model>.dart` — models live in the feature's own
+`model/` layer (carrying data between `presentation/` and `data/`, both directions),
+**not** in `data/`. If a model is shared across features, move it to `core/model/`.
 
 ## Create a model
 ```dart

@@ -10,7 +10,8 @@ independent of the UI. It composes smaller skills — invoke each via the Skill 
 
 ## Steps
 1. **Model the payloads** — invoke the **add-json-model** skill for the request
-   and/or response shapes. Place models in `lib/features/<feature>/data/`. Run
+   and/or response shapes. Place models in `lib/features/<feature>/model/` (the
+   feature's `model/` layer, not `data/`; shared models go in `core/model/`). Run
    `build_runner` after.
 2. **Create the repository** — invoke the **add-repo** skill. The repo lives in
    `lib/features/<feature>/data/`, is annotated (`@lazySingleton` typically), and

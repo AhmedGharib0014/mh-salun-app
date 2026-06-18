@@ -35,15 +35,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Folder Architecture
 
-Common Flutter structures:
+**Feature-first.** The first level under `lib/` is exactly two directories: `features/` and `core/`.
 
-- **Layer-first**: top-level `data/`, `domain/`, `presentation/`, `core/`. Features scattered across layers. Only viable for small apps.
-- **Feature-first**: `features/<name>/{data,domain,presentation}` + `core/` + `shared/`. Each feature self-contained. Default choice for non-trivial apps.
-- **Melos modular**: each feature is its own Dart package. Compile-enforced boundaries. High tooling cost; justified only by multi-team or hard-isolation needs.
+```
+lib/
+├── core/                     # cross-feature code (router, theme, di, shared widgets/utils)
+└── features/
+    └── <feature_name>/       # one directory per feature
+        ├── presentation/     # screens + a widgets/ folder for widgets used only by this feature
+        ├── bloc/             # bloc/event/state files for this feature (optional — omit if not using bloc)
+        ├── model/            # models carrying data between presentation and data, both directions
+        └── data/             # repositories and clients (API/network, local storage)
+```
 
-**Decision: feature-first.** Layer-first for throwaway only; melos when compile-time isolation is genuinely required.
-
-Open boundary rules to settle per project:
-- Strictness of inter-layer dependency rule
-- Whether anemic features collapse `domain/`
-- Promotion rule for moving code into `shared/` (guard against `core/` becoming a junk drawer)
+### Rules
+- Under `lib/` there are only `features/` and `core/` — nothing else.
+- Each feature owns these layers: `presentation/`, `model/`, `data/`, and an optional `bloc/`.
+- `presentation/` holds the feature's screens plus a `widgets/` subfolder for widgets used only by that feature.
+- `bloc/` holds the feature's bloc/event/state files. It is optional — only present when the feature uses bloc; omit it otherwise (→ `add-bloc`).
+- `model/` holds the data models passed between `presentation/` and `data/` (request/response/view models) — used in both directions.
+- `data/` holds repositories and clients (network + local storage).
+- Code shared across features lives in `core/`, not inside any feature.
+- If something is shared between features, move it to `core/` under the folder that corresponds to its layer (e.g. shared models → `core/model/`, shared clients/repos → `core/data/`, shared widgets → `core/presentation/`). Do not let one feature reach into another.
