@@ -48,73 +48,6 @@ Open boundary rules to settle per project:
 - Whether anemic features collapse `domain/`
 - Promotion rule for moving code into `shared/` (guard against `core/` becoming a junk drawer)
 
-## Responsive Sizing Strategy (Mobile-only, v1)
-
-We do NOT use proportional/screen-scaling libraries (e.g. flutter_screenutil). 
-No `.w`, `.h`, `.sp`, no width-ratio math for sizing.
-
-### Fixed design tokens
-Spacing, font sizes, icon sizes, and border radii are fixed constants — same value 
-on every device. They don't need to scale; 16px padding looks correct whether the 
-screen is 320pt or 430pt wide.
-
-Define these in `lib/core/theme/spacing.dart` and `lib/core/theme/font_sizes.dart`:
-
-```dart
-class AppSpacing {
-  static const xs = 4.0;
-  static const sm = 8.0;
-  static const md = 16.0;
-  static const lg = 24.0;
-  static const xl = 32.0;
-}
-
-class AppFontSize {
-  static const caption = 12.0;
-  static const body = 14.0;
-  static const title = 18.0;
-  static const heading = 24.0;
-}
-```
-
-Always reference these constants. Never hardcode raw numbers for padding/margin/fontSize 
-in widgets.
-
-### Layout adaptation via flex widgets
-Screen-width differences are absorbed by `Expanded`, `Flexible`, and `FractionallySizedBox` 
-— not by computing pixel values. Define ratios/proportions, let Flutter compute actual 
-pixels at layout time.
-
-```dart
-// Proportional split — adapts to any width automatically
-Row(
-  children: [
-    Expanded(flex: 2, child: ProductImage()),
-    Expanded(flex: 3, child: ProductDetails()),
-  ],
-)
-
-// Percentage of available width
-FractionallySizedBox(
-  widthFactor: 0.9,
-  child: TextField(...),
-)
-```
-
-### MediaQuery — minimal use only
-Only for: safe area handling, keyboard insets, and rare small-screen conditionals 
-(e.g. `if (MediaQuery.of(context).size.height < 700) ...`). Do not build a sizing 
-abstraction layer around MediaQuery.
-
-### Rule of thumb
-- "Should this look the same everywhere?" → fixed token (spacing, font size, radius, icon size)
-- "Should this adapt to available space?" → flex/fractional widget (layout proportions, widths)
-
-### Out of scope for v1
-No breakpoints, no tablet/desktop layouts, no adaptive scaffolds. Will be introduced 
-when tablet/desktop support is added — retrofitted around real layout decisions, 
-not the token values above.
-
 ## Skills — recipes loaded on demand
 
 Per-package, step-by-step **recipes** live in `.claude/skills/`, loaded only when
@@ -136,6 +69,7 @@ Each phase orchestrates smaller single-concern skills:
 | `build-data-layer` | building a client/repo for an endpoint |
 | `integrate-feature` | wiring a screen to an endpoint |
 | `add-screen` | creating a page/widget |
+| `presentation-rules` | building, updating, or adding sections to any screen |
 | `add-route` | registering a screen in go_router |
 | `add-localized-string` | adding/using translated text |
 | `add-json-model` | creating a JSON-serializable model |

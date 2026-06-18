@@ -9,25 +9,16 @@ description: Create a presentation page or widget for the mh_salun Flutter app. 
 `lib/features/<feature>/presentation/<feature>_page.dart` (feature-first). Shared,
 reusable widgets used by multiple features go in `lib/shared/` (create it if needed).
 
-## Sizing rules (mobile-only v1) — do not violate
-- **Never hardcode** raw numbers for padding/margin/fontSize/radius/icon size.
-  Use the fixed tokens:
-  - `AppSpacing` (`lib/core/theme/spacing.dart`): `xs/sm/md/lg/xl/xxl`,
-    `iconSm/iconMd/iconLg`, `radiusSm/radiusMd/radiusLg/radiusXl/radiusFull`
-  - `AppFontSize` (`lib/core/theme/font_sizes.dart`): `label/caption/body/title/heading/display`
-  - `AppTextStyles` (`lib/core/theme/text_styles.dart`): ready-made styles
-    (`headingGold`, `titleMedium`, `bodyRegular`, `buttonPrimary`, …)
-- **No** `flutter_screenutil`, no `.w/.h/.sp`, no width-ratio math.
-- Width differences are absorbed by `Expanded` / `Flexible` / `FractionallySizedBox`,
-  not by computing pixels.
-- `MediaQuery` only for safe-area, keyboard insets, rare small-screen conditionals.
-- All user-facing text uses `.tr()` — invoke the **add-localized-string** skill.
+## Layout and sizing rules
+Invoke the **presentation-rules** skill — it owns all sizing, token, flex-layout,
+and MediaQuery constraints that apply here.
 
-## State: setState vs BLoC
-Default to a plain widget with `setState` for local, screen-only state. Add a BLoC
-**only** when state survives navigation, is shared across widgets, or has complex
-transitions — invoke the **add-bloc** skill in that case. (See the BLoC decision
-rule in the **add-bloc** skill.)
+- All user-facing text uses `.tr()`.
+
+## State: setState only
+Always use `setState` for local screen state. This skill never adds a BLoC. If a
+BLoC is needed, another skill (e.g. **integrate-feature** → **add-bloc**) handles
+it first — this skill then wires the screen to the already-registered BLoC.
 
 ## Example (login screen scaffold)
 ```dart
@@ -66,6 +57,4 @@ class LoginPage extends StatelessWidget {
 ```
 
 ## After creating the screen
-- Wire it into navigation — invoke the **add-route** skill.
-- Reference the home page (`lib/features/home/presentation/home_page.dart`) for the
-  existing widget style.
+Reference the home page (`lib/features/home/presentation/home_page.dart`) for the existing widget style.

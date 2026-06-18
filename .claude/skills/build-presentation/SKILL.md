@@ -11,13 +11,8 @@ invoke each via the Skill tool.
 
 ## Steps
 1. **Create the page/widget** — invoke the **add-screen** skill.
-   Place it at `lib/features/<feature>/presentation/<feature>_page.dart`. Use only
-   fixed design tokens (`AppSpacing`, `AppFontSize`, `AppTextStyles`) and flex
-   widgets for layout — never hardcoded sizes or screen-scaling.
-2. **Localize every string** — invoke the **add-localized-string** skill for each
-   user-facing text (keys in both `ar.json` and `en.json`, used via `.tr()`).
-3. **Wire navigation** — invoke the **add-route** skill to add the `AppRoutes`
-   constant and `GoRoute`, so the screen is reachable.
+2. **Localize every string** — invoke the **add-localized-string** skill.
+3. **Wire navigation** — invoke the **add-route** skill.
 
 ## Keep state local for now
 Use plain widgets / `setState` at this phase. Do **not** add a BLoC yet — that
