@@ -27,5 +27,8 @@
   "register_password_too_short": "Password must be at least 6 characters",
   "register_confirm_password_label": "Confirm password",
   "register_confirm_password_hint": "Re-enter your password",
-  "register_password_mismatch": "Passwords do not match"
+  "register_password_mismatch": "Passwords do not match",
+  "reset_password_title": "Reset Password",
+  "reset_password_subtitle": "Enter your email and we'll send you a link to reset your password.",
+  "reset_password_button": "Send Reset Link"
 }

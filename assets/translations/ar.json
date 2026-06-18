@@ -27,5 +27,8 @@
   "register_password_too_short": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
   "register_confirm_password_label": "تأكيد كلمة المرور",
   "register_confirm_password_hint": "أعد إدخال كلمة المرور",
-  "register_password_mismatch": "كلمتا المرور غير متطابقتين"
+  "register_password_mismatch": "كلمتا المرور غير متطابقتين",
+  "reset_password_title": "إعادة تعيين كلمة المرور",
+  "reset_password_subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.",
+  "reset_password_button": "إرسال رابط الاسترداد"
 }
