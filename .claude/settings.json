@@ -19,7 +19,11 @@
       "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun diff)",
       "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun add .claude/skills/add-screen/SKILL.md .claude/skills/build-presentation/SKILL.md .claude/skills/presentation-rules/ CLAUDE.md .claude/settings.json)",
       "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun commit -m ' *)",
-      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun push)"
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun push)",
+      "Bash(find /Users/ahmedbisher/Desktop/MH_salun -name \"*.png\" -o -name \"*.jpg\" -o -name \"*.jpeg\" -o -name \"*.webp\" 2>/dev/null | head -20)",
+      "Read(//Users/ahmedbisher/Desktop/MH_salun/**)",
+      "Bash(find /Users/ahmedbisher/Desktop -maxdepth 2 -name \"*.png\" -o -name \"*.jpg\" -o -name \"*.jpeg\" 2>/dev/null | grep -v MH_salun | head -10)",
+      "Read(//Users/ahmedbisher/Desktop/**)"
     ]
   }
 }
