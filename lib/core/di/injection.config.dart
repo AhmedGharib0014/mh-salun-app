@@ -14,6 +14,8 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:mh_salun/core/di/register_module.dart' as _i511;
 import 'package:mh_salun/features/auth/data/auth_repository.dart' as _i589;
+import 'package:mh_salun/features/auth/presentation/bloc/login_bloc.dart'
+    as _i42;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -26,6 +28,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i589.AuthRepository>(
       () => _i589.AuthRepository(gh<_i361.Dio>()),
+    );
+    gh.factory<_i42.LoginBloc>(
+      () => _i42.LoginBloc(gh<_i589.AuthRepository>()),
     );
     return this;
   }
