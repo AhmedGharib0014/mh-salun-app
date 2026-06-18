@@ -17,7 +17,9 @@
       "Edit(/.claude/skills/build-data-layer/**)",
       "Edit(/.claude/skills/integrate-feature/**)",
       "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun diff)",
-      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun add .claude/skills/add-screen/SKILL.md .claude/skills/build-presentation/SKILL.md .claude/skills/presentation-rules/ CLAUDE.md .claude/settings.json)"
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun add .claude/skills/add-screen/SKILL.md .claude/skills/build-presentation/SKILL.md .claude/skills/presentation-rules/ CLAUDE.md .claude/settings.json)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun commit -m ' *)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun push)"
     ]
   }
 }
