@@ -2,5 +2,14 @@
   "app_title": "فلاتر ديمو",
   "home_page_title": "الصفحة الرئيسية",
   "counter_instruction": "لقد ضغطت على الزر هذا العدد من المرات:",
-  "increment": "زيادة"
+  "increment": "زيادة",
+  "login_title": "تسجيل الدخول",
+  "login_email_label": "البريد الإلكتروني",
+  "login_email_hint": "example@email.com",
+  "login_password_label": "كلمة المرور",
+  "login_password_hint": "أدخل كلمة المرور",
+  "login_button": "دخول",
+  "login_forgot_password": "نسيت كلمة المرور؟",
+  "login_invalid_email": "الرجاء إدخال بريد إلكتروني صحيح",
+  "login_required_field": "هذا الحقل مطلوب"
 }

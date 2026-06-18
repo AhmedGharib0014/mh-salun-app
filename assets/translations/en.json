@@ -2,5 +2,14 @@
   "app_title": "Flutter Demo",
   "home_page_title": "Flutter Demo Home Page",
   "counter_instruction": "You have pushed the button this many times:",
-  "increment": "Increment"
+  "increment": "Increment",
+  "login_title": "Login",
+  "login_email_label": "Email",
+  "login_email_hint": "example@email.com",
+  "login_password_label": "Password",
+  "login_password_hint": "Enter your password",
+  "login_button": "Login",
+  "login_forgot_password": "Forgot password?",
+  "login_invalid_email": "Please enter a valid email address",
+  "login_required_field": "This field is required"
 }
