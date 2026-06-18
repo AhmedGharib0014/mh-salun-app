@@ -7,37 +7,39 @@ import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
 import 'package:mh_salun/features/auth/presentation/widgets/auth_switch_link.dart';
 import 'package:mh_salun/features/auth/presentation/widgets/email_text_field.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/login/forgot_password_button.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/login/login_button.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/password_text_field.dart';
+import 'package:mh_salun/features/auth/presentation/widgets/register/birth_date_field.dart';
+import 'package:mh_salun/features/auth/presentation/widgets/register/name_text_field.dart';
+import 'package:mh_salun/features/auth/presentation/widgets/register/password_fields.dart';
+import 'package:mh_salun/features/auth/presentation/widgets/register/register_button.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  DateTime? _birthDate;
 
   @override
   void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  String? _validateRequired(String? value) {
-    if (value == null || value.isEmpty) return 'auth_required_field'.tr();
-    return null;
-  }
+  void _onBirthDateChanged(DateTime? date) =>
+      setState(() => _birthDate = date);
 
-  void _onForgotPassword() => context.pushNamed(AppRoutes.resetPassword);
-
-  void _onRegisterTap() => context.goNamed(AppRoutes.register);
+  void _onLoginTap() => context.goNamed(AppRoutes.login);
 
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
@@ -59,27 +61,40 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: AppSpacing.xxl),
                 Text(
-                  'login_title'.tr(),
+                  'register_title'.tr(),
                   style: AppTextStyles.headingGold,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppSpacing.xxl),
+                NameTextField(
+                  controller: _firstNameController,
+                  labelKey: 'register_first_name_label',
+                  hintKey: 'register_first_name_hint',
+                ),
+                const SizedBox(height: AppSpacing.md),
+                NameTextField(
+                  controller: _lastNameController,
+                  labelKey: 'register_last_name_label',
+                  hintKey: 'register_last_name_hint',
+                ),
+                const SizedBox(height: AppSpacing.md),
                 EmailTextField(controller: _emailController),
                 const SizedBox(height: AppSpacing.md),
-                PasswordTextField(
-                  controller: _passwordController,
-                  validator: _validateRequired,
+                PasswordFields(passwordController: _passwordController),
+                const SizedBox(height: AppSpacing.md),
+                BirthDateField(
+                  value: _birthDate,
+                  onChanged: _onBirthDateChanged,
                 ),
-                const SizedBox(height: AppSpacing.sm),
-                ForgotPasswordButton(onTap: _onForgotPassword),
                 const SizedBox(height: AppSpacing.xl),
-                LoginButton(onPressed: _submit),
+                RegisterButton(onPressed: _submit),
                 const SizedBox(height: AppSpacing.lg),
                 AuthSwitchLink(
-                  promptKey: 'auth_no_account',
-                  actionKey: 'auth_register_action',
-                  onTap: _onRegisterTap,
+                  promptKey: 'auth_have_account',
+                  actionKey: 'auth_login_action',
+                  onTap: _onLoginTap,
                 ),
+                const SizedBox(height: AppSpacing.xl),
               ],
             ),
           ),

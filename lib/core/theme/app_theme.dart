@@ -323,6 +323,66 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
         ),
       ),
+
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: AppColors.surface,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+        ),
+        headerBackgroundColor: AppColors.surfaceHigh,
+        headerForegroundColor: AppColors.primary,
+        headerHeadlineStyle: const TextStyle(
+          fontSize: AppFontSize.heading,
+          fontWeight: FontWeight.w700,
+          color: AppColors.primary,
+        ),
+        headerHelpStyle: const TextStyle(
+          fontSize: AppFontSize.label,
+          color: AppColors.onSurface,
+          letterSpacing: 1.0,
+        ),
+        weekdayStyle: const TextStyle(
+          fontSize: AppFontSize.caption,
+          fontWeight: FontWeight.w600,
+          color: AppColors.onSurface,
+        ),
+        dayStyle: const TextStyle(fontSize: AppFontSize.body),
+        dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.onPrimary;
+          if (states.contains(WidgetState.disabled)) return AppColors.onSurface;
+          return AppColors.onBackground;
+        }),
+        dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.primary;
+          return Colors.transparent;
+        }),
+        todayForegroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.onPrimary;
+          return AppColors.primary;
+        }),
+        todayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.primary;
+          return Colors.transparent;
+        }),
+        todayBorder: const BorderSide(color: AppColors.primary, width: 1),
+        yearForegroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.onPrimary;
+          return AppColors.onBackground;
+        }),
+        yearBackgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.primary;
+          return Colors.transparent;
+        }),
+        dividerColor: AppColors.divider,
+        confirmButtonStyle: TextButton.styleFrom(
+          foregroundColor: AppColors.primary,
+        ),
+        cancelButtonStyle: TextButton.styleFrom(
+          foregroundColor: AppColors.onSurface,
+        ),
+      ),
     );
   }
 }

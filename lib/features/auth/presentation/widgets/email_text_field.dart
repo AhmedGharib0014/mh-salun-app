@@ -7,9 +7,9 @@ class EmailTextField extends StatelessWidget {
   final TextEditingController controller;
 
   String? _validate(String? value) {
-    if (value == null || value.isEmpty) return 'login_required_field'.tr();
+    if (value == null || value.isEmpty) return 'auth_required_field'.tr();
     final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
-    if (!emailRegex.hasMatch(value)) return 'login_invalid_email'.tr();
+    if (!emailRegex.hasMatch(value)) return 'auth_invalid_email'.tr();
     return null;
   }
 
@@ -19,8 +19,8 @@ class EmailTextField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        labelText: 'login_email_label'.tr(),
-        hintText: 'login_email_hint'.tr(),
+        labelText: 'auth_email_label'.tr(),
+        hintText: 'auth_email_hint'.tr(),
       ),
       validator: _validate,
     );
