@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/email_text_field.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/reset_password/send_reset_link_button.dart';
+import 'package:mh_salun/core/presentation/widgets/email_text_field.dart';
+import 'package:mh_salun/features/login/presentation/widgets/send_reset_link_button.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});

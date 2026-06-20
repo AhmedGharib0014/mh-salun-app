@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/password_text_field.dart';
+import 'package:mh_salun/core/presentation/widgets/password_text_field.dart';
 
 /// Password + confirm-password pair for registration. Owns the confirm
 /// controller and keeps all password-related validation — required, minimum

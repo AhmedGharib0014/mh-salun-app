@@ -17,7 +17,9 @@ Otherwise **skip the BLoC**: use a plain widget with `setState`, and call the re
 directly from the UI.
 
 ## Structure
-`lib/features/<feature>/presentation/bloc/` (or `.../<feature>_bloc.dart`):
+`lib/features/<feature>/bloc/` — a feature-level folder, a sibling of `presentation/`,
+`model/`, and `data/` (not nested under `presentation/`). It exists only when the
+feature uses a BLoC; omit it entirely otherwise.
 - `<feature>_event.dart` — events (user intents)
 - `<feature>_state.dart` — states (incl. initial / loading / success / failure)
 - `<feature>_bloc.dart` — maps events to states; depends on the repo

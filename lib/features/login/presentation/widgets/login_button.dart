@@ -5,14 +5,19 @@ import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key, required this.onPressed});
+  const LoginButton({
+    super.key,
+    required this.onPressed,
+    this.isLoading = false,
+  });
 
   final VoidCallback onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.onPrimary,
@@ -22,7 +27,16 @@ class LoginButton extends StatelessWidget {
         ),
         textStyle: AppTextStyles.buttonPrimary,
       ),
-      child: Text('login_button'.tr()),
+      child: isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.onPrimary),
+              ),
+            )
+          : Text('login_button'.tr()),
     );
   }
 }

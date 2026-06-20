@@ -23,7 +23,26 @@
       "Bash(find /Users/ahmedbisher/Desktop/MH_salun -name \"*.png\" -o -name \"*.jpg\" -o -name \"*.jpeg\" -o -name \"*.webp\" 2>/dev/null | head -20)",
       "Read(//Users/ahmedbisher/Desktop/MH_salun/**)",
       "Bash(find /Users/ahmedbisher/Desktop -maxdepth 2 -name \"*.png\" -o -name \"*.jpg\" -o -name \"*.jpeg\" 2>/dev/null | grep -v MH_salun | head -10)",
-      "Read(//Users/ahmedbisher/Desktop/**)"
+      "Read(//Users/ahmedbisher/Desktop/**)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun status)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun log --oneline -5)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun/mh_salun add assets/translations/ar.json assets/translations/en.json lib/features/auth/presentation/reset_password_page.dart lib/features/auth/presentation/widgets/reset_password/)",
+      "Bash(git checkout *)",
+      "Bash(dart analyze *)",
+      "Bash(find /Users/ahmedbisher/.claude /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/.claude -type d -name \"*\" 2>/dev/null | grep -iE \"skill\" | head -50)",
+      "Read(//Users/ahmedbisher/.claude/**)",
+      "Bash(mkdir -p core/presentation/widgets core/data)",
+      "Bash(mkdir -p features/login/data features/login/presentation/bloc features/login/presentation/widgets)",
+      "Bash(mkdir -p features/registration/data features/registration/presentation/widgets)",
+      "Bash(mv features/auth/presentation/widgets/auth_switch_link.dart core/presentation/widgets/)",
+      "Bash(mv features/auth/presentation/widgets/email_text_field.dart core/presentation/widgets/)",
+      "Bash(mkdir -p model)",
+      "Bash(mv data/login_request.dart data/login_request.g.dart data/login_response.dart data/login_response.g.dart model/)",
+      "Bash(mv data/register_request.dart data/register_request.g.dart data/register_response.dart data/register_response.g.dart model/)",
+      "Bash(perl -pi -e \"s{features/login/presentation/bloc/login_bloc.dart}{features/login/bloc/login_bloc.dart}g\" lib/features/login/presentation/login_page.dart lib/core/di/injection.config.dart)",
+      "Bash(git fetch *)",
+      "Bash(git commit -q -m 'refactor: split auth into login & registration features *)",
+      "Bash(git commit -q -m 'docs: document feature-first folder architecture *)"
     ]
   }
 }

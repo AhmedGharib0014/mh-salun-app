@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/data/auth_exception.dart';
 import '../../../core/storage/local_storage.dart';
-import 'auth_exception.dart';
-import 'login_request.dart';
-import 'login_response.dart';
+import '../model/login_request.dart';
+import '../model/login_response.dart';
 
-/// Data access for authentication endpoints.
+/// Data access for the login endpoint and persisted auth tokens.
 @lazySingleton
-class AuthRepository {
-  AuthRepository(this._dio);
+class LoginRepository {
+  LoginRepository(this._dio);
 
   final Dio _dio;
 
@@ -27,12 +27,13 @@ class AuthRepository {
         '/auth/login',
         data: LoginRequest(email: email, password: password).toJson(),
       );
-      final result =
-          LoginResponse.fromJson(response.data as Map<String, dynamic>);
+      final result = LoginResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
       await _persistTokens(result);
       return result;
     } on DioException catch (e) {
-      throw _mapError(e);
+      throw AuthException.fromDio(e);
     }
   }
 
@@ -51,21 +52,5 @@ class AuthRepository {
   Future<void> _persistTokens(LoginResponse response) async {
     await LocalStorage.prefs.setString(_accessTokenKey, response.accessToken);
     await LocalStorage.prefs.setString(_refreshTokenKey, response.refreshToken);
-  }
-
-  /// Maps a [DioException] to a user-facing [AuthException], preferring the
-  /// backend's RFC 7807 `detail` message when present.
-  AuthException _mapError(DioException e) {
-    final data = e.response?.data;
-    if (data is Map<String, dynamic> && data['detail'] is String) {
-      return AuthException(
-        data['detail'] as String,
-        statusCode: e.response?.statusCode,
-      );
-    }
-    return AuthException(
-      'Something went wrong. Please try again.',
-      statusCode: e.response?.statusCode,
-    );
   }
 }

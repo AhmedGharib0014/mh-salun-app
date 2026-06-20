@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
-import 'package:mh_salun/features/auth/presentation/login_page.dart';
-import 'package:mh_salun/features/auth/presentation/register_page.dart';
-import 'package:mh_salun/features/auth/presentation/reset_password_page.dart';
+import 'package:mh_salun/features/login/presentation/login_page.dart';
+import 'package:mh_salun/features/login/presentation/reset_password_page.dart';
+import 'package:mh_salun/features/registration/presentation/register_page.dart';
 import 'package:mh_salun/features/home/presentation/home_page.dart';
 import 'package:mh_salun/features/splash/presentation/splash_page.dart';
 

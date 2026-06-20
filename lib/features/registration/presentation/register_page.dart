@@ -5,12 +5,12 @@ import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/auth_switch_link.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/email_text_field.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/register/birth_date_field.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/register/name_text_field.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/register/password_fields.dart';
-import 'package:mh_salun/features/auth/presentation/widgets/register/register_button.dart';
+import 'package:mh_salun/core/presentation/widgets/auth_switch_link.dart';
+import 'package:mh_salun/core/presentation/widgets/email_text_field.dart';
+import 'package:mh_salun/features/registration/presentation/widgets/birth_date_field.dart';
+import 'package:mh_salun/features/registration/presentation/widgets/name_text_field.dart';
+import 'package:mh_salun/features/registration/presentation/widgets/password_fields.dart';
+import 'package:mh_salun/features/registration/presentation/widgets/register_button.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
