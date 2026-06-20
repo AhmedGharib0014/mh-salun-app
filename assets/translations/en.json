@@ -31,6 +31,10 @@
   "register_confirm_password_label": "Confirm password",
   "register_confirm_password_hint": "Re-enter your password",
   "register_password_mismatch": "Passwords do not match",
+  "register_error_title": "Registration failed",
+  "register_generic_error": "Something went wrong. Please try again.",
+  "register_success_title": "Account created",
+  "register_success_message": "We've sent a verification link to your email. Please verify your email, then you can log in.",
   "reset_password_title": "Reset Password",
   "reset_password_subtitle": "Enter your email and we'll send you a link to reset your password.",
   "reset_password_button": "Send Reset Link"

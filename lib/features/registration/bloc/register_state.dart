@@ -1,0 +1,15 @@
+part of 'register_bloc.dart';
+
+sealed class RegisterState {}
+
+class RegisterInitial extends RegisterState {}
+
+class RegisterLoading extends RegisterState {}
+
+class RegisterSuccess extends RegisterState {}
+
+class RegisterFailure extends RegisterState {
+  RegisterFailure(this.message);
+
+  final String message;
+}

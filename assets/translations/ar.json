@@ -31,6 +31,10 @@
   "register_confirm_password_label": "تأكيد كلمة المرور",
   "register_confirm_password_hint": "أعد إدخال كلمة المرور",
   "register_password_mismatch": "كلمتا المرور غير متطابقتين",
+  "register_error_title": "فشل إنشاء الحساب",
+  "register_generic_error": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+  "register_success_title": "تم إنشاء الحساب",
+  "register_success_message": "لقد أرسلنا رابط تفعيل إلى بريدك الإلكتروني. يرجى تفعيل بريدك الإلكتروني، ثم يمكنك تسجيل الدخول.",
   "reset_password_title": "إعادة تعيين كلمة المرور",
   "reset_password_subtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.",
   "reset_password_button": "إرسال رابط الاسترداد"
