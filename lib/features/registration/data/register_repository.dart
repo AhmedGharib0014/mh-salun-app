@@ -21,7 +21,7 @@ class RegisterRepository {
     required String password,
     required String firstName,
     required String lastName,
-    required int age,
+    DateTime? dateOfBirth,
   }) async {
     try {
       final response = await _dio.post(
@@ -31,12 +31,21 @@ class RegisterRepository {
           password: password,
           firstName: firstName,
           lastName: lastName,
-          age: age,
+          dateOfBirth:
+              dateOfBirth == null ? null : _formatDate(dateOfBirth),
         ).toJson(),
       );
       return RegisterResponse.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
       throw AuthException.fromDio(e);
     }
+  }
+
+  /// Formats a date as an ISO-8601 calendar date (`yyyy-MM-dd`).
+  String _formatDate(DateTime date) {
+    final y = date.year.toString().padLeft(4, '0');
+    final m = date.month.toString().padLeft(2, '0');
+    final d = date.day.toString().padLeft(2, '0');
+    return '$y-$m-$d';
   }
 }

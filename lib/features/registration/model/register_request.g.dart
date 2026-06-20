@@ -12,7 +12,7 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
-      age: (json['age'] as num).toInt(),
+      dateOfBirth: json['dateOfBirth'] as String?,
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
@@ -21,5 +21,5 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'password': instance.password,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
-      'age': instance.age,
+      if (instance.dateOfBirth case final value?) 'dateOfBirth': value,
     };
