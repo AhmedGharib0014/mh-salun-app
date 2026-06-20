@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../../core/data/auth_exception.dart';
 import '../../../core/storage/local_storage.dart';
-import '../../../core/utils/app_logger.dart';
 import '../model/login_request.dart';
 import '../model/login_response.dart';
 
