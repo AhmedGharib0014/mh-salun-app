@@ -21,5 +21,5 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'password': instance.password,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
-      if (instance.dateOfBirth case final value?) 'dateOfBirth': value,
+      'dateOfBirth': ?instance.dateOfBirth,
     };
