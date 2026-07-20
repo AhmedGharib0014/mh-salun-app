@@ -15,10 +15,6 @@ class HomeBottomNav extends StatelessWidget {
     required this.onAddTap,
   });
 
-  /// Vertical space the bar (plus the raised circle) covers over the body,
-  /// excluding the device's bottom inset — use it as scroll clearance.
-  static const double scrollClearance = _overhang + _barHeight + AppSpacing.sm;
-
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
   final VoidCallback onAddTap;

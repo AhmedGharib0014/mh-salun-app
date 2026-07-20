@@ -96,5 +96,10 @@
   "home_nav_bookings": "My bookings",
   "home_nav_account": "Account",
   "services_title": "Services",
-  "services_subtitle": "Pick a service to book your next visit"
+  "services_subtitle": "Pick a service to book your next visit",
+  "placeholder_coming_soon": "We're working on this. Check back soon.",
+  "account_first_name_label": "First name",
+  "account_last_name_label": "Last name",
+  "account_email_label": "Email",
+  "account_age_label": "Age"
 }

@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mh_salun/features/home/model/service.dart';
+import 'package:mh_salun/core/model/service.dart';
 
 /// Placeholder catalog shared by the home and services screens until the
 /// data layer provides real services.
