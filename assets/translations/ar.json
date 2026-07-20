@@ -96,5 +96,6 @@
   "home_nav_bookings": "حجوزاتي",
   "home_nav_account": "حسابي",
   "services_title": "الخدمات",
-  "services_subtitle": "اختر خدمة لحجز زيارتك القادمة"
+  "services_subtitle": "اختر خدمة لحجز زيارتك القادمة",
+  "placeholder_coming_soon": "نعمل على هذا القسم. ترقبونا قريباً."
 }
