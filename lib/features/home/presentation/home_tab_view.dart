@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:mh_salun/core/model/services_catalog.dart';
+import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/home/model/barber.dart';
-import 'package:mh_salun/features/home/model/services_catalog.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/barbers_section.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/book_now_card.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/greeting_header.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/home_bottom_nav.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/home_header.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/services_section.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/upcoming_booking_card.dart';
@@ -74,7 +74,7 @@ class _HomeTabViewState extends State<HomeTabView> {
             // Clearance so the last content clears the curved nav bar
             // (bar + raised circle + device bottom inset).
             SizedBox(
-              height: HomeBottomNav.scrollClearance +
+              height: AppSpacing.bottomNavClearance +
                   MediaQuery.of(context).padding.bottom,
             ),
           ],

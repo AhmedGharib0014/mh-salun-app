@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/features/home/model/account_profile.dart';
-import 'package:mh_salun/features/home/presentation/widgets/account/account_header.dart';
-import 'package:mh_salun/features/home/presentation/widgets/account/account_info_section.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/home_bottom_nav.dart';
+import 'package:mh_salun/features/account/model/account_profile.dart';
+import 'package:mh_salun/features/account/presentation/widgets/account/account_header.dart';
+import 'package:mh_salun/features/account/presentation/widgets/account/account_info_section.dart';
 
 class AccountTabView extends StatelessWidget {
   const AccountTabView({super.key});
@@ -23,7 +22,7 @@ class AccountTabView extends StatelessWidget {
             const SizedBox(height: AppSpacing.lg),
             AccountInfoSection(profile: profile),
             SizedBox(
-              height: HomeBottomNav.scrollClearance +
+              height: AppSpacing.bottomNavClearance +
                   MediaQuery.of(context).padding.bottom,
             ),
           ],

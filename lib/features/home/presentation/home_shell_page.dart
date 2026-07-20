@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mh_salun/features/home/presentation/account_tab_view.dart';
-import 'package:mh_salun/features/home/presentation/bookings_tab_view.dart';
+import 'package:mh_salun/features/account/presentation/account_tab_view.dart';
 import 'package:mh_salun/features/home/presentation/home_tab_view.dart';
-import 'package:mh_salun/features/home/presentation/services_tab_view.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/home_bottom_nav.dart';
+import 'package:mh_salun/features/reservations/presentation/reservations_tab_view.dart';
+import 'package:mh_salun/features/services/presentation/services_tab_view.dart';
 
 /// Persistent shell owning the bottom nav bar and the in-place tab content.
 /// Switching destinations only swaps the current [PageView] page — it
@@ -47,7 +47,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
         children: [
           HomeTabView(onSeeAllServices: _onSeeAllServices),
           const ServicesTabView(),
-          const BookingsTabView(),
+          const ReservationsTabView(),
           const AccountTabView(),
         ],
       ),

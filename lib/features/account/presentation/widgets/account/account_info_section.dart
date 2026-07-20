@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/home/model/account_profile.dart';
+import 'package:mh_salun/features/account/model/account_profile.dart';
 
 /// Card listing the user's profile fields as labeled rows.
 class AccountInfoSection extends StatelessWidget {

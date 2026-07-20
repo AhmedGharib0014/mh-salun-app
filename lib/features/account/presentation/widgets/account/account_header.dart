@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/home/model/account_profile.dart';
+import 'package:mh_salun/features/account/model/account_profile.dart';
 
 /// Centered avatar (circular initials, matching the app's badge style)
-/// plus the user's full name and email.
+/// plus the user's email.
 class AccountHeader extends StatelessWidget {
   const AccountHeader({super.key, required this.profile});
 
@@ -29,8 +29,6 @@ class AccountHeader extends StatelessWidget {
           child: Text(profile.initials, style: AppTextStyles.headingGold),
         ),
         const SizedBox(height: AppSpacing.md),
-        Text(profile.fullName, style: AppTextStyles.titleLarge),
-        const SizedBox(height: AppSpacing.xs),
         Text(profile.email, style: AppTextStyles.bodySecondary),
       ],
     );

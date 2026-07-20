@@ -17,4 +17,10 @@ class AppSpacing {
   static const radiusLg = 12.0;
   static const radiusXl = 16.0;
   static const radiusFull = 100.0;
+
+  /// Vertical space the curved bottom nav bar (plus its raised circle)
+  /// covers over the body, excluding the device's bottom inset. Scrollable
+  /// tab content should reserve this much bottom padding so its last item
+  /// clears the bar. Must track HomeBottomNav's bar height + overhang.
+  static const bottomNavClearance = 106.0;
 }

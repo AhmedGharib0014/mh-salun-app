@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mh_salun/core/model/service.dart';
+import 'package:mh_salun/core/presentation/widgets/service_card.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/features/home/model/service.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/section_header.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/service_card.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({
