@@ -42,7 +42,12 @@
       "Bash(perl -pi -e \"s{features/login/presentation/bloc/login_bloc.dart}{features/login/bloc/login_bloc.dart}g\" lib/features/login/presentation/login_page.dart lib/core/di/injection.config.dart)",
       "Bash(git fetch *)",
       "Bash(git commit -q -m 'refactor: split auth into login & registration features *)",
-      "Bash(git commit -q -m 'docs: document feature-first folder architecture *)"
+      "Bash(git commit -q -m 'docs: document feature-first folder architecture *)",
+      "Bash(xargs -I{} echo {})",
+      "Bash(python3 -c \"import json; json.load\\(open\\('assets/translations/en.json'\\)\\); json.load\\(open\\('assets/translations/ar.json'\\)\\); print\\('valid json'\\)\")",
+      "Bash(flutter devices *)",
+      "Bash(flutter run *)",
+      "Bash(echo \"started, pid $!\")"
     ]
   }
 }

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mh_salun/core/data/token_storage.dart';
+import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/router/app_router.dart';
 
 class SplashPage extends StatefulWidget {
@@ -15,11 +17,13 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), _navigateToLogin);
+    Timer(const Duration(seconds: 2), _navigateNext);
   }
 
-  void _navigateToLogin() {
-    if (mounted) context.goNamed(AppRoutes.login);
+  void _navigateNext() {
+    if (!mounted) return;
+    final isLoggedIn = getIt<TokenStorage>().isLoggedIn;
+    context.goNamed(isLoggedIn ? AppRoutes.home : AppRoutes.login);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 import 'font_sizes.dart';
 import 'spacing.dart';
@@ -70,7 +71,7 @@ abstract final class AppTheme {
       labelSmall: TextStyle(fontSize: AppFontSize.label, fontWeight: FontWeight.w500, color: AppColors.onSurface, letterSpacing: 1.0),
     );
 
-    return ThemeData(
+    final base = ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: colorScheme,
@@ -383,6 +384,14 @@ abstract final class AppTheme {
           foregroundColor: AppColors.onSurface,
         ),
       ),
+    );
+
+    // Apply the Cairo Arabic display font across the whole app. Because the
+    // ambient DefaultTextStyle now resolves to Cairo, widgets that pass an
+    // explicit AppTextStyles style (which omit fontFamily) inherit it too.
+    return base.copyWith(
+      textTheme: GoogleFonts.cairoTextTheme(base.textTheme),
+      primaryTextTheme: GoogleFonts.cairoTextTheme(base.primaryTextTheme),
     );
   }
 }
