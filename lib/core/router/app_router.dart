@@ -3,18 +3,20 @@ import 'package:mh_salun/features/login/presentation/login_page.dart';
 import 'package:mh_salun/features/login/presentation/reset_password_page.dart';
 import 'package:mh_salun/features/registration/presentation/register_page.dart';
 import 'package:mh_salun/features/home/presentation/home_page.dart';
+import 'package:mh_salun/features/home/presentation/services_page.dart';
 import 'package:mh_salun/features/splash/presentation/splash_page.dart';
 
 class AppRoutes {
   static const splash = 'splash';
   static const home = 'home';
+  static const services = 'services';
   static const login = 'login';
   static const register = 'register';
   static const resetPassword = 'reset-password';
 }
 
 final appRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/home',
   routes: [
     GoRoute(
       path: '/',
@@ -25,6 +27,11 @@ final appRouter = GoRouter(
       path: '/home',
       name: AppRoutes.home,
       builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/services',
+      name: AppRoutes.services,
+      builder: (context, state) => const ServicesPage(),
     ),
     GoRoute(
       path: '/login',

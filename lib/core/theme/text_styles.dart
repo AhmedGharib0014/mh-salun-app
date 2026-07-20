@@ -8,7 +8,6 @@ abstract final class AppTextStyles {
     fontSize: AppFontSize.display,
     fontWeight: FontWeight.w700,
     color: AppColors.primary,
-    letterSpacing: 2.0,
   );
 
   // Headings
@@ -16,17 +15,21 @@ abstract final class AppTextStyles {
     fontSize: AppFontSize.heading,
     fontWeight: FontWeight.w700,
     color: AppColors.onBackground,
-    letterSpacing: 1.2,
   );
 
   static const TextStyle headingGold = TextStyle(
     fontSize: AppFontSize.heading,
     fontWeight: FontWeight.w700,
     color: AppColors.primary,
-    letterSpacing: 1.5,
   );
 
   // Title
+  static const TextStyle titleLarge = TextStyle(
+    fontSize: AppFontSize.titleLarge,
+    fontWeight: FontWeight.w700,
+    color: AppColors.onBackground,
+  );
+
   static const TextStyle titleMedium = TextStyle(
     fontSize: AppFontSize.title,
     fontWeight: FontWeight.w600,
@@ -37,7 +40,6 @@ abstract final class AppTextStyles {
     fontSize: AppFontSize.title,
     fontWeight: FontWeight.w600,
     color: AppColors.primary,
-    letterSpacing: 0.8,
   );
 
   // Body
@@ -66,14 +68,12 @@ abstract final class AppTextStyles {
     fontSize: AppFontSize.caption,
     fontWeight: FontWeight.w400,
     color: AppColors.onSurface,
-    letterSpacing: 0.4,
   );
 
   static const TextStyle label = TextStyle(
     fontSize: AppFontSize.label,
     fontWeight: FontWeight.w500,
     color: AppColors.onSurface,
-    letterSpacing: 1.0,
   );
 
   // Buttons
@@ -81,13 +81,11 @@ abstract final class AppTextStyles {
     fontSize: AppFontSize.body,
     fontWeight: FontWeight.w700,
     color: AppColors.onPrimary,
-    letterSpacing: 1.5,
   );
 
   static const TextStyle buttonSecondary = TextStyle(
     fontSize: AppFontSize.body,
     fontWeight: FontWeight.w600,
     color: AppColors.primary,
-    letterSpacing: 1.2,
   );
 }
