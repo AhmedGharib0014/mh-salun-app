@@ -96,10 +96,17 @@
   "home_nav_bookings": "My bookings",
   "home_nav_account": "Account",
   "services_title": "Services",
-  "services_subtitle": "Pick a service to book your next visit",
   "placeholder_coming_soon": "We're working on this. Check back soon.",
   "account_first_name_label": "First name",
   "account_last_name_label": "Last name",
   "account_email_label": "Email",
-  "account_age_label": "Age"
+  "account_age_label": "Age",
+  "reservations_title": "My Bookings",
+  "reservations_tab_upcoming": "Upcoming",
+  "reservations_tab_previous": "Previous",
+  "reservations_status_completed": "Completed",
+  "reservations_status_cancelled": "Cancelled",
+  "reservations_empty_upcoming_title": "No upcoming reservations",
+  "reservations_empty_upcoming_subtitle": "Book your next visit and it will show up here",
+  "reservations_empty_previous_title": "You have no previous reservations"
 }

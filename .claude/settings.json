@@ -47,7 +47,8 @@
       "Bash(python3 -c \"import json; json.load\\(open\\('assets/translations/en.json'\\)\\); json.load\\(open\\('assets/translations/ar.json'\\)\\); print\\('valid json'\\)\")",
       "Bash(flutter devices *)",
       "Bash(flutter run *)",
-      "Bash(echo \"started, pid $!\")"
+      "Bash(echo \"started, pid $!\")",
+      "Bash(flutter build *)"
     ]
   }
 }

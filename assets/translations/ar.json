@@ -96,10 +96,17 @@
   "home_nav_bookings": "حجوزاتي",
   "home_nav_account": "حسابي",
   "services_title": "الخدمات",
-  "services_subtitle": "اختر خدمة لحجز زيارتك القادمة",
   "placeholder_coming_soon": "نعمل على هذا القسم. ترقبونا قريباً.",
   "account_first_name_label": "الاسم الأول",
   "account_last_name_label": "اسم العائلة",
   "account_email_label": "البريد الإلكتروني",
-  "account_age_label": "العمر"
+  "account_age_label": "العمر",
+  "reservations_title": "حجوزاتي",
+  "reservations_tab_upcoming": "القادمة",
+  "reservations_tab_previous": "السابقة",
+  "reservations_status_completed": "مكتمل",
+  "reservations_status_cancelled": "ملغى",
+  "reservations_empty_upcoming_title": "لا توجد حجوزات قادمة",
+  "reservations_empty_upcoming_subtitle": "احجز زيارتك القادمة وستظهر هنا",
+  "reservations_empty_previous_title": "لا توجد حجوزات سابقة"
 }

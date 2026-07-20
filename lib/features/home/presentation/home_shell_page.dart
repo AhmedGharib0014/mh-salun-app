@@ -47,7 +47,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
         children: [
           HomeTabView(onSeeAllServices: _onSeeAllServices),
           const ServicesTabView(),
-          const ReservationsTabView(),
+          ReservationsTabView(onStartBooking: _onSeeAllServices),
           const AccountTabView(),
         ],
       ),
