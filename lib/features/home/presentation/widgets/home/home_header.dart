@@ -7,9 +7,7 @@ import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key, required this.onProfileTap});
-
-  final VoidCallback onProfileTap;
+  const HomeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,24 +54,6 @@ class HomeHeader extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          GestureDetector(
-            onTap: onProfileTap,
-            child: Container(
-              width: AppSpacing.xxl,
-              height: AppSpacing.xxl,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.surfaceHigh,
-                border: Border.all(color: AppColors.primary, width: 1.5),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                'home_customer_name'.tr().substring(0, 1),
-                style: AppTextStyles.titleGold,
-              ),
             ),
           ),
         ],

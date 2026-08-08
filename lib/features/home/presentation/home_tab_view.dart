@@ -21,8 +21,6 @@ class HomeTabView extends StatefulWidget {
 }
 
 class _HomeTabViewState extends State<HomeTabView> {
-  void _onProfileTap() {}
-
   void _onStartBooking() => context.pushNamed(AppRoutes.newReservation);
 
   void _onSeeAllUpcoming() {}
@@ -38,7 +36,7 @@ class _HomeTabViewState extends State<HomeTabView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            HomeHeader(onProfileTap: _onProfileTap),
+            const HomeHeader(),
             const GreetingHeader(),
             BookNowCard(onStartBooking: _onStartBooking),
             UpcomingBookingCard(onSeeAllTap: _onSeeAllUpcoming),
