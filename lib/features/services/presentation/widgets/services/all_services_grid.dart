@@ -15,7 +15,7 @@ class AllServicesGrid extends StatelessWidget {
     return GridView.builder(
       padding: EdgeInsets.fromLTRB(
         AppSpacing.lg,
-        0,
+        AppSpacing.lg,
         AppSpacing.lg,
         AppSpacing.bottomNavClearance + MediaQuery.of(context).padding.bottom,
       ),

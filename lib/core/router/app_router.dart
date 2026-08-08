@@ -3,6 +3,7 @@ import 'package:mh_salun/features/login/presentation/login_page.dart';
 import 'package:mh_salun/features/login/presentation/reset_password_page.dart';
 import 'package:mh_salun/features/registration/presentation/register_page.dart';
 import 'package:mh_salun/features/home/presentation/home_shell_page.dart';
+import 'package:mh_salun/features/reservations/presentation/new_reservation_flow_page.dart';
 import 'package:mh_salun/features/splash/presentation/splash_page.dart';
 
 class AppRoutes {
@@ -11,10 +12,11 @@ class AppRoutes {
   static const login = 'login';
   static const register = 'register';
   static const resetPassword = 'reset-password';
+  static const newReservation = 'new-reservation';
 }
 
 final appRouter = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
@@ -40,6 +42,11 @@ final appRouter = GoRouter(
       path: '/reset-password',
       name: AppRoutes.resetPassword,
       builder: (context, state) => const ResetPasswordPage(),
+    ),
+    GoRoute(
+      path: '/new-reservation',
+      name: AppRoutes.newReservation,
+      builder: (context, state) => const NewReservationFlowPage(),
     ),
   ],
 );
