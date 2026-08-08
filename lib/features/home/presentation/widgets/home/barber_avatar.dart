@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/home/model/barber.dart';
+import 'package:mh_salun/core/model/barber.dart';
 
 class BarberAvatar extends StatelessWidget {
   const BarberAvatar({super.key, required this.barber});

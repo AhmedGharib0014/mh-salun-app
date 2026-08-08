@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/features/home/model/barber.dart';
+import 'package:mh_salun/core/model/barber.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/barber_avatar.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/section_header.dart';
 
