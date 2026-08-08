@@ -15,6 +15,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:mh_salun/core/data/organization_repository.dart' as _i445;
 import 'package:mh_salun/core/data/token_storage.dart' as _i724;
 import 'package:mh_salun/core/di/register_module.dart' as _i511;
+import 'package:mh_salun/features/home/bloc/organization_bloc.dart' as _i587;
 import 'package:mh_salun/features/login/bloc/login_bloc.dart' as _i569;
 import 'package:mh_salun/features/login/data/login_repository.dart' as _i1060;
 import 'package:mh_salun/features/registration/bloc/register_bloc.dart'
@@ -43,6 +44,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1060.LoginRepository>(
       () => _i1060.LoginRepository(gh<_i361.Dio>(), gh<_i724.TokenStorage>()),
+    );
+    gh.factory<_i587.OrganizationBloc>(
+      () => _i587.OrganizationBloc(gh<_i445.OrganizationRepository>()),
     );
     gh.factory<_i569.LoginBloc>(
       () => _i569.LoginBloc(gh<_i1060.LoginRepository>()),
