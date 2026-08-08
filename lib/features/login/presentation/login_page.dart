@@ -10,7 +10,9 @@ import 'package:mh_salun/core/theme/text_styles.dart';
 import 'package:mh_salun/core/presentation/widgets/auth_switch_link.dart';
 import 'package:mh_salun/core/presentation/widgets/email_text_field.dart';
 import 'package:mh_salun/core/presentation/widgets/password_text_field.dart';
+import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
 import 'package:mh_salun/features/login/bloc/login_bloc.dart';
+import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 import 'package:mh_salun/features/login/presentation/widgets/forgot_password_button.dart';
 import 'package:mh_salun/features/login/presentation/widgets/login_button.dart';
 
@@ -102,6 +104,11 @@ class _LoginPageState extends State<LoginPage> {
                   BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
                       if (state is LoginSuccess) {
+                        // Drop any previous organization's cached data on a
+                        // new successful login, since the shared
+                        // employees/services blocs are singletons.
+                        context.read<EmployeesBloc>().add(EmployeesCleared());
+                        context.read<ServicesBloc>().add(ServicesCleared());
                         context.goNamed(AppRoutes.home);
                       } else if (state is LoginFailure) {
                         _showErrorDialog(context, state.message);

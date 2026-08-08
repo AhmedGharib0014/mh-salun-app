@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
@@ -32,11 +33,7 @@ class ServiceCard extends StatelessWidget {
               ),
             ),
             alignment: Alignment.center,
-            child: Icon(
-              service.icon,
-              size: AppSpacing.iconMd,
-              color: AppColors.primary,
-            ),
+            child: _ServiceIcon(service: service),
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
@@ -69,6 +66,39 @@ class ServiceCard extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ServiceIcon extends StatelessWidget {
+  const _ServiceIcon({required this.service});
+
+  final Service service;
+
+  @override
+  Widget build(BuildContext context) {
+    final iconUrl = service.iconUrl;
+    if (iconUrl == null) {
+      return Icon(
+        service.icon,
+        size: AppSpacing.iconMd,
+        color: AppColors.primary,
+      );
+    }
+    return SvgPicture.network(
+      iconUrl,
+      width: AppSpacing.iconMd,
+      height: AppSpacing.iconMd,
+      placeholderBuilder: (context) => Icon(
+        service.icon,
+        size: AppSpacing.iconMd,
+        color: AppColors.primary,
+      ),
+      errorBuilder: (context, error, stackTrace) => Icon(
+        service.icon,
+        size: AppSpacing.iconMd,
+        color: AppColors.primary,
       ),
     );
   }

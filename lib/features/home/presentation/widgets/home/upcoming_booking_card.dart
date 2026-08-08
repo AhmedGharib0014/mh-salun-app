@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/core/presentation/widgets/section_header.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/info_chip.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/section_header.dart';
 
 class UpcomingBookingCard extends StatelessWidget {
   const UpcomingBookingCard({super.key, required this.onSeeAllTap});

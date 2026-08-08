@@ -51,7 +51,37 @@
       "Bash(flutter build *)",
       "Bash(python3 -c \"import json; json.load\\(open\\('assets/translations/en.json'\\)\\); json.load\\(open\\('assets/translations/ar.json'\\)\\); print\\('JSON OK'\\)\")",
       "Bash(python3 -c \"import json; json.load\\(open\\('assets/translations/en.json'\\)\\); json.load\\(open\\('assets/translations/ar.json'\\)\\); print\\('both JSON valid'\\)\")",
-      "Bash(python3 -c \"import json; json.load\\(open\\('assets/translations/en.json'\\)\\); json.load\\(open\\('assets/translations/ar.json'\\)\\); print\\('JSON valid'\\)\")"
+      "Bash(python3 -c \"import json; json.load\\(open\\('assets/translations/en.json'\\)\\); json.load\\(open\\('assets/translations/ar.json'\\)\\); print\\('JSON valid'\\)\")",
+      "Bash(git commit *)",
+      "Bash(mkdir -p /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/organization/model /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/organization/data)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun mv lib/features/organization/model/organization_response.dart lib/core/model/organization_response.dart)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun mv lib/features/organization/model/organization_response.g.dart lib/core/model/organization_response.g.dart)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun mv lib/features/organization/data/organization_repository.dart lib/core/data/organization_repository.dart)",
+      "Bash(dart format *)",
+      "Bash(mkdir -p /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/services/model /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/services/data)",
+      "Bash(mkdir -p /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/employees/model /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/employees/data)",
+      "Read(//Users/ahmedbisher/.pub-cache/**)",
+      "Bash(find / -type d -iname \"flutter_svg-*\")",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun mv lib/features/home/presentation/widgets/home/section_header.dart lib/core/presentation/widgets/section_header.dart)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun rm -q lib/features/home/presentation/widgets/home/barbers_section.dart lib/features/home/presentation/widgets/home/barber_avatar.dart)",
+      "Read(//Users/ahmedbisher/.pub-cache/hosted/pub.dev/flutter_svg-2.2.1/lib/src/**)",
+      "Bash(awk '/^  flutter_svg:/{f=1} f{print; if\\(/version:/\\){exit}}' /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/pubspec.lock)",
+      "Bash(grep -n \"factory SvgPicture.network\" -A 40 /Users/ahmedbisher/.pub-cache/hosted/pub.dev/flutter_svg-2.3.0/lib/src/svg.dart)",
+      "Read(//Users/ahmedbisher/.pub-cache/hosted/pub.dev/flutter_svg-2.3.0/lib/src/**)",
+      "Bash(find /Users/ahmedbisher/.pub-cache/hosted/pub.dev/flutter_svg-2.3.0 -iname \"*.dart\" | xargs grep -l \"factory SvgPicture.network\" )",
+      "Read(//Users/ahmedbisher/.pub-cache/hosted/pub.dev/flutter_svg-2.3.0/**)",
+      "Bash(find /Users/ahmedbisher/.pub-cache/hosted/pub.dev/flutter_svg-2.3.0 -iname \"*.dart\" )",
+      "Read(//Users/ahmedbisher/.pub-cache/hosted/pub.dev/flutter_svg-2.3.0/lib/**)",
+      "Bash(git -C /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun mv lib/features/home/presentation/widgets/home/section_loading.dart lib/core/presentation/widgets/section_loading.dart)",
+      "Bash(cd /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features *)",
+      "Read(//Users/ahmedbisher/Desktop/MH_salun-app/**)",
+      "Read(//Users/ahmedbisher/Desktop/MH_salun-app/core/data/**)",
+      "Read(//Users/ahmedbisher/Desktop/MH_salun-app/core/model/**)"
+    ],
+    "additionalDirectories": [
+      "/Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/organization",
+      "/Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/services",
+      "/Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/employees"
     ]
   }
 }

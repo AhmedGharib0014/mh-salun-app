@@ -15,6 +15,9 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:mh_salun/core/data/organization_repository.dart' as _i445;
 import 'package:mh_salun/core/data/token_storage.dart' as _i724;
 import 'package:mh_salun/core/di/register_module.dart' as _i511;
+import 'package:mh_salun/features/employees/bloc/employees_bloc.dart' as _i520;
+import 'package:mh_salun/features/employees/data/employee_repository.dart'
+    as _i920;
 import 'package:mh_salun/features/home/bloc/organization_bloc.dart' as _i587;
 import 'package:mh_salun/features/login/bloc/login_bloc.dart' as _i569;
 import 'package:mh_salun/features/login/data/login_repository.dart' as _i1060;
@@ -22,6 +25,9 @@ import 'package:mh_salun/features/registration/bloc/register_bloc.dart'
     as _i377;
 import 'package:mh_salun/features/registration/data/register_repository.dart'
     as _i280;
+import 'package:mh_salun/features/services/bloc/services_bloc.dart' as _i448;
+import 'package:mh_salun/features/services/data/catalog_item_repository.dart'
+    as _i662;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -36,8 +42,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i445.OrganizationRepository>(
       () => _i445.OrganizationRepository(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i920.EmployeeRepository>(
+      () => _i920.EmployeeRepository(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i280.RegisterRepository>(
       () => _i280.RegisterRepository(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i662.CatalogItemRepository>(
+      () => _i662.CatalogItemRepository(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i520.EmployeesBloc>(
+      () => _i520.EmployeesBloc(gh<_i920.EmployeeRepository>()),
     );
     gh.factory<_i377.RegisterBloc>(
       () => _i377.RegisterBloc(gh<_i280.RegisterRepository>()),
@@ -47,6 +62,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i587.OrganizationBloc>(
       () => _i587.OrganizationBloc(gh<_i445.OrganizationRepository>()),
+    );
+    gh.lazySingleton<_i448.ServicesBloc>(
+      () => _i448.ServicesBloc(gh<_i662.CatalogItemRepository>()),
     );
     gh.factory<_i569.LoginBloc>(
       () => _i569.LoginBloc(gh<_i1060.LoginRepository>()),
