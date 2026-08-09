@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/features/account/presentation/account_tab_view.dart';
 import 'package:mh_salun/features/home/presentation/home_tab_view.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/home_bottom_nav.dart';
@@ -34,7 +36,9 @@ class _HomeShellPageState extends State<HomeShellPage> {
 
   void _onSeeAllServices() => _goToTab(1);
 
-  void _onAddTap() {}
+  void _onStartBooking() => context.pushNamed(AppRoutes.newReservation);
+
+  void _onAddTap() => _onStartBooking();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
         children: [
           HomeTabView(onSeeAllServices: _onSeeAllServices),
           const ServicesTabView(),
-          const ReservationsTabView(),
+          ReservationsTabView(onStartBooking: _onStartBooking),
           const AccountTabView(),
         ],
       ),

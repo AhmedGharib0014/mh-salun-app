@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/core/storage/local_storage.dart';
@@ -9,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   await EasyLocalization.ensureInitialized();
+  await initializeDateFormatting();
   await LocalStorage.init();
   runApp(
     EasyLocalization(
