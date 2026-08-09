@@ -1,15 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/font_sizes.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/home/bloc/organization_bloc.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key, required this.onProfileTap});
-
-  final VoidCallback onProfileTap;
+  const HomeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +45,31 @@ class HomeHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'home_salon_name'.tr(),
-                  style: AppTextStyles.titleLarge,
-                  overflow: TextOverflow.ellipsis,
+                BlocBuilder<OrganizationBloc, OrganizationState>(
+                  builder: (context, state) {
+                    if (state is OrganizationLoaded) {
+                      return Text(
+                        state.organization.name,
+                        style: AppTextStyles.titleLarge,
+                        overflow: TextOverflow.ellipsis,
+                      );
+                    }
+                    if (state is OrganizationFailure) {
+                      return Text(
+                        'home_salon_name'.tr(),
+                        style: AppTextStyles.titleLarge,
+                        overflow: TextOverflow.ellipsis,
+                      );
+                    }
+                    return SizedBox(
+                      width: AppSpacing.xxl * 2,
+                      height: AppFontSize.title,
+                      child: const LinearProgressIndicator(
+                        color: AppColors.primary,
+                        backgroundColor: AppColors.surface,
+                      ),
+                    );
+                  },
                 ),
                 Text(
                   'home_salon_tagline'.tr(),
@@ -56,24 +77,6 @@ class HomeHeader extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          GestureDetector(
-            onTap: onProfileTap,
-            child: Container(
-              width: AppSpacing.xxl,
-              height: AppSpacing.xxl,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.surfaceHigh,
-                border: Border.all(color: AppColors.primary, width: 1.5),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                'home_customer_name'.tr().substring(0, 1),
-                style: AppTextStyles.titleGold,
-              ),
             ),
           ),
         ],

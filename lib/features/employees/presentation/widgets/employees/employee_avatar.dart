@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/core/model/barber.dart';
+import 'package:mh_salun/features/employees/model/employee.dart';
 
-class BarberAvatar extends StatelessWidget {
-  const BarberAvatar({super.key, required this.barber});
+class EmployeeAvatar extends StatelessWidget {
+  const EmployeeAvatar({super.key, required this.employee});
 
-  final Barber barber;
+  final Employee employee;
 
   @override
   Widget build(BuildContext context) {
+    final name = '${employee.user.firstName} ${employee.user.lastName}';
     return SizedBox(
       width: 96,
       child: Column(
@@ -24,11 +25,14 @@ class BarberAvatar extends StatelessWidget {
               border: Border.all(color: AppColors.primary, width: 2),
             ),
             alignment: Alignment.center,
-            child: Text(barber.initial, style: AppTextStyles.headingLarge),
+            child: Text(
+              employee.user.firstName.substring(0, 1),
+              style: AppTextStyles.headingLarge,
+            ),
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            barber.name,
+            name,
             style: AppTextStyles.bodyRegular.copyWith(fontWeight: FontWeight.w700, height: 1.2),
             textAlign: TextAlign.center,
             maxLines: 1,
@@ -40,7 +44,7 @@ class BarberAvatar extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                barber.rating,
+                employee.ratingAvg.toStringAsFixed(1),
                 style: AppTextStyles.bodyGold.copyWith(fontWeight: FontWeight.w600),
               ),
               const SizedBox(width: 2),
