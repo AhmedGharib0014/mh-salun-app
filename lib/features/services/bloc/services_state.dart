@@ -12,4 +12,8 @@ class ServicesLoaded extends ServicesState {
   final List<CatalogItem> items;
 }
 
-class ServicesFailure extends ServicesState {}
+class ServicesFailure extends ServicesState {
+  ServicesFailure(this.messageKey);
+
+  final String messageKey;
+}

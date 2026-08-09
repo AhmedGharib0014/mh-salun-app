@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mh_salun/core/di/injection.dart';
+import 'package:mh_salun/core/presentation/widgets/app_error_dialog.dart';
 import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/account_tab_view.dart';
@@ -68,8 +69,33 @@ class _HomeShellPageState extends State<HomeShellPage> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _organizationBloc,
-      child: BlocListener<OrganizationBloc, OrganizationState>(
-        listener: _onOrganizationChanged,
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<OrganizationBloc, OrganizationState>(
+            listener: _onOrganizationChanged,
+          ),
+          BlocListener<EmployeesBloc, EmployeesState>(
+            listener: (context, state) {
+              if (state is EmployeesFailure) {
+                AppErrorDialog.show(context, state.messageKey);
+              }
+            },
+          ),
+          BlocListener<ServicesBloc, ServicesState>(
+            listener: (context, state) {
+              if (state is ServicesFailure) {
+                AppErrorDialog.show(context, state.messageKey);
+              }
+            },
+          ),
+          BlocListener<ProfileBloc, ProfileState>(
+            listener: (context, state) {
+              if (state is ProfileFailure) {
+                AppErrorDialog.show(context, state.messageKey);
+              }
+            },
+          ),
+        ],
         child: Scaffold(
           extendBody: true,
           body: PageView(

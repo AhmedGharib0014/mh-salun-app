@@ -12,4 +12,8 @@ class ProfileLoaded extends ProfileState {
   final Profile profile;
 }
 
-class ProfileFailure extends ProfileState {}
+class ProfileFailure extends ProfileState {
+  ProfileFailure(this.messageKey);
+
+  final String messageKey;
+}
