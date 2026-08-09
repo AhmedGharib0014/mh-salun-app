@@ -101,7 +101,7 @@
   "account_first_name_label": "الاسم الأول",
   "account_last_name_label": "اسم العائلة",
   "account_email_label": "البريد الإلكتروني",
-  "account_age_label": "العمر",
+  "account_dob_label": "تاريخ الميلاد",
   "reservations_title": "حجوزاتي",
   "reservations_tab_upcoming": "القادمة",
   "reservations_tab_previous": "السابقة",

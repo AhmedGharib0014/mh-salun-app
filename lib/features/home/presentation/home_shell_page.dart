@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/router/app_router.dart';
+import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/account_tab_view.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
 import 'package:mh_salun/features/home/bloc/organization_bloc.dart';
@@ -32,6 +33,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
     super.initState();
     _organizationBloc = getIt<OrganizationBloc>()
       ..add(OrganizationRequested());
+    getIt<ProfileBloc>().add(ProfileRequested());
   }
 
   @override

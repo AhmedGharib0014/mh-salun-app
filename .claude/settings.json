@@ -76,7 +76,9 @@
       "Bash(cd /Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features *)",
       "Read(//Users/ahmedbisher/Desktop/MH_salun-app/**)",
       "Read(//Users/ahmedbisher/Desktop/MH_salun-app/core/data/**)",
-      "Read(//Users/ahmedbisher/Desktop/MH_salun-app/core/model/**)"
+      "Read(//Users/ahmedbisher/Desktop/MH_salun-app/core/model/**)",
+      "Bash(git mv *)",
+      "Bash(git rm *)"
     ],
     "additionalDirectories": [
       "/Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/organization",

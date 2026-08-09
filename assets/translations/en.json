@@ -101,7 +101,7 @@
   "account_first_name_label": "First name",
   "account_last_name_label": "Last name",
   "account_email_label": "Email",
-  "account_age_label": "Age",
+  "account_dob_label": "Date of birth",
   "reservations_title": "My Bookings",
   "reservations_tab_upcoming": "Upcoming",
   "reservations_tab_previous": "Previous",
