@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/font_sizes.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/book_now_button.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/step_chevron.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/step_chip.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/home_related/book_now_button.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/home_related/step_chevron.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/home_related/step_chip.dart';
 
 class BookNowContent extends StatelessWidget {
   const BookNowContent({super.key, required this.onStartBooking});
@@ -35,16 +35,20 @@ class BookNowContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        const Row(
-          mainAxisSize: MainAxisSize.min,
+        // Wrap, not Row: the five steps don't fit on one line on narrow
+        // phones, so they flow onto a second line instead of overflowing.
+        const Wrap(
+          spacing: AppSpacing.xs,
+          runSpacing: AppSpacing.xs,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
+            StepChip(labelKey: 'home_book_step_branch'),
+            StepChevron(),
             StepChip(labelKey: 'home_book_step_barber'),
             StepChevron(),
             StepChip(labelKey: 'home_book_step_service'),
             StepChevron(),
             StepChip(labelKey: 'home_book_step_time'),
-            StepChevron(),
-            StepChip(labelKey: 'home_book_step_review'),
           ],
         ),
         const SizedBox(height: AppSpacing.md),

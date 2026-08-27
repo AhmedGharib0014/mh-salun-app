@@ -7,15 +7,18 @@ import 'package:mh_salun/core/model/services_catalog.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/branches/model/branch.dart';
 import 'package:mh_salun/features/reservations/model/time_slot.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_step.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/select_barber_step.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/select_branch_step.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/select_datetime_step.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/select_services_step.dart';
 
 /// Multi-step flow the guest enters from the "+" button or a "start booking"
-/// action. Step 1 picks a barber, step 2 picks one or more services, step 3
-/// picks a date & time, and step 4 reviews the whole booking before confirming.
+/// action. Step 1 picks a branch, step 2 picks a barber, step 3 picks one or
+/// more services, step 4 picks a date & time, and step 5 reviews the whole
+/// booking before confirming.
 /// The selection is held here and passed down to each step.
 class NewReservationFlowPage extends StatefulWidget {
   const NewReservationFlowPage({super.key});
@@ -25,7 +28,7 @@ class NewReservationFlowPage extends StatefulWidget {
 }
 
 class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
-  static const int _stepCount = 4;
+  static const int _stepCount = 5;
   static const int _monthsAhead = 3;
 
   final List<Barber> _barbers = BarbersCatalog.all();
@@ -38,6 +41,7 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
     _firstDate.day,
   );
 
+  Branch? _selectedBranch;
   Barber? _selectedBarber;
   late DateTime _selectedDate = _firstDate;
   TimeSlot? _selectedSlot;
@@ -46,10 +50,12 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
   bool get _canContinue {
     switch (_step) {
       case 0:
-        return _selectedBarber != null;
+        return _selectedBranch != null;
       case 1:
-        return _selectedServices.isNotEmpty;
+        return _selectedBarber != null;
       case 2:
+        return _selectedServices.isNotEmpty;
+      case 3:
         return _selectedSlot != null;
       default:
         return true; // Review step: every choice is already made.
@@ -60,10 +66,12 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
   String get _continueLabel {
     switch (_step) {
       case 0:
-        return 'new_reservation_to_services'.tr();
+        return 'new_reservation_to_barber'.tr();
       case 1:
-        return 'new_reservation_to_datetime'.tr();
+        return 'new_reservation_to_services'.tr();
       case 2:
+        return 'new_reservation_to_datetime'.tr();
+      case 3:
         return 'new_reservation_to_review'.tr();
       default:
         return 'new_reservation_book'.tr();
@@ -71,11 +79,20 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
   }
 
   /// Compact recap of the current step's selection, shown in the footer.
-  /// Step 1: barber name. Step 2: services total. Step 3: date & time.
-  /// Step 4 (review): the order total, ready to book.
+  /// Step 1: branch name. Step 2: barber name. Step 3: services total.
+  /// Step 4: date & time. Step 5 (review): the order total, ready to book.
   Widget _footerSummary() {
     switch (_step) {
       case 0:
+        final branchName = _selectedBranch?.name;
+        if (branchName == null) return const SizedBox.shrink();
+        return Text(
+          branchName,
+          style: AppTextStyles.titleLarge,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        );
+      case 1:
         final name = _selectedBarber?.name;
         if (name == null) return const SizedBox.shrink();
         return Text(
@@ -84,7 +101,7 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         );
-      case 1:
+      case 2:
         if (_selectedServices.isEmpty) return const SizedBox.shrink();
         return Text(
           _formattedTotal(),
@@ -92,7 +109,7 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         );
-      case 2:
+      case 3:
         final slot = _selectedSlot;
         if (slot == null) return const SizedBox.shrink();
         return Text(
@@ -174,6 +191,19 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
     }
   }
 
+  /// Picking a different branch invalidates everything downstream — staff,
+  /// services and availability are all branch-specific.
+  void _selectBranch(Branch branch) {
+    setState(() {
+      if (_selectedBranch?.id == branch.id) return;
+      _selectedBranch = branch;
+      _selectedBarber = null;
+      _selectedServices.clear();
+      _selectedDate = _firstDate;
+      _selectedSlot = null;
+    });
+  }
+
   void _selectBarber(Barber barber) =>
       setState(() => _selectedBarber = barber);
 
@@ -196,10 +226,14 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
   /// choice is made, but IndexedStack builds all children eagerly, so we guard
   /// against the not-yet-selected state before then.
   Widget _buildReviewStep() {
+    final branch = _selectedBranch;
     final barber = _selectedBarber;
     final slot = _selectedSlot;
-    if (barber == null || slot == null) return const SizedBox.shrink();
+    if (branch == null || barber == null || slot == null) {
+      return const SizedBox.shrink();
+    }
     return ReviewStep(
+      branch: branch,
       barber: barber,
       services: _selectedServices.toList(),
       dateTimeLabel: _formattedDateTime(slot.time),
@@ -227,6 +261,10 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
       body: IndexedStack(
         index: _step,
         children: [
+          SelectBranchStep(
+            selectedBranch: _selectedBranch,
+            onBranchSelected: _selectBranch,
+          ),
           SelectBarberStep(
             barbers: _barbers,
             selectedBarber: _selectedBarber,

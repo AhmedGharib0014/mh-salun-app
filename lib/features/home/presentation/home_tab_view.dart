@@ -7,10 +7,10 @@ import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
 import 'package:mh_salun/features/branches/presentation/widgets/branches_section.dart';
 import 'package:mh_salun/features/employees/presentation/widgets/employees/employees_section.dart';
 import 'package:mh_salun/features/home/bloc/organization_bloc.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/book_now_card.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/home_header.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/services_section.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/upcoming_booking_card.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/home_related/book_now_card.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/home_related/upcoming_booking_card.dart';
 
 class HomeTabView extends StatefulWidget {
   const HomeTabView({super.key, required this.onSeeAllServices});
