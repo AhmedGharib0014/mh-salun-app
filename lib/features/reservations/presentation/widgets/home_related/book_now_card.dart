@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/book_now_content.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/home_related/book_now_content.dart';
 
 class BookNowCard extends StatelessWidget {
   const BookNowCard({super.key, required this.onStartBooking});
