@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../data/catalog_item_repository.dart';
@@ -34,8 +35,10 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       );
       _items = items;
       emit(ServicesLoaded(items));
+    } on DioException catch (_) {
+      emit(ServicesFailure('network_error'));
     } catch (_) {
-      emit(ServicesFailure());
+      emit(ServicesFailure('services_generic_error'));
     }
   }
 

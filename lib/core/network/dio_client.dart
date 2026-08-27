@@ -49,7 +49,8 @@ class TokenRefreshInterceptor extends QueuedInterceptorsWrapper {
   TokenRefreshInterceptor(this._dio, TokenStorage tokenStorage)
     : _tokenStorage = tokenStorage,
       _refreshTokenRepository = RefreshTokenRepository(
-        Dio(BaseOptions(baseUrl: ApiConfig.baseUrl)),
+        Dio(BaseOptions(baseUrl: ApiConfig.baseUrl))
+          ..interceptors.add(DioLogInterceptor()),
         tokenStorage,
       );
 
@@ -67,9 +68,17 @@ class TokenRefreshInterceptor extends QueuedInterceptorsWrapper {
 
     final refreshToken = _tokenStorage.refreshToken;
     if (refreshToken == null) {
+      appLogger.w(
+        '[TOKEN REFRESH] Got 401 on ${err.requestOptions.path} but no '
+        'refresh token is stored — cannot refresh.',
+      );
       return handler.next(err);
     }
 
+    appLogger.w(
+      '[TOKEN REFRESH] 401 on ${err.requestOptions.path} — attempting '
+      'token refresh.',
+    );
     try {
       final result = await _refreshTokenRepository.refresh(refreshToken);
 
@@ -77,7 +86,10 @@ class TokenRefreshInterceptor extends QueuedInterceptorsWrapper {
       retryOptions.headers['Authorization'] = 'Bearer ${result.accessToken}';
       final retryResponse = await _dio.fetch(retryOptions);
       handler.resolve(retryResponse);
-    } on AuthException {
+    } on AuthException catch (e) {
+      appLogger.w(
+        '[TOKEN REFRESH] Refresh failed (${e.runtimeType}) — clearing tokens.',
+      );
       await _tokenStorage.clearTokens();
       handler.next(err);
     }

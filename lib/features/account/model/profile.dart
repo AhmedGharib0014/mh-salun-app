@@ -10,7 +10,7 @@ class Profile {
     required this.email,
     required this.firstName,
     required this.lastName,
-    required this.dateOfBirth,
+    this.dateOfBirth,
     required this.createdAt,
     this.avatarUrl,
   });
@@ -22,7 +22,7 @@ class Profile {
   final String email;
   final String firstName;
   final String lastName;
-  final DateTime dateOfBirth;
+  final DateTime? dateOfBirth;
   final DateTime createdAt;
   final String? avatarUrl;
 

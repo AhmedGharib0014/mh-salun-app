@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:mh_salun/features/branches/model/branch.dart';
+import 'package:mh_salun/features/branches/presentation/branch_details_page.dart';
 import 'package:mh_salun/features/login/presentation/login_page.dart';
 import 'package:mh_salun/features/login/presentation/reset_password_page.dart';
 import 'package:mh_salun/features/registration/presentation/register_page.dart';
@@ -13,6 +15,7 @@ class AppRoutes {
   static const register = 'register';
   static const resetPassword = 'reset-password';
   static const newReservation = 'new-reservation';
+  static const branchDetails = 'branch-details';
 }
 
 final appRouter = GoRouter(
@@ -47,6 +50,12 @@ final appRouter = GoRouter(
       path: '/new-reservation',
       name: AppRoutes.newReservation,
       builder: (context, state) => const NewReservationFlowPage(),
+    ),
+    GoRoute(
+      path: '/branch-details',
+      name: AppRoutes.branchDetails,
+      builder: (context, state) =>
+          BranchDetailsPage(branch: state.extra! as Branch),
     ),
   ],
 );

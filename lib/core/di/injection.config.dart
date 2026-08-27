@@ -18,6 +18,9 @@ import 'package:mh_salun/core/di/register_module.dart' as _i511;
 import 'package:mh_salun/features/account/bloc/profile_bloc.dart' as _i854;
 import 'package:mh_salun/features/account/data/profile_repository.dart'
     as _i257;
+import 'package:mh_salun/features/branches/bloc/branches_bloc.dart' as _i589;
+import 'package:mh_salun/features/branches/data/branch_repository.dart'
+    as _i158;
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart' as _i520;
 import 'package:mh_salun/features/employees/data/employee_repository.dart'
     as _i920;
@@ -48,6 +51,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i257.ProfileRepository>(
       () => _i257.ProfileRepository(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i158.BranchRepository>(
+      () => _i158.BranchRepository(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i920.EmployeeRepository>(
       () => _i920.EmployeeRepository(gh<_i361.Dio>()),
     );
@@ -65,6 +71,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1060.LoginRepository>(
       () => _i1060.LoginRepository(gh<_i361.Dio>(), gh<_i724.TokenStorage>()),
+    );
+    gh.lazySingleton<_i589.BranchesBloc>(
+      () => _i589.BranchesBloc(gh<_i158.BranchRepository>()),
     );
     gh.factory<_i587.OrganizationBloc>(
       () => _i587.OrganizationBloc(gh<_i445.OrganizationRepository>()),

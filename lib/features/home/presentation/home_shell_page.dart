@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mh_salun/core/di/injection.dart';
+import 'package:mh_salun/core/presentation/widgets/app_error_dialog.dart';
 import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/account_tab_view.dart';
+import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
 import 'package:mh_salun/features/home/bloc/organization_bloc.dart';
 import 'package:mh_salun/features/home/presentation/home_tab_view.dart';
@@ -31,8 +33,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
   @override
   void initState() {
     super.initState();
-    _organizationBloc = getIt<OrganizationBloc>()
-      ..add(OrganizationRequested());
+    _organizationBloc = getIt<OrganizationBloc>()..add(OrganizationRequested());
     getIt<ProfileBloc>().add(ProfileRequested());
   }
 
@@ -50,8 +51,6 @@ class _HomeShellPageState extends State<HomeShellPage> {
 
   void _onNavSelected(int index) => _goToTab(index);
 
-  void _onSeeAllServices() => _goToTab(1);
-
   void _onStartBooking() => context.pushNamed(AppRoutes.newReservation);
 
   void _onAddTap() => _onStartBooking();
@@ -61,6 +60,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
       final orgId = state.organization.id;
       context.read<EmployeesBloc>().add(EmployeesRequested(orgId));
       context.read<ServicesBloc>().add(ServicesRequested(orgId));
+      context.read<BranchesBloc>().add(BranchesRequested(orgId));
     }
   }
 
@@ -68,8 +68,33 @@ class _HomeShellPageState extends State<HomeShellPage> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _organizationBloc,
-      child: BlocListener<OrganizationBloc, OrganizationState>(
-        listener: _onOrganizationChanged,
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<OrganizationBloc, OrganizationState>(
+            listener: _onOrganizationChanged,
+          ),
+          BlocListener<EmployeesBloc, EmployeesState>(
+            listener: (context, state) {
+              if (state is EmployeesFailure) {
+                AppErrorDialog.show(context, state.messageKey);
+              }
+            },
+          ),
+          BlocListener<ServicesBloc, ServicesState>(
+            listener: (context, state) {
+              if (state is ServicesFailure) {
+                AppErrorDialog.show(context, state.messageKey);
+              }
+            },
+          ),
+          BlocListener<ProfileBloc, ProfileState>(
+            listener: (context, state) {
+              if (state is ProfileFailure) {
+                AppErrorDialog.show(context, state.messageKey);
+              }
+            },
+          ),
+        ],
         child: Scaffold(
           extendBody: true,
           body: PageView(
@@ -77,7 +102,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
             physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (index) => setState(() => _currentIndex = index),
             children: [
-              HomeTabView(onSeeAllServices: _onSeeAllServices),
+              HomeTabView(onSeeAllServices: () => _goToTab(1)),
               const ServicesTabView(),
               ReservationsTabView(onStartBooking: _onStartBooking),
               const AccountTabView(),

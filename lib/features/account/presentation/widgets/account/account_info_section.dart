@@ -32,7 +32,9 @@ class AccountInfoSection extends StatelessWidget {
           const Divider(color: AppColors.divider, height: AppSpacing.lg),
           InfoRow(
             labelKey: 'account_dob_label',
-            value: DateFormat('yyyy-MM-dd').format(profile.dateOfBirth),
+            value: profile.dateOfBirth == null
+                ? 'account_not_provided'.tr()
+                : DateFormat('yyyy-MM-dd').format(profile.dateOfBirth!),
           ),
         ],
       ),

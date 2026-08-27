@@ -12,4 +12,8 @@ class OrganizationLoaded extends OrganizationState {
   final OrganizationResponse organization;
 }
 
-class OrganizationFailure extends OrganizationState {}
+class OrganizationFailure extends OrganizationState {
+  OrganizationFailure(this.messageKey);
+
+  final String messageKey;
+}

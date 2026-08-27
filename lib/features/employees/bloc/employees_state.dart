@@ -12,4 +12,8 @@ class EmployeesLoaded extends EmployeesState {
   final List<Employee> employees;
 }
 
-class EmployeesFailure extends EmployeesState {}
+class EmployeesFailure extends EmployeesState {
+  EmployeesFailure(this.messageKey);
+
+  final String messageKey;
+}

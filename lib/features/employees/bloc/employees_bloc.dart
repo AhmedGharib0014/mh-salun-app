@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../data/employee_repository.dart';
@@ -32,8 +33,10 @@ class EmployeesBloc extends Bloc<EmployeesEvent, EmployeesState> {
       final employees = await _repo.getEmployees(orgId: event.orgId);
       _employees = employees;
       emit(EmployeesLoaded(employees));
+    } on DioException catch (_) {
+      emit(EmployeesFailure('network_error'));
     } catch (_) {
-      emit(EmployeesFailure());
+      emit(EmployeesFailure('employees_generic_error'));
     }
   }
 

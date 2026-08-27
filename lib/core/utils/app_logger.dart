@@ -32,7 +32,8 @@ class DioLogInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     appLogger.e(
-      '[ERROR] ${err.requestOptions.path}',
+      '[ERROR] [${err.response?.statusCode}] ${err.requestOptions.path}\n'
+      '${err.response?.data ?? err.message}',
       error: err.error,
       stackTrace: err.stackTrace,
     );
