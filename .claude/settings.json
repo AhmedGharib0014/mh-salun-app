@@ -78,7 +78,14 @@
       "Read(//Users/ahmedbisher/Desktop/MH_salun-app/core/data/**)",
       "Read(//Users/ahmedbisher/Desktop/MH_salun-app/core/model/**)",
       "Bash(git mv *)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(git status *)",
+      "Bash(grep \"dio:\" pubspec.lock -A3 | head -6; echo \"===\"; find ~/.pub-cache -type d -path \"*dio-*/lib/src\" 2>/dev/null | head)",
+      "Bash(awk '/^  dio:/{f=1} f&&/version:/{print; exit}' pubspec.lock)",
+      "Read(//Users/ahmedbisher/.pub-cache/hosted/pub.dev/dio-5.9.2/lib/src/interceptors/**)",
+      "Read(//Users/ahmedbisher/.pub-cache/hosted/pub.dev/dio-5.9.2/lib/src/**)",
+      "Bash(sed -n '386,520p' /Users/ahmedbisher/.pub-cache/hosted/pub.dev/dio-5.9.2/lib/src/interceptor.dart)",
+      "Bash(sed -n '225,386p' /Users/ahmedbisher/.pub-cache/hosted/pub.dev/dio-5.9.2/lib/src/interceptor.dart)"
     ],
     "additionalDirectories": [
       "/Users/ahmedbisher/Desktop/MH_salun-app/mh_salun/lib/features/organization",

@@ -25,6 +25,7 @@
   "profile_generic_error": "We couldn't load your profile. Please try again.",
   "services_generic_error": "We couldn't load the services. Please try again.",
   "employees_generic_error": "We couldn't load the barbers. Please try again.",
+  "branches_generic_error": "We couldn't load the branches. Please try again.",
   "register_title": "Create Account",
   "register_first_name_label": "First name",
   "register_first_name_hint": "Enter your first name",
@@ -145,5 +146,12 @@
   "new_reservation_review_total_label": "Total",
   "new_reservation_review_total_hint": "Pay at the salon",
   "new_reservation_review_edit": "Edit",
-  "new_reservation_booked": "Your booking is confirmed. See you soon!"
+  "new_reservation_booked": "Your booking is confirmed. See you soon!",
+  "home_branches_title": "Branches",
+  "branch_details_contact_title": "Contact",
+  "branch_details_hours_title": "Working hours",
+  "branch_details_closed": "Closed",
+  "branch_card_details_hint": "View details",
+  "branch_details_directions_button": "Get directions",
+  "branch_details_directions_error": "Couldn't open the map. Please try again."
 }

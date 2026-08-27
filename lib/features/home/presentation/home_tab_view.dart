@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
+import 'package:mh_salun/features/branches/presentation/widgets/branches_section.dart';
 import 'package:mh_salun/features/employees/presentation/widgets/employees/employees_section.dart';
 import 'package:mh_salun/features/home/bloc/organization_bloc.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/book_now_card.dart';
-import 'package:mh_salun/features/home/presentation/widgets/home/greeting_header.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/home_header.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/services_section.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/upcoming_booking_card.dart';
@@ -35,25 +35,25 @@ class _HomeTabViewState extends State<HomeTabView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const HomeHeader(),
-            const GreetingHeader(),
             BookNowCard(onStartBooking: _onStartBooking),
             UpcomingBookingCard(onSeeAllTap: _onSeeAllUpcoming),
+            // Every section below depends on the organization, so they share
+            // a single spinner instead of one per section.
             BlocBuilder<OrganizationBloc, OrganizationState>(
               builder: (context, state) => state is OrganizationLoaded
-                  ? const EmployeesSection()
-                  : const SectionLoading(height: 140),
-            ),
-            BlocBuilder<OrganizationBloc, OrganizationState>(
-              builder: (context, state) => state is OrganizationLoaded
-                  ? ServicesSection(onSeeAllTap: widget.onSeeAllServices)
-                  : const SectionLoading(height: 220),
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const BranchesSection(),
+                        const EmployeesSection(),
+                        ServicesSection(onSeeAllTap: widget.onSeeAllServices),
+                      ],
+                    )
+                  : const SectionLoading(height: 510),
             ),
             // Clearance so the last content clears the curved nav bar
             // (bar + raised circle + device bottom inset).
-            SizedBox(
-              height: AppSpacing.bottomNavClearance +
-                  MediaQuery.of(context).padding.bottom,
-            ),
+            SizedBox(height: AppSpacing.bottomNavClearance),
           ],
         ),
       ),

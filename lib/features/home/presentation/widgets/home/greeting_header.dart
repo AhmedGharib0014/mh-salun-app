@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/theme/font_sizes.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 
 class GreetingHeader extends StatelessWidget {
   const GreetingHeader({super.key});
@@ -23,12 +25,19 @@ class GreetingHeader extends StatelessWidget {
             'home_greeting_evening'.tr(),
             style: AppTextStyles.bodySecondary,
           ),
-          Text(
-            'home_customer_name'.tr(),
-            style: AppTextStyles.headingLarge.copyWith(
-              fontSize: AppFontSize.display,
-              fontWeight: FontWeight.w600,
-            ),
+          BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              final name = state is ProfileLoaded
+                  ? state.profile.firstName
+                  : 'home_customer_name'.tr();
+              return Text(
+                name,
+                style: AppTextStyles.headingLarge.copyWith(
+                  fontSize: AppFontSize.display,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            },
           ),
         ],
       ),

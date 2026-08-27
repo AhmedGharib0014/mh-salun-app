@@ -35,10 +35,21 @@ Keep the page a thin composition tree. Extract a widget into its own file under
 Keep it **inline in the page** when it is trivial layout/text — `Text`, `SizedBox`,
 plain `Padding` / `Align` / `Column`.
 
+**"Inline" means an anonymous widget subtree in the build method — never a named
+class.** A private widget class defined in the page file (`class _Header extends
+StatelessWidget`, `class _SectionCard ...`) is **not** allowed. The moment a piece of
+UI is worth naming as its own `StatelessWidget`/`StatefulWidget`, it goes in its own
+file under `widgets/<screen>/` and is made **public** (drop the leading `_`) so it is
+importable. A page file must contain exactly one widget class: the page itself.
+
 One widget = one file. Each extracted widget is **self-contained**: it owns its
 decoration, its own local state, and any field-specific logic (an email field owns its
 email `validator`). The page passes in only a `controller` and intent callbacks
 (`onTap`, `onPressed`).
+
+Before making a new widget, check `widgets/` for an existing one that fits — if it
+almost fits, add an optional parameter (e.g. `size`, `textStyle`) with a default that
+preserves current callers, rather than duplicating the widget.
 
 ## Logic placement
 - Validators and event handlers are **named private methods**, never inline closures
@@ -151,6 +162,10 @@ class EmailTextField extends StatelessWidget {
 ```
 
 ## After creating the screen
-Re-check the page against **Component extraction** and **Logic placement**: no inline
-closures in the build tree, decorated/stateful/tappable widgets pulled into
-`widgets/<screen>/`, only trivial `Text`/`SizedBox` left inline.
+Re-check the page against **Component extraction** and **Logic placement**:
+- The page file declares **exactly one** widget class — no leftover `_Header`,
+  `_SectionCard`, or other private widget classes sharing the file. Each lives in its
+  own public file under `widgets/<screen>/`.
+- No inline closures in the build tree.
+- Decorated/stateful/tappable widgets pulled into `widgets/<screen>/`; only trivial
+  `Text`/`SizedBox` left inline.

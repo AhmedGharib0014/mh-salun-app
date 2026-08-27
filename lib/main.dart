@@ -7,6 +7,7 @@ import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/core/storage/local_storage.dart';
 import 'package:mh_salun/core/theme/app_theme.dart';
 import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
+import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
 import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 
@@ -26,6 +27,7 @@ void main() async {
         providers: [
           BlocProvider(create: (_) => getIt<EmployeesBloc>()),
           BlocProvider(create: (_) => getIt<ServicesBloc>()),
+          BlocProvider(create: (_) => getIt<BranchesBloc>()),
           BlocProvider(create: (_) => getIt<ProfileBloc>()),
         ],
         child: const MyApp(),
