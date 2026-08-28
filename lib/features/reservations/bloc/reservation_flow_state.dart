@@ -12,8 +12,8 @@ class ReservationFlowState {
   });
 
   final Branch? branch;
-  final Barber? barber;
-  final Set<Service> services;
+  final Employee? barber;
+  final Set<CatalogItem> services;
   final TimeSlot? slot;
 
   /// True once every step is answered — i.e. a booking request can be built.

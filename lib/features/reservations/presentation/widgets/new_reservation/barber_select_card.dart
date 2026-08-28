@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:mh_salun/core/model/barber.dart';
+import 'package:mh_salun/core/presentation/widgets/avatar_circle.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/employees/model/employee.dart';
 
 /// Selectable barber tile for the "choose your barber" step. A gold ring and
 /// a check badge mark the currently selected barber.
 class BarberSelectCard extends StatelessWidget {
   const BarberSelectCard({
     super.key,
-    required this.barber,
+    required this.employee,
     required this.selected,
     required this.onTap,
   });
 
-  final Barber barber;
+  final Employee employee;
   final bool selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final user = employee.user;
+
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -43,21 +46,14 @@ class BarberSelectCard extends StatelessWidget {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                Container(
-                  width: 72,
-                  height: 72,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.surfaceHigh,
-                    border: Border.all(
-                      color: selected ? AppColors.primary : AppColors.outline,
-                      width: 2,
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    barber.initial,
-                    style: AppTextStyles.headingLarge,
+                AvatarCircle(
+                  initial: user.firstName.characters.firstOrNull ?? '',
+                  size: 72,
+                  imageUrl: user.avatarUrl,
+                  textStyle: AppTextStyles.headingLarge,
+                  border: Border.all(
+                    color: selected ? AppColors.primary : AppColors.outline,
+                    width: 2,
                   ),
                 ),
                 if (selected)
@@ -85,7 +81,7 @@ class BarberSelectCard extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              barber.name,
+              '${user.firstName} ${user.lastName}',
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.w700,
               ),
@@ -104,7 +100,7 @@ class BarberSelectCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 2),
                 Text(
-                  barber.rating,
+                  employee.ratingAvg.toStringAsFixed(1),
                   style: AppTextStyles.bodyGold.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

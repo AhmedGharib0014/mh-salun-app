@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mh_salun/core/presentation/widgets/avatar_circle.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
@@ -16,19 +17,12 @@ class EmployeeAvatar extends StatelessWidget {
       width: 96,
       child: Column(
         children: [
-          Container(
-            width: 74,
-            height: 74,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.surfaceHigh,
-              border: Border.all(color: AppColors.primary, width: 2),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              employee.user.firstName.substring(0, 1),
-              style: AppTextStyles.headingLarge,
-            ),
+          AvatarCircle(
+            initial: employee.user.firstName.characters.firstOrNull ?? '',
+            size: 74,
+            imageUrl: employee.user.avatarUrl,
+            textStyle: AppTextStyles.headingLarge,
+            border: Border.all(color: AppColors.primary, width: 2),
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(

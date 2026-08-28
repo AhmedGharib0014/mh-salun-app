@@ -54,11 +54,10 @@ class _NewReservationFlowViewState extends State<_NewReservationFlowView> {
     if (!selection.isAnswered(_step)) return;
 
     final next = _step.next;
+
     if (next != null) {
       setState(() => _step = next);
     } else {
-      // Final step: confirm the booking. The request will be built from
-      // `selection` once the data layer exists.
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(content: Text('new_reservation_booked'.tr())));

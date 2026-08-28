@@ -40,48 +40,45 @@ class SelectBranchStep extends StatelessWidget {
                 subtitleKey: 'new_reservation_branch_subtitle',
               ),
             ),
-            Expanded(child: _body(state)),
+            Expanded(
+              child: switch (state) {
+                BranchesFailure(:final messageKey) => StepMessage(
+                  icon: Icons.error_outline_rounded,
+                  messageKey: messageKey,
+                ),
+                BranchesLoaded(:final branches) when branches.isEmpty =>
+                  const StepMessage(
+                    icon: Icons.store_mall_directory_outlined,
+                    messageKey: 'new_reservation_branch_empty',
+                  ),
+                BranchesLoaded(:final branches) => ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg,
+                    0,
+                    AppSpacing.lg,
+                    AppSpacing.lg,
+                  ),
+                  itemCount: branches.length,
+                  separatorBuilder: (_, _) =>
+                      const SizedBox(height: AppSpacing.md),
+                  itemBuilder: (context, index) {
+                    final branch = branches[index];
+                    return BranchSelectCard(
+                      branch: branch,
+                      selected: branch.id == selectedBranch?.id,
+                      onTap: () => onBranchSelected(branch),
+                    );
+                  },
+                ),
+                BranchesInitial() ||
+                BranchesLoading() => const SectionLoading(
+                  height: double.infinity,
+                ),
+              },
+            ),
           ],
         );
       },
     );
-  }
-
-  Widget _body(BranchesState state) {
-    switch (state) {
-      case BranchesFailure(:final messageKey):
-        return StepMessage(
-          icon: Icons.error_outline_rounded,
-          messageKey: messageKey,
-        );
-      case BranchesLoaded(:final branches):
-        if (branches.isEmpty) {
-          return const StepMessage(
-            icon: Icons.store_mall_directory_outlined,
-            messageKey: 'new_reservation_branch_empty',
-          );
-        }
-        return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            0,
-            AppSpacing.lg,
-            AppSpacing.lg,
-          ),
-          itemCount: branches.length,
-          separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
-          itemBuilder: (context, index) {
-            final branch = branches[index];
-            return BranchSelectCard(
-              branch: branch,
-              selected: branch.id == selectedBranch?.id,
-              onTap: () => onBranchSelected(branch),
-            );
-          },
-        );
-      case BranchesInitial():
-      case BranchesLoading():
-        return const SectionLoading(height: double.infinity);
-    }
   }
 }

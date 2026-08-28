@@ -41,4 +41,13 @@ class CatalogItem {
   final DateTime updatedAt;
 
   Map<String, dynamic> toJson() => _$CatalogItemToJson(this);
+
+  /// Identity is the backend [id], so selections (e.g. the booking flow's
+  /// picked services) survive a refetch handing back new instances.
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is CatalogItem && other.id == id);
+
+  @override
+  int get hashCode => id.hashCode;
 }

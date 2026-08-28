@@ -1,22 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mh_salun/core/model/barber.dart';
+import 'package:mh_salun/core/presentation/widgets/avatar_circle.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/employees/model/employee.dart';
 
 /// Read-only barber summary shown in the review step: ringed initial avatar,
 /// name, role and rating pill.
 class BarberRow extends StatelessWidget {
-  const BarberRow({super.key, required this.barber});
+  const BarberRow({super.key, required this.employee});
 
-  final Barber barber;
+  final Employee employee;
 
   @override
   Widget build(BuildContext context) {
+    final user = employee.user;
+
     return Row(
       children: [
-        // Avatar with a gradient gold ring around a dark inner disc.
         Container(
           padding: const EdgeInsets.all(2),
           decoration: const BoxDecoration(
@@ -27,15 +29,11 @@ class BarberRow extends StatelessWidget {
               colors: [AppColors.primaryLight, AppColors.primary],
             ),
           ),
-          child: Container(
-            width: AppSpacing.xxl,
-            height: AppSpacing.xxl,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.surfaceHigh,
-            ),
-            alignment: Alignment.center,
-            child: Text(barber.initial, style: AppTextStyles.titleLarge),
+          child: AvatarCircle(
+            initial: user.firstName.characters.firstOrNull ?? '',
+            size: AppSpacing.xxl,
+            imageUrl: user.avatarUrl,
+            textStyle: AppTextStyles.titleLarge,
           ),
         ),
         const SizedBox(width: AppSpacing.md),
@@ -44,7 +42,7 @@ class BarberRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                barber.name,
+                '${user.firstName} ${user.lastName}',
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -80,7 +78,7 @@ class BarberRow extends StatelessWidget {
               ),
               const SizedBox(width: 2),
               Text(
-                barber.rating,
+                employee.ratingAvg.toStringAsFixed(1),
                 style: AppTextStyles.bodyGold.copyWith(
                   fontWeight: FontWeight.w700,
                 ),

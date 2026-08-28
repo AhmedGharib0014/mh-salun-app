@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/model/barber.dart';
-import '../../../core/model/service.dart';
 import '../../branches/model/branch.dart';
+import '../../employees/model/employee.dart';
+import '../../services/model/catalog_item.dart';
 import '../model/reservation_step.dart';
 import '../model/time_slot.dart';
 
@@ -33,7 +33,7 @@ class ReservationFlowBloc
     ReservationBarberSelected event,
     Emitter<ReservationFlowState> emit,
   ) {
-    if (state.barber?.name == event.barber.name) return;
+    if (state.barber?.id == event.barber.id) return;
     emit(ReservationFlowState(branch: state.branch, barber: event.barber));
   }
 
@@ -41,7 +41,7 @@ class ReservationFlowBloc
     ReservationServiceToggled event,
     Emitter<ReservationFlowState> emit,
   ) {
-    final services = Set<Service>.of(state.services);
+    final services = Set<CatalogItem>.of(state.services);
     if (!services.remove(event.service)) services.add(event.service);
 
     emit(

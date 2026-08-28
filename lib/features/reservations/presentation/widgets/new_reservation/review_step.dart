@@ -1,9 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mh_salun/core/model/barber.dart';
-import 'package:mh_salun/core/model/service.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/branches/model/branch.dart';
+import 'package:mh_salun/features/employees/model/employee.dart';
 import 'package:mh_salun/features/reservations/model/reservation_step.dart';
 import 'package:mh_salun/features/reservations/model/time_slot.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/barber_row.dart';
@@ -14,6 +13,8 @@ import 'package:mh_salun/features/reservations/presentation/widgets/new_reservat
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_section.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/service_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/total_card.dart';
+import 'package:mh_salun/features/services/model/catalog_item.dart';
+import 'package:mh_salun/features/services/model/catalog_item_x.dart';
 
 class ReviewStep extends StatelessWidget {
   const ReviewStep({
@@ -26,8 +27,8 @@ class ReviewStep extends StatelessWidget {
   });
 
   final Branch? branch;
-  final Barber? barber;
-  final Set<Service> services;
+  final Employee? barber;
+  final Set<CatalogItem> services;
   final TimeSlot? slot;
 
   /// Called with the step to return to when a section's "Edit" is tapped.
@@ -64,7 +65,7 @@ class ReviewStep extends StatelessWidget {
           icon: Icons.person_rounded,
           title: 'new_reservation_review_barber_label'.tr(),
           onEdit: () => onEditStep(ReservationStep.barber),
-          child: BarberRow(barber: barber),
+          child: BarberRow(employee: barber),
         ),
         const SizedBox(height: AppSpacing.md),
         ReviewSection(
@@ -75,7 +76,7 @@ class ReviewStep extends StatelessWidget {
             children: [
               for (var i = 0; i < services.length; i++) ...[
                 if (i > 0) const ReviewRowDivider(),
-                ServiceRow(service: services[i]),
+                ServiceRow(service: services[i].toService()),
               ],
             ],
           ),
@@ -94,13 +95,8 @@ class ReviewStep extends StatelessWidget {
   }
 
   /// Sum of [services] prices, formatted with the active locale's digits.
-  /// Prices are placeholder strings (e.g. "$25" / "٢٥$"), so we pull the
-  /// numeric part out regardless of Western or Arabic-Indic digits.
-  String _totalLabel(BuildContext context, Iterable<Service> services) {
-    final total = services.fold<int>(
-      0,
-      (sum, service) => sum + _priceValue(service.price),
-    );
+  String _totalLabel(BuildContext context, Iterable<CatalogItem> services) {
+    final total = services.fold<double>(0, (sum, item) => sum + item.price);
     final digits = NumberFormat.decimalPattern(
       context.locale.toString(),
     ).format(total);
@@ -112,18 +108,5 @@ class ReviewStep extends StatelessWidget {
     final date = DateFormat('EEE, d MMM', locale).format(time);
     final clock = DateFormat.jm(locale).format(time);
     return '$date · $clock';
-  }
-
-  int _priceValue(String raw) {
-    const arabicZero = 0x0660;
-    final digits = StringBuffer();
-    for (final rune in raw.runes) {
-      if (rune >= 0x30 && rune <= 0x39) {
-        digits.writeCharCode(rune);
-      } else if (rune >= arabicZero && rune <= arabicZero + 9) {
-        digits.writeCharCode(0x30 + (rune - arabicZero));
-      }
-    }
-    return int.tryParse(digits.toString()) ?? 0;
   }
 }

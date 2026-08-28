@@ -13,7 +13,7 @@ class ReservationBranchSelected extends ReservationFlowEvent {
 class ReservationBarberSelected extends ReservationFlowEvent {
   ReservationBarberSelected(this.barber);
 
-  final Barber barber;
+  final Employee barber;
 }
 
 /// Step 3: the guest tapped a service card — added when not yet picked,
@@ -21,7 +21,7 @@ class ReservationBarberSelected extends ReservationFlowEvent {
 class ReservationServiceToggled extends ReservationFlowEvent {
   ReservationServiceToggled(this.service);
 
-  final Service service;
+  final CatalogItem service;
 }
 
 /// Step 4: the guest picked a time slot, or `null` when the selection is
