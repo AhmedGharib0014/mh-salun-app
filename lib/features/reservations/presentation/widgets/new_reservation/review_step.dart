@@ -4,6 +4,7 @@ import 'package:mh_salun/core/model/barber.dart';
 import 'package:mh_salun/core/model/service.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/branches/model/branch.dart';
+import 'package:mh_salun/features/reservations/model/reservation_step.dart';
 import 'package:mh_salun/features/reservations/model/time_slot.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/barber_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/branch_row.dart';
@@ -29,9 +30,8 @@ class ReviewStep extends StatelessWidget {
   final Set<Service> services;
   final TimeSlot? slot;
 
-  /// Called with the step index to return to when a section's "Edit" is tapped
-  /// (0 = branch, 1 = barber, 2 = services, 3 = date & time).
-  final ValueChanged<int> onEditStep;
+  /// Called with the step to return to when a section's "Edit" is tapped.
+  final ValueChanged<ReservationStep> onEditStep;
 
   @override
   Widget build(BuildContext context) {
@@ -56,21 +56,21 @@ class ReviewStep extends StatelessWidget {
         ReviewSection(
           icon: Icons.storefront_rounded,
           title: 'new_reservation_review_branch_label'.tr(),
-          onEdit: () => onEditStep(0),
+          onEdit: () => onEditStep(ReservationStep.branch),
           child: BranchRow(branch: branch),
         ),
         const SizedBox(height: AppSpacing.md),
         ReviewSection(
           icon: Icons.person_rounded,
           title: 'new_reservation_review_barber_label'.tr(),
-          onEdit: () => onEditStep(1),
+          onEdit: () => onEditStep(ReservationStep.barber),
           child: BarberRow(barber: barber),
         ),
         const SizedBox(height: AppSpacing.md),
         ReviewSection(
           icon: Icons.content_cut_rounded,
           title: 'new_reservation_review_services_label'.tr(),
-          onEdit: () => onEditStep(2),
+          onEdit: () => onEditStep(ReservationStep.services),
           child: Column(
             children: [
               for (var i = 0; i < services.length; i++) ...[
@@ -84,7 +84,7 @@ class ReviewStep extends StatelessWidget {
         ReviewSection(
           icon: Icons.event_rounded,
           title: 'new_reservation_review_datetime_label'.tr(),
-          onEdit: () => onEditStep(3),
+          onEdit: () => onEditStep(ReservationStep.dateTime),
           child: DateTimeRow(dateTimeLabel: _dateTimeLabel(context, slot.time)),
         ),
         const SizedBox(height: AppSpacing.lg),

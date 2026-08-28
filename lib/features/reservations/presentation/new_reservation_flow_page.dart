@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mh_salun/core/model/barber.dart';
-import 'package:mh_salun/core/model/service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
-import 'package:mh_salun/features/branches/model/branch.dart';
-import 'package:mh_salun/features/reservations/model/time_slot.dart';
+import 'package:mh_salun/features/reservations/bloc/reservation_flow_bloc.dart';
+import 'package:mh_salun/features/reservations/model/reservation_step.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/booking_footer.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_step.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/select_barber_step.dart';
@@ -13,70 +13,52 @@ import 'package:mh_salun/features/reservations/presentation/widgets/new_reservat
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/select_services_step.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/step_progress.dart';
 
-class NewReservationFlowPage extends StatefulWidget {
+class NewReservationFlowPage extends StatelessWidget {
   const NewReservationFlowPage({super.key});
 
   @override
-  State<NewReservationFlowPage> createState() => _NewReservationFlowPageState();
+  Widget build(BuildContext context) {
+    // One bloc per flow: leaving the page drops the selections with it.
+    return BlocProvider(
+      create: (_) => getIt<ReservationFlowBloc>(),
+      child: const _NewReservationFlowView(),
+    );
+  }
 }
 
-class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
-  static const int _stepCount = 5;
+/// Owns only which step is on screen — every selection lives in
+/// [ReservationFlowBloc].
+class _NewReservationFlowView extends StatefulWidget {
+  const _NewReservationFlowView();
 
-  final Set<Service> _selectedServices = {};
+  @override
+  State<_NewReservationFlowView> createState() =>
+      _NewReservationFlowViewState();
+}
 
-  Branch? _selectedBranch;
-  Barber? _selectedBarber;
-  TimeSlot? _selectedSlot;
-  int _step = 0;
-
-  bool get _canContinue {
-    switch (_step) {
-      case 0:
-        return _selectedBranch != null;
-      case 1:
-        return _selectedBarber != null;
-      case 2:
-        return _selectedServices.isNotEmpty;
-      case 3:
-        return _selectedSlot != null;
-      default:
-        return true; // Review step: every choice is already made.
-    }
-  }
-
-  /// Label for the primary button, naming the selection type of the next step.
-  String get _continueLabel {
-    switch (_step) {
-      case 0:
-        return 'new_reservation_to_barber'.tr();
-      case 1:
-        return 'new_reservation_to_services'.tr();
-      case 2:
-        return 'new_reservation_to_datetime'.tr();
-      case 3:
-        return 'new_reservation_to_review'.tr();
-      default:
-        return 'new_reservation_book'.tr();
-    }
-  }
+class _NewReservationFlowViewState extends State<_NewReservationFlowView> {
+  ReservationStep _step = ReservationStep.branch;
 
   void _onBack() {
-    if (_step == 0) {
+    final previous = _step.previous;
+    if (previous == null) {
       Navigator.of(context).pop();
     } else {
-      setState(() => _step -= 1);
+      setState(() => _step = previous);
     }
   }
 
-  void _goToStep(int step) => setState(() => _step = step);
+  void _goToStep(ReservationStep step) => setState(() => _step = step);
 
-  void _onContinue() {
-    if (!_canContinue) return;
-    if (_step < _stepCount - 1) {
-      setState(() => _step += 1);
+  void _onContinue(ReservationFlowState selection) {
+    if (!selection.isAnswered(_step)) return;
+
+    final next = _step.next;
+    if (next != null) {
+      setState(() => _step = next);
     } else {
-      // Final step: confirm the booking. Persisting it awaits the data layer.
+      // Final step: confirm the booking. The request will be built from
+      // `selection` once the data layer exists.
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(SnackBar(content: Text('new_reservation_booked'.tr())));
@@ -84,77 +66,70 @@ class _NewReservationFlowPageState extends State<NewReservationFlowPage> {
     }
   }
 
-  void _selectBranch(Branch branch) {
-    setState(() {
-      if (_selectedBranch?.id == branch.id) return;
-      _selectedBranch = branch;
-      _selectedBarber = null;
-      _selectedServices.clear();
-      _selectedSlot = null;
-    });
-  }
-
-  void _selectBarber(Barber barber) => setState(() => _selectedBarber = barber);
-
-  void _toggleService(Service service) {
-    setState(() {
-      if (!_selectedServices.remove(service)) _selectedServices.add(service);
-    });
-  }
-
-  void _slotChanged(TimeSlot? slot) => setState(() => _selectedSlot = slot);
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        toolbarHeight: 44,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: _onBack,
-        ),
-        title: Text('new_reservation_title'.tr()),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(36),
-          child: StepProgress(step: _step, stepCount: _stepCount),
-        ),
-      ),
-      body: IndexedStack(
-        index: _step,
-        children: [
-          SelectBranchStep(
-            selectedBranch: _selectedBranch,
-            onBranchSelected: _selectBranch,
+    return BlocBuilder<ReservationFlowBloc, ReservationFlowState>(
+      builder: (context, selection) {
+        final bloc = context.read<ReservationFlowBloc>();
+
+        return Scaffold(
+          backgroundColor: AppColors.background,
+          appBar: AppBar(
+            toolbarHeight: 44,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: _onBack,
+            ),
+            title: Text('new_reservation_title'.tr()),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(36),
+              child: StepProgress(
+                step: _step.index,
+                stepCount: ReservationStep.values.length,
+              ),
+            ),
           ),
-          SelectBarberStep(
-            selectedBarber: _selectedBarber,
-            onBarberSelected: _selectBarber,
+          body: IndexedStack(
+            index: _step.index,
+            children: [
+              SelectBranchStep(
+                selectedBranch: selection.branch,
+                onBranchSelected: (branch) =>
+                    bloc.add(ReservationBranchSelected(branch)),
+              ),
+              SelectBarberStep(
+                selectedBarber: selection.barber,
+                onBarberSelected: (barber) =>
+                    bloc.add(ReservationBarberSelected(barber)),
+              ),
+              SelectServicesStep(
+                selectedServices: selection.services,
+                onServiceToggled: (service) =>
+                    bloc.add(ReservationServiceToggled(service)),
+              ),
+              // Keyed by branch so a different branch starts the calendar over.
+              SelectDateTimeStep(
+                key: ValueKey(selection.branch?.id),
+                selectedSlot: selection.slot,
+                onSlotChanged: (slot) =>
+                    bloc.add(ReservationSlotSelected(slot)),
+              ),
+              ReviewStep(
+                branch: selection.branch,
+                barber: selection.barber,
+                services: selection.services,
+                slot: selection.slot,
+                onEditStep: _goToStep,
+              ),
+            ],
           ),
-          SelectServicesStep(
-            selectedServices: _selectedServices,
-            onServiceToggled: _toggleService,
+          bottomNavigationBar: BookingFooter(
+            buttonLabel: _step.continueLabelKey.tr(),
+            canContinue: selection.isAnswered(_step),
+            onContinue: () => _onContinue(selection),
           ),
-          // Keyed by branch so a different branch starts the calendar over.
-          SelectDateTimeStep(
-            key: ValueKey(_selectedBranch?.id),
-            selectedSlot: _selectedSlot,
-            onSlotChanged: _slotChanged,
-          ),
-          ReviewStep(
-            branch: _selectedBranch,
-            barber: _selectedBarber,
-            services: _selectedServices,
-            slot: _selectedSlot,
-            onEditStep: _goToStep,
-          ),
-        ],
-      ),
-      bottomNavigationBar: BookingFooter(
-        buttonLabel: _continueLabel,
-        canContinue: _canContinue,
-        onContinue: _onContinue,
-      ),
+        );
+      },
     );
   }
 }

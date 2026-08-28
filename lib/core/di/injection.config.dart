@@ -32,6 +32,8 @@ import 'package:mh_salun/features/registration/bloc/register_bloc.dart'
     as _i377;
 import 'package:mh_salun/features/registration/data/register_repository.dart'
     as _i280;
+import 'package:mh_salun/features/reservations/bloc/reservation_flow_bloc.dart'
+    as _i1066;
 import 'package:mh_salun/features/services/bloc/services_bloc.dart' as _i448;
 import 'package:mh_salun/features/services/data/catalog_item_repository.dart'
     as _i662;
@@ -44,6 +46,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
+    gh.factory<_i1066.ReservationFlowBloc>(() => _i1066.ReservationFlowBloc());
     gh.lazySingleton<_i724.TokenStorage>(() => _i724.TokenStorage());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i445.OrganizationRepository>(
