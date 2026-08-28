@@ -159,5 +159,10 @@
   "branch_details_closed": "Closed",
   "branch_card_details_hint": "View details",
   "branch_details_directions_button": "Get directions",
-  "branch_details_directions_error": "Couldn't open the map. Please try again."
+  "branch_details_directions_error": "Couldn't open the map. Please try again.",
+  "logout_button": "Log out",
+  "logout_confirm_title": "Log out",
+  "logout_confirm_message": "Are you sure you want to log out?",
+  "logout_confirm_cancel": "Cancel",
+  "logout_confirm_action": "Log out"
 }

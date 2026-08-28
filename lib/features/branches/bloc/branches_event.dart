@@ -8,3 +8,7 @@ class BranchesRequested extends BranchesEvent {
 
   final String orgId;
 }
+
+/// Dispatched on logout, and on a new successful login, to drop the previous
+/// session's cached branches.
+class BranchesCleared extends BranchesEvent {}

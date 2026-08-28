@@ -162,5 +162,10 @@
   "branch_details_closed": "مغلق",
   "branch_card_details_hint": "عرض التفاصيل",
   "branch_details_directions_button": "الحصول على الاتجاهات",
-  "branch_details_directions_error": "تعذّر فتح الخريطة. حاول مرة أخرى."
+  "branch_details_directions_error": "تعذّر فتح الخريطة. حاول مرة أخرى.",
+  "logout_button": "تسجيل الخروج",
+  "logout_confirm_title": "تسجيل الخروج",
+  "logout_confirm_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "logout_confirm_cancel": "إلغاء",
+  "logout_confirm_action": "تسجيل الخروج"
 }

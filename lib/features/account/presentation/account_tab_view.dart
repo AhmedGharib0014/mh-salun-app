@@ -5,6 +5,7 @@ import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/account_header.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/account_info_section.dart';
+import 'package:mh_salun/features/account/presentation/widgets/account/logout_button.dart';
 
 /// Fetch of the underlying `ProfileBloc` data is centralized in
 /// `HomeShellPage`, so this view just renders whatever state the shared
@@ -28,6 +29,8 @@ class AccountTabView extends StatelessWidget {
                   AccountHeader(profile: profile),
                   const SizedBox(height: AppSpacing.lg),
                   AccountInfoSection(profile: profile),
+                  const SizedBox(height: AppSpacing.xl),
+                  const LogoutButton(),
                   SizedBox(
                     height: AppSpacing.bottomNavClearance +
                         MediaQuery.of(context).padding.bottom,

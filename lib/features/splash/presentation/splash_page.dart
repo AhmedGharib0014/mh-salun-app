@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mh_salun/core/data/token_storage.dart';
-import 'package:mh_salun/core/di/injection.dart';
-import 'package:mh_salun/core/router/app_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mh_salun/features/auth/bloc/auth_bloc.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -17,13 +15,14 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), _navigateNext);
+    Timer(const Duration(seconds: 2), _checkSession);
   }
 
-  void _navigateNext() {
+  /// Asks the [AuthBloc] whether a session exists. The navigation that follows
+  /// is handled by the global auth listener in `main.dart`.
+  void _checkSession() {
     if (!mounted) return;
-    final isLoggedIn = getIt<TokenStorage>().isLoggedIn;
-    context.goNamed(isLoggedIn ? AppRoutes.home : AppRoutes.login);
+    context.read<AuthBloc>().add(AuthCheckRequested());
   }
 
   @override

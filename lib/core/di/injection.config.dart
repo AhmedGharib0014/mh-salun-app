@@ -18,6 +18,7 @@ import 'package:mh_salun/core/di/register_module.dart' as _i511;
 import 'package:mh_salun/features/account/bloc/profile_bloc.dart' as _i854;
 import 'package:mh_salun/features/account/data/profile_repository.dart'
     as _i257;
+import 'package:mh_salun/features/auth/bloc/auth_bloc.dart' as _i835;
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart' as _i589;
 import 'package:mh_salun/features/branches/data/branch_repository.dart'
     as _i158;
@@ -77,6 +78,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i587.OrganizationBloc>(
       () => _i587.OrganizationBloc(gh<_i445.OrganizationRepository>()),
+    );
+    gh.lazySingleton<_i835.AuthBloc>(
+      () => _i835.AuthBloc(gh<_i724.TokenStorage>()),
     );
     gh.lazySingleton<_i854.ProfileBloc>(
       () => _i854.ProfileBloc(gh<_i257.ProfileRepository>()),

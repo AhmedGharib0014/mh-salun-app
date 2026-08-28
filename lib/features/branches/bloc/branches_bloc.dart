@@ -14,6 +14,7 @@ part 'branches_state.dart';
 class BranchesBloc extends Bloc<BranchesEvent, BranchesState> {
   BranchesBloc(this._repo) : super(BranchesInitial()) {
     on<BranchesRequested>(_onRequested);
+    on<BranchesCleared>(_onCleared);
   }
 
   final BranchRepository _repo;
@@ -31,5 +32,9 @@ class BranchesBloc extends Bloc<BranchesEvent, BranchesState> {
     } catch (_) {
       emit(BranchesFailure('branches_generic_error'));
     }
+  }
+
+  void _onCleared(BranchesCleared event, Emitter<BranchesState> emit) {
+    emit(BranchesInitial());
   }
 }

@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 
+import '../../features/auth/bloc/auth_bloc.dart';
 import '../data/auth_exception.dart';
 import '../data/refresh_token_repository.dart';
 import '../data/token_storage.dart';
+import '../di/injection.dart';
 import '../utils/app_logger.dart';
 import 'api_config.dart';
 
@@ -88,9 +90,9 @@ class TokenRefreshInterceptor extends QueuedInterceptorsWrapper {
       handler.resolve(retryResponse);
     } on AuthException catch (e) {
       appLogger.w(
-        '[TOKEN REFRESH] Refresh failed (${e.runtimeType}) — clearing tokens.',
+        '[TOKEN REFRESH] Refresh failed (${e.runtimeType}) — logging out.',
       );
-      await _tokenStorage.clearTokens();
+      getIt<AuthBloc>().add(LogoutRequested());
       handler.next(err);
     }
   }
