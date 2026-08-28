@@ -9,25 +9,48 @@ import 'package:mh_salun/features/reservations/presentation/widgets/new_reservat
 
 /// Step 3 of the new-reservation flow: pick a day from the calendar (from
 /// today onward, paging by month) then a single available time slot for it.
-class SelectDateTimeStep extends StatelessWidget {
+///
+/// The bookable range and the picked day are the step's own business — the
+/// flow never needs them, since [TimeSlot.time] already carries the full date.
+/// Only the chosen slot travels back up, and it comes back null whenever the
+/// day changes and the previous pick goes stale.
+class SelectDateTimeStep extends StatefulWidget {
   const SelectDateTimeStep({
     super.key,
-    required this.firstDate,
-    required this.lastDate,
-    required this.slots,
-    required this.selectedDate,
     required this.selectedSlot,
-    required this.onDateSelected,
-    required this.onSlotSelected,
+    required this.onSlotChanged,
   });
 
-  final DateTime firstDate;
-  final DateTime lastDate;
-  final List<TimeSlot> slots;
-  final DateTime selectedDate;
   final TimeSlot? selectedSlot;
-  final ValueChanged<DateTime> onDateSelected;
-  final ValueChanged<TimeSlot> onSlotSelected;
+  final ValueChanged<TimeSlot?> onSlotChanged;
+
+  @override
+  State<SelectDateTimeStep> createState() => _SelectDateTimeStepState();
+}
+
+class _SelectDateTimeStepState extends State<SelectDateTimeStep> {
+  /// How far ahead the calendar lets the guest book.
+  static const int _monthsAhead = 3;
+
+  final DateTime _firstDate = _today();
+  late final DateTime _lastDate = DateTime(
+    _firstDate.year,
+    _firstDate.month + _monthsAhead,
+    _firstDate.day,
+  );
+
+  late DateTime _selectedDate = _firstDate;
+
+  static DateTime _today() {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day);
+  }
+
+  void _selectDate(DateTime date) {
+    setState(() => _selectedDate = date);
+    // Slots differ per day; drop the stale choice held by the flow.
+    widget.onSlotChanged(null);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +70,10 @@ class SelectDateTimeStep extends StatelessWidget {
           ),
         ),
         BookingCalendar(
-          firstDate: firstDate,
-          lastDate: lastDate,
-          selectedDate: selectedDate,
-          onDateSelected: onDateSelected,
+          firstDate: _firstDate,
+          lastDate: _lastDate,
+          selectedDate: _selectedDate,
+          onDateSelected: _selectDate,
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(
@@ -67,9 +90,9 @@ class SelectDateTimeStep extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
           child: TimeSlotGrid(
-            slots: slots,
-            selectedSlot: selectedSlot,
-            onSlotSelected: onSlotSelected,
+            slots: TimeSlot.forDate(_selectedDate),
+            selectedSlot: widget.selectedSlot,
+            onSlotSelected: widget.onSlotChanged,
           ),
         ),
       ],

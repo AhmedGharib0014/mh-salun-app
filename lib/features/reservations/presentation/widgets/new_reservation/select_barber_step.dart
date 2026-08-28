@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/model/barber.dart';
+import 'package:mh_salun/core/model/barbers_catalog.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/barber_select_card.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/booking_step_header.dart';
 
 /// Step 1 of the new-reservation flow: pick exactly one barber from a grid of
-/// selectable cards.
+/// selectable cards. The step sources the roster itself; the flow only cares
+/// about which barber came back.
 class SelectBarberStep extends StatelessWidget {
   const SelectBarberStep({
     super.key,
-    required this.barbers,
     required this.selectedBarber,
     required this.onBarberSelected,
   });
 
-  final List<Barber> barbers;
   final Barber? selectedBarber;
   final ValueChanged<Barber> onBarberSelected;
 
   @override
   Widget build(BuildContext context) {
+    final barbers = BarbersCatalog.all();
+
     return CustomScrollView(
       slivers: [
         const SliverToBoxAdapter(
