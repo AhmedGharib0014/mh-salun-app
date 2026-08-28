@@ -14,7 +14,7 @@ class ReservationFlowState {
   final Branch? branch;
   final Employee? barber;
   final Set<CatalogItem> services;
-  final TimeSlot? slot;
+  final AvailableSlot? slot;
 
   /// True once every step is answered — i.e. a booking request can be built.
   bool get isComplete =>

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/branches/model/branch.dart';
 import 'package:mh_salun/features/employees/model/employee.dart';
+import 'package:mh_salun/features/reservations/model/available_slot.dart';
 import 'package:mh_salun/features/reservations/model/reservation_step.dart';
-import 'package:mh_salun/features/reservations/model/time_slot.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/barber_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/branch_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/date_time_row.dart';
@@ -29,7 +29,7 @@ class ReviewStep extends StatelessWidget {
   final Branch? branch;
   final Employee? barber;
   final Set<CatalogItem> services;
-  final TimeSlot? slot;
+  final AvailableSlot? slot;
 
   /// Called with the step to return to when a section's "Edit" is tapped.
   final ValueChanged<ReservationStep> onEditStep;
@@ -86,7 +86,7 @@ class ReviewStep extends StatelessWidget {
           icon: Icons.event_rounded,
           title: 'new_reservation_review_datetime_label'.tr(),
           onEdit: () => onEditStep(ReservationStep.dateTime),
-          child: DateTimeRow(dateTimeLabel: _dateTimeLabel(context, slot.time)),
+          child: DateTimeRow(dateTimeLabel: _dateTimeLabel(context, slot.startsAt)),
         ),
         const SizedBox(height: AppSpacing.lg),
         TotalCard(totalLabel: _totalLabel(context, services)),

@@ -32,8 +32,12 @@ import 'package:mh_salun/features/registration/bloc/register_bloc.dart'
     as _i377;
 import 'package:mh_salun/features/registration/data/register_repository.dart'
     as _i280;
+import 'package:mh_salun/features/reservations/bloc/available_slots_bloc.dart'
+    as _i733;
 import 'package:mh_salun/features/reservations/bloc/reservation_flow_bloc.dart'
     as _i1066;
+import 'package:mh_salun/features/reservations/data/available_slots_repository.dart'
+    as _i7;
 import 'package:mh_salun/features/services/bloc/services_bloc.dart' as _i448;
 import 'package:mh_salun/features/services/data/catalog_item_repository.dart'
     as _i662;
@@ -64,6 +68,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i280.RegisterRepository>(
       () => _i280.RegisterRepository(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i7.AvailableSlotsRepository>(
+      () => _i7.AvailableSlotsRepository(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i662.CatalogItemRepository>(
       () => _i662.CatalogItemRepository(gh<_i361.Dio>()),
     );
@@ -72,6 +79,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i377.RegisterBloc>(
       () => _i377.RegisterBloc(gh<_i280.RegisterRepository>()),
+    );
+    gh.factory<_i733.AvailableSlotsBloc>(
+      () => _i733.AvailableSlotsBloc(gh<_i7.AvailableSlotsRepository>()),
     );
     gh.lazySingleton<_i1060.LoginRepository>(
       () => _i1060.LoginRepository(gh<_i361.Dio>(), gh<_i724.TokenStorage>()),

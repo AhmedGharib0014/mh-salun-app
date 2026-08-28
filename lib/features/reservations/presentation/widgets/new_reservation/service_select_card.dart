@@ -3,6 +3,7 @@ import 'package:mh_salun/core/model/service.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/selection_checkbox.dart';
 
 /// Selectable service row for the "choose services" step. Tapping toggles the
 /// service; a gold checkbox and border mark it as included in the booking.
@@ -99,35 +100,10 @@ class ServiceSelectCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
-            _Checkbox(selected: selected),
+            SelectionCheckbox(selected: selected),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _Checkbox extends StatelessWidget {
-  const _Checkbox({required this.selected});
-
-  final bool selected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        color: selected ? AppColors.primary : Colors.transparent,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusSm + 2),
-        border: Border.all(
-          color: selected ? AppColors.primary : AppColors.outline,
-          width: 2,
-        ),
-      ),
-      child: selected
-          ? const Icon(Icons.check, size: 16, color: AppColors.onPrimary)
-          : null,
     );
   }
 }

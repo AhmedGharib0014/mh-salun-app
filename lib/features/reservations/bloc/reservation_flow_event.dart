@@ -29,7 +29,7 @@ class ReservationServiceToggled extends ReservationFlowEvent {
 class ReservationSlotSelected extends ReservationFlowEvent {
   ReservationSlotSelected(this.slot);
 
-  final TimeSlot? slot;
+  final AvailableSlot? slot;
 }
 
 /// Drops every selection, for starting the flow over.

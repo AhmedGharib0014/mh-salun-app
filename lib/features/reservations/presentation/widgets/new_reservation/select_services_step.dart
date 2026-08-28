@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
+import 'package:mh_salun/features/employees/model/employee.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/booking_step_header.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/service_select_card.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/step_message.dart';
@@ -9,18 +10,15 @@ import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 import 'package:mh_salun/features/services/model/catalog_item.dart';
 import 'package:mh_salun/features/services/model/catalog_item_x.dart';
 
-/// Step 3 of the new-reservation flow: pick one or more services. Each row
-/// toggles independently so the guest can combine services in one booking.
-/// Reads the app-wide `ServicesBloc` (already loaded for the home screen), so
-/// it neither owns nor closes it nor triggers the fetch itself; the flow only
-/// tracks the picked services, which it needs for the review recap.
 class SelectServicesStep extends StatelessWidget {
   const SelectServicesStep({
     super.key,
+    required this.barber,
     required this.selectedServices,
     required this.onServiceToggled,
   });
 
+  final Employee? barber;
   final Set<CatalogItem> selectedServices;
   final ValueChanged<CatalogItem> onServiceToggled;
 
@@ -28,6 +26,14 @@ class SelectServicesStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ServicesBloc, ServicesState>(
       builder: (context, state) {
+        // The catalog narrowed to what the selected barber offers.
+        final offeredIds = barber?.catalogItemIds.toSet() ?? const {};
+        final offered = switch (state) {
+          ServicesLoaded(:final items) =>
+            items.where((item) => offeredIds.contains(item.id)).toList(),
+          _ => const <CatalogItem>[],
+        };
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -49,23 +55,22 @@ class SelectServicesStep extends StatelessWidget {
                   icon: Icons.error_outline_rounded,
                   messageKey: messageKey,
                 ),
-                ServicesLoaded(:final items) when items.isEmpty =>
-                  const StepMessage(
-                    icon: Icons.content_cut_rounded,
-                    messageKey: 'new_reservation_service_empty',
-                  ),
-                ServicesLoaded(:final items) => ListView.separated(
+                ServicesLoaded() when offered.isEmpty => const StepMessage(
+                  icon: Icons.content_cut_rounded,
+                  messageKey: 'new_reservation_service_empty',
+                ),
+                ServicesLoaded() => ListView.separated(
                   padding: const EdgeInsets.fromLTRB(
                     AppSpacing.lg,
                     0,
                     AppSpacing.lg,
                     AppSpacing.lg,
                   ),
-                  itemCount: items.length,
+                  itemCount: offered.length,
                   separatorBuilder: (_, _) =>
                       const SizedBox(height: AppSpacing.md),
                   itemBuilder: (context, index) {
-                    final item = items[index];
+                    final item = offered[index];
                     return ServiceSelectCard(
                       service: item.toService(),
                       selected: selectedServices.contains(item),
@@ -73,8 +78,7 @@ class SelectServicesStep extends StatelessWidget {
                     );
                   },
                 ),
-                ServicesInitial() ||
-                ServicesLoading() => const SectionLoading(
+                ServicesInitial() || ServicesLoading() => const SectionLoading(
                   height: double.infinity,
                 ),
               },

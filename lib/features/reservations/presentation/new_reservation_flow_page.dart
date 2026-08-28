@@ -102,17 +102,12 @@ class _NewReservationFlowViewState extends State<_NewReservationFlowView> {
                     bloc.add(ReservationBarberSelected(barber)),
               ),
               SelectServicesStep(
+                barber: selection.barber,
                 selectedServices: selection.services,
                 onServiceToggled: (service) =>
                     bloc.add(ReservationServiceToggled(service)),
               ),
-              // Keyed by branch so a different branch starts the calendar over.
-              SelectDateTimeStep(
-                key: ValueKey(selection.branch?.id),
-                selectedSlot: selection.slot,
-                onSlotChanged: (slot) =>
-                    bloc.add(ReservationSlotSelected(slot)),
-              ),
+              const SelectDateTimeStep(),
               ReviewStep(
                 branch: selection.branch,
                 barber: selection.barber,

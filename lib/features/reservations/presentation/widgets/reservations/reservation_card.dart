@@ -5,6 +5,7 @@ import 'package:mh_salun/core/theme/font_sizes.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
 import 'package:mh_salun/features/reservations/model/reservation.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/home_related/info_chip.dart';
 
 class ReservationCard extends StatelessWidget {
   const ReservationCard({super.key, required this.reservation});
@@ -95,9 +96,9 @@ class ReservationCard extends StatelessWidget {
                   spacing: AppSpacing.md,
                   runSpacing: AppSpacing.xs,
                   children: [
-                    _InfoChip(emoji: '📅', label: reservation.dateLabel),
-                    _InfoChip(emoji: '🕐', label: reservation.timeLabel),
-                    _InfoChip(emoji: '⏱', label: reservation.durationLabel),
+                    InfoChip(emoji: '📅', label: reservation.dateLabel),
+                    InfoChip(emoji: '🕐', label: reservation.timeLabel),
+                    InfoChip(emoji: '⏱', label: reservation.durationLabel),
                   ],
                 ),
               ],
@@ -105,25 +106,6 @@ class ReservationCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _InfoChip extends StatelessWidget {
-  const _InfoChip({required this.emoji, required this.label});
-
-  final String emoji;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(emoji, style: const TextStyle(fontSize: AppFontSize.caption)),
-        const SizedBox(width: AppSpacing.xs),
-        Text(label, style: AppTextStyles.caption),
-      ],
     );
   }
 }
