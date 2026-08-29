@@ -20,9 +20,31 @@ directly from the UI.
 `lib/features/<feature>/bloc/` — a feature-level folder, a sibling of `presentation/`,
 `model/`, and `data/` (not nested under `presentation/`). It exists only when the
 feature uses a BLoC; omit it entirely otherwise.
+
+**One BLoC** — the three files sit directly in `bloc/`:
 - `<feature>_event.dart` — events (user intents)
 - `<feature>_state.dart` — states (incl. initial / loading / success / failure)
 - `<feature>_bloc.dart` — maps events to states; depends on the repo
+
+**Multiple BLoCs** — each BLoC gets its own subfolder named after it, holding its
+own bloc/event/state trio. Never leave several BLoCs' files flat in `bloc/`.
+
+```
+bloc/
+├── available_slots/
+│   ├── available_slots_bloc.dart
+│   ├── available_slots_event.dart
+│   └── available_slots_state.dart
+└── book_reservation/
+    ├── book_reservation_bloc.dart
+    ├── book_reservation_event.dart
+    └── book_reservation_state.dart
+```
+
+When a feature grows a second BLoC, move the existing one into its own subfolder at
+the same time — the flat layout is only for the single-BLoC case. Events and states
+stay `part of` their bloc file, so the `part` directives are unaffected by the move;
+only relative imports (one level deeper) and package imports elsewhere change.
 
 ```dart
 import 'package:bloc/bloc.dart';

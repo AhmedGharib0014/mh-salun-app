@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../branches/model/branch.dart';
-import '../../employees/model/employee.dart';
-import '../../services/model/catalog_item.dart';
-import '../model/available_slot.dart';
-import '../model/reservation_step.dart';
+import '../../../branches/model/branch.dart';
+import '../../../employees/model/employee.dart';
+import '../../../services/model/catalog_item.dart';
+import '../../model/available_slot.dart';
+import '../../model/reservation_step.dart';
 
 part 'reservation_flow_event.dart';
 part 'reservation_flow_state.dart';

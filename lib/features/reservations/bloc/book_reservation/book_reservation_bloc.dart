@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data/book_reservation_repository.dart';
-import '../model/booked_reservation.dart';
+import '../../data/book_reservation_repository.dart';
+import '../../model/booked_reservation.dart';
 
 part 'book_reservation_event.dart';
 part 'book_reservation_state.dart';

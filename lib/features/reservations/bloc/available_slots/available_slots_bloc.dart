@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data/available_slots_repository.dart';
-import '../model/available_slot.dart';
+import '../../data/available_slots_repository.dart';
+import '../../model/available_slot.dart';
 
 part 'available_slots_event.dart';
 part 'available_slots_state.dart';
