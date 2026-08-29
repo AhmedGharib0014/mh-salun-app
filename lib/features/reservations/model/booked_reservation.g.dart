@@ -15,9 +15,19 @@ BookedReservation _$BookedReservationFromJson(Map<String, dynamic> json) =>
       endsAt: DateTime.parse(json['endsAt'] as String),
       status: json['status'] as String,
       enrichmentStatus: json['enrichmentStatus'] as String,
-      items: (json['items'] as List<dynamic>)
-          .map((e) => BookedReservationItem.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      items:
+          (json['items'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    BookedReservationItem.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
+          [],
+      employee: json['employee'] == null
+          ? null
+          : ReservationEmployee.fromJson(
+              json['employee'] as Map<String, dynamic>,
+            ),
     );
 
 Map<String, dynamic> _$BookedReservationToJson(BookedReservation instance) =>
@@ -30,4 +40,5 @@ Map<String, dynamic> _$BookedReservationToJson(BookedReservation instance) =>
       'status': instance.status,
       'enrichmentStatus': instance.enrichmentStatus,
       'items': instance.items,
+      'employee': instance.employee,
     };
