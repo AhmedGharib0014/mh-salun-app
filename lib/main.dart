@@ -12,6 +12,7 @@ import 'package:mh_salun/features/auth/bloc/auth_bloc.dart';
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
 import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart';
+import 'package:mh_salun/features/reservations/bloc/reservations_list/reservations_list_bloc.dart';
 import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 
 void main() async {
@@ -34,6 +35,9 @@ void main() async {
           BlocProvider(create: (_) => getIt<ProfileBloc>()),
           BlocProvider(create: (_) => getIt<AuthBloc>()),
           BlocProvider(create: (_) => getIt<HomeTabCubit>()),
+          // Above the router: the home card, the upcoming tab and the success
+          // page all read this one list.
+          BlocProvider(create: (_) => getIt<UpcomingReservationsBloc>()),
         ],
         child: const GlobalListener(child: MyApp()),
       ),

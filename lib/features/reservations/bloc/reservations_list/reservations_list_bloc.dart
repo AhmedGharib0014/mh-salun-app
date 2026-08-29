@@ -9,55 +9,43 @@ import '../../model/reservation_filter.dart';
 part 'reservations_list_event.dart';
 part 'reservations_list_state.dart';
 
-/// Lists one slice (upcoming / past) of the guest's reservations, page by page.
+/// Lists one slice of the guest's reservations, page by page.
 ///
-/// One instance per tab — the tab owns it and passes its filter with the first
-/// event, which the bloc then keeps for the following pages.
-@injectable
-class ReservationsListBloc
+/// The slice is fixed at construction by the subclass, never by an event, so
+/// an instance can only ever load the filter it was built for — the upcoming
+/// list cannot be repointed at the past one and drop what the home card is
+/// showing. The two subclasses also give the two instances distinct types, so
+/// `context.read` resolves by type instead of by position in the widget tree.
+abstract class ReservationsListBloc
     extends Bloc<ReservationsListEvent, ReservationsListState> {
-  ReservationsListBloc(this._repo) : super(ReservationsListInitial()) {
-    on<ReservationsListRequested>(_onRequested);
+  ReservationsListBloc(this._repo, this._filter)
+    : super(ReservationsListInitial()) {
     on<ReservationsListRefreshed>(_onRefreshed);
     on<ReservationsListNextPageRequested>(_onNextPageRequested);
+    on<ReservationsListCleared>(_onCleared);
   }
 
   final ReservationsRepository _repo;
 
-  ReservationFilter? _filter;
+  final ReservationFilter _filter;
 
   /// Page to ask for next, or null once the last page has been loaded.
   int? _nextPage = 0;
 
   List<BookedReservation> _items = [];
 
-  Future<void> _onRequested(
-    ReservationsListRequested event,
-    Emitter<ReservationsListState> emit,
-  ) async {
-    _filter = event.filter;
-    await _loadFirstPage(emit);
-  }
-
+  /// Loads page 0 and replaces whatever was listed before.
+  ///
+  /// Keeps the current list on screen instead of flashing a spinner once
+  /// something has been listed — pull-to-refresh shows its own indicator, and
+  /// the home card must not blank out on a background refresh.
   Future<void> _onRefreshed(
     ReservationsListRefreshed event,
     Emitter<ReservationsListState> emit,
   ) async {
-    if (_filter == null) return;
-    await _loadFirstPage(emit, silent: state is ReservationsListLoaded);
-  }
-
-  /// Loads page 0 and replaces whatever was listed before.
-  ///
-  /// [silent] keeps the current list on screen instead of flashing a spinner —
-  /// used by pull-to-refresh, which shows its own indicator.
-  Future<void> _loadFirstPage(
-    Emitter<ReservationsListState> emit, {
-    bool silent = false,
-  }) async {
-    if (!silent) emit(ReservationsListLoading());
+    if (state is! ReservationsListLoaded) emit(ReservationsListLoading());
     try {
-      final page = await _repo.getMyReservations(filter: _filter!, page: 0);
+      final page = await _repo.getMyReservations(filter: _filter, page: 0);
       _items = page.content;
       _nextPage = page.nextPage;
       emit(ReservationsListLoaded(items: _items, hasNext: page.hasNext));
@@ -81,7 +69,7 @@ class ReservationsListBloc
 
     emit(current.copyWith(isLoadingMore: true, loadMoreFailed: false));
     try {
-      final next = await _repo.getMyReservations(filter: _filter!, page: page);
+      final next = await _repo.getMyReservations(filter: _filter, page: page);
       _items = [..._items, ...next.content];
       _nextPage = next.nextPage;
       emit(ReservationsListLoaded(items: _items, hasNext: next.hasNext));
@@ -91,7 +79,32 @@ class ReservationsListBloc
     }
   }
 
-  String _messageKey(Object error) => error is DioException
-      ? 'network_error'
-      : 'reservations_generic_error';
+  void _onCleared(
+    ReservationsListCleared event,
+    Emitter<ReservationsListState> emit,
+  ) {
+    _items = [];
+    _nextPage = 0;
+    emit(ReservationsListInitial());
+  }
+
+  String _messageKey(Object error) =>
+      error is DioException ? 'network_error' : 'reservations_generic_error';
+}
+
+/// The guest's upcoming reservations.
+///
+/// Provided once above the router, so the home card, the upcoming tab and the
+/// success page all read and refresh the same list.
+@injectable
+class UpcomingReservationsBloc extends ReservationsListBloc {
+  UpcomingReservationsBloc(ReservationsRepository repo)
+    : super(repo, ReservationFilter.upcoming);
+}
+
+/// The guest's past reservations — read only by its own tab.
+@injectable
+class PastReservationsBloc extends ReservationsListBloc {
+  PastReservationsBloc(ReservationsRepository repo)
+    : super(repo, ReservationFilter.past);
 }

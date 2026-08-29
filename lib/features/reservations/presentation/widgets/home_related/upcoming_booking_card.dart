@@ -1,11 +1,17 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mh_salun/core/theme/app_colors.dart';
-import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/presentation/widgets/section_header.dart';
-import 'package:mh_salun/features/reservations/presentation/widgets/home_related/info_chip.dart';
+import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
+import 'package:mh_salun/core/theme/spacing.dart';
+import 'package:mh_salun/features/reservations/bloc/reservations_list/reservations_list_bloc.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/reservations/reservation_card.dart';
 
+/// The guest's next reservation on the home tab.
+///
+/// Reads the same list as the upcoming tab, so the two never disagree, and
+/// takes its first item — paging further in the tab does not disturb it. The
+/// section is left out entirely when there is nothing upcoming: the book-now
+/// card above already carries that prompt.
 class UpcomingBookingCard extends StatelessWidget {
   const UpcomingBookingCard({super.key, required this.onSeeAllTap});
 
@@ -13,76 +19,36 @@ class UpcomingBookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SectionHeader(
-          titleKey: 'home_upcoming_title',
-          actionKey: 'home_see_all',
-          onActionTap: onSeeAllTap,
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
-            border: Border.all(color: AppColors.divider),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceHigh,
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
-                  border: Border.all(color: AppColors.outline),
+    return BlocBuilder<UpcomingReservationsBloc, ReservationsListState>(
+      builder: (context, state) {
+        switch (state) {
+          case ReservationsListInitial() || ReservationsListLoading():
+            return const SectionLoading(height: 140);
+          // The reservations tab reports the error; the home tab stays quiet
+          // rather than showing a second one.
+          case ReservationsListFailure():
+            return const SizedBox.shrink();
+          case ReservationsListLoaded(:final items) when items.isEmpty:
+            return const SizedBox.shrink();
+          case ReservationsListLoaded(:final items):
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SectionHeader(
+                  titleKey: 'home_upcoming_title',
+                  actionKey: 'home_see_all',
+                  onActionTap: onSeeAllTap,
                 ),
-                alignment: Alignment.center,
-                child: Text(
-                  'home_upcoming_barber_name'.tr().substring(0, 1),
-                  style: AppTextStyles.headingGold,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                  ),
+                  child: ReservationCard(reservation: items.first),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'home_upcoming_barber_name'.tr(),
-                      style: AppTextStyles.titleMedium.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      'home_upcoming_services'.tr(),
-                      style: AppTextStyles.bodySecondary,
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Wrap(
-                      spacing: AppSpacing.md,
-                      runSpacing: AppSpacing.xs,
-                      children: [
-                        InfoChip(emoji: '📅', label: 'home_today'.tr()),
-                        InfoChip(
-                          emoji: '🕐',
-                          label: 'home_time_placeholder'.tr(),
-                        ),
-                        InfoChip(emoji: '⏱', label: 'home_duration_60'.tr()),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+              ],
+            );
+        }
+      },
     );
   }
 }

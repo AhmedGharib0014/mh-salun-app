@@ -7,6 +7,7 @@ import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
 import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart';
+import 'package:mh_salun/features/reservations/bloc/reservations_list/reservations_list_bloc.dart';
 import 'package:mh_salun/features/reservations/model/booked_reservation.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/reservation_success/go_to_reservations_button.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/reservation_success/success_badge.dart';
@@ -21,6 +22,8 @@ class ReservationSuccessPage extends StatelessWidget {
   final BookedReservation reservation;
 
   void _onGoToReservations(BuildContext context) {
+    // The booking just made is not in the list the shell loaded earlier.
+    context.read<UpcomingReservationsBloc>().add(ReservationsListRefreshed());
     // The shell reads its destination from the cubit as it comes up.
     context.read<HomeTabCubit>().show(HomeTab.reservations);
     context.goNamed(AppRoutes.home);

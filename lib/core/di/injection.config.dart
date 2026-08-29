@@ -47,8 +47,6 @@ import 'package:mh_salun/features/reservations/data/available_slots_repository.d
     as _i7;
 import 'package:mh_salun/features/reservations/data/book_reservation_repository.dart'
     as _i438;
-import 'package:mh_salun/features/reservations/data/reservations_refresh_notifier.dart'
-    as _i327;
 import 'package:mh_salun/features/reservations/data/reservations_repository.dart'
     as _i492;
 import 'package:mh_salun/features/services/bloc/services_bloc.dart' as _i448;
@@ -67,10 +65,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i724.TokenStorage>(() => _i724.TokenStorage());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i898.HomeTabCubit>(() => _i898.HomeTabCubit());
-    gh.lazySingleton<_i327.ReservationsRefreshNotifier>(
-      () => _i327.ReservationsRefreshNotifier(),
-      dispose: (i) => i.dispose(),
-    );
     gh.lazySingleton<_i445.OrganizationRepository>(
       () => _i445.OrganizationRepository(gh<_i361.Dio>()),
     );
@@ -101,12 +95,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i520.EmployeesBloc>(
       () => _i520.EmployeesBloc(gh<_i920.EmployeeRepository>()),
     );
-    gh.factory<_i131.ReservationsListBloc>(
-      () => _i131.ReservationsListBloc(
-        gh<_i492.ReservationsRepository>(),
-        gh<_i327.ReservationsRefreshNotifier>(),
-      ),
-    );
     gh.factory<_i377.RegisterBloc>(
       () => _i377.RegisterBloc(gh<_i280.RegisterRepository>()),
     );
@@ -118,6 +106,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i589.BranchesBloc>(
       () => _i589.BranchesBloc(gh<_i158.BranchRepository>()),
+    );
+    gh.factory<_i131.UpcomingReservationsBloc>(
+      () => _i131.UpcomingReservationsBloc(gh<_i492.ReservationsRepository>()),
+    );
+    gh.factory<_i131.PastReservationsBloc>(
+      () => _i131.PastReservationsBloc(gh<_i492.ReservationsRepository>()),
     );
     gh.factory<_i291.OrganizationBloc>(
       () => _i291.OrganizationBloc(gh<_i445.OrganizationRepository>()),
