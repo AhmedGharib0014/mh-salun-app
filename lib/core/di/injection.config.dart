@@ -34,10 +34,14 @@ import 'package:mh_salun/features/registration/data/register_repository.dart'
     as _i280;
 import 'package:mh_salun/features/reservations/bloc/available_slots_bloc.dart'
     as _i733;
+import 'package:mh_salun/features/reservations/bloc/book_reservation_bloc.dart'
+    as _i953;
 import 'package:mh_salun/features/reservations/bloc/reservation_flow_bloc.dart'
     as _i1066;
 import 'package:mh_salun/features/reservations/data/available_slots_repository.dart'
     as _i7;
+import 'package:mh_salun/features/reservations/data/book_reservation_repository.dart'
+    as _i438;
 import 'package:mh_salun/features/services/bloc/services_bloc.dart' as _i448;
 import 'package:mh_salun/features/services/data/catalog_item_repository.dart'
     as _i662;
@@ -71,6 +75,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i7.AvailableSlotsRepository>(
       () => _i7.AvailableSlotsRepository(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i438.BookReservationRepository>(
+      () => _i438.BookReservationRepository(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i662.CatalogItemRepository>(
       () => _i662.CatalogItemRepository(gh<_i361.Dio>()),
     );
@@ -103,6 +110,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i569.LoginBloc>(
       () => _i569.LoginBloc(gh<_i1060.LoginRepository>()),
+    );
+    gh.factory<_i953.BookReservationBloc>(
+      () => _i953.BookReservationBloc(gh<_i438.BookReservationRepository>()),
     );
     return this;
   }

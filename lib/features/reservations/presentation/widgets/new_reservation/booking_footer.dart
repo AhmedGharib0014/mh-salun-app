@@ -10,11 +10,15 @@ class BookingFooter extends StatelessWidget {
     required this.buttonLabel,
     required this.canContinue,
     required this.onContinue,
+    this.isLoading = false,
   });
 
   final String buttonLabel;
   final bool canContinue;
   final VoidCallback onContinue;
+
+  /// Whether the action the button triggered is still running.
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,7 @@ class BookingFooter extends StatelessWidget {
                 enabled: canContinue,
                 label: buttonLabel,
                 onTap: onContinue,
+                loading: isLoading,
               ),
             ],
           ),

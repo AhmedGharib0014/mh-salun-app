@@ -12,14 +12,21 @@ class ContinueButton extends StatelessWidget {
     required this.enabled,
     required this.label,
     required this.onTap,
+    this.loading = false,
   });
 
   final bool enabled;
   final String label;
   final VoidCallback onTap;
 
+  /// Swaps the label for a spinner and refuses taps while the action the
+  /// button triggered is still running.
+  final bool loading;
+
   @override
   Widget build(BuildContext context) {
+    final tappable = enabled && !loading;
+
     return Opacity(
       opacity: enabled ? 1 : 0.5,
       child: AnimatedContainer(
@@ -42,7 +49,7 @@ class ContinueButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: enabled ? onTap : null,
+            onTap: tappable ? onTap : null,
             borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -54,11 +61,21 @@ class ContinueButton extends StatelessWidget {
                 children: [
                   Text(label, style: AppTextStyles.buttonPrimary),
                   const SizedBox(width: AppSpacing.sm),
-                  const Icon(
-                    Icons.arrow_forward_rounded,
-                    size: AppSpacing.iconSm,
-                    color: AppColors.onPrimary,
-                  ),
+                  if (loading)
+                    const SizedBox(
+                      width: AppSpacing.iconSm,
+                      height: AppSpacing.iconSm,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.onPrimary,
+                      ),
+                    )
+                  else
+                    const Icon(
+                      Icons.arrow_forward_rounded,
+                      size: AppSpacing.iconSm,
+                      color: AppColors.onPrimary,
+                    ),
                 ],
               ),
             ),

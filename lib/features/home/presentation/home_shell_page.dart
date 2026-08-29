@@ -19,16 +19,20 @@ import 'package:mh_salun/features/services/presentation/services_tab_view.dart';
 /// Switching destinations only swaps the current [PageView] page — it
 /// never pushes a new route.
 class HomeShellPage extends StatefulWidget {
-  const HomeShellPage({super.key});
+  const HomeShellPage({super.key, this.initialTab = 0});
+
+  /// Destination the shell opens on — see [AppRoutes.reservationsTab] for the
+  /// indices other screens navigate to.
+  final int initialTab;
 
   @override
   State<HomeShellPage> createState() => _HomeShellPageState();
 }
 
 class _HomeShellPageState extends State<HomeShellPage> {
-  final _pageController = PageController();
+  late final _pageController = PageController(initialPage: widget.initialTab);
   late final OrganizationBloc _organizationBloc;
-  int _currentIndex = 0;
+  late int _currentIndex = widget.initialTab;
 
   @override
   void initState() {
