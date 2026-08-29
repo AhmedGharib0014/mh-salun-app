@@ -11,6 +11,7 @@ import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/auth/bloc/auth_bloc.dart';
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
+import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart';
 import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 
 void main() async {
@@ -32,6 +33,7 @@ void main() async {
           BlocProvider(create: (_) => getIt<BranchesBloc>()),
           BlocProvider(create: (_) => getIt<ProfileBloc>()),
           BlocProvider(create: (_) => getIt<AuthBloc>()),
+          BlocProvider(create: (_) => getIt<HomeTabCubit>()),
         ],
         child: const GlobalListener(child: MyApp()),
       ),

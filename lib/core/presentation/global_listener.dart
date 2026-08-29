@@ -5,6 +5,7 @@ import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/auth/bloc/auth_bloc.dart';
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
+import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart';
 import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 
 class GlobalListener extends StatelessWidget {
@@ -32,6 +33,9 @@ class _AuthListener extends BlocListener<AuthBloc, AuthState> {
         context.read<ServicesBloc>().add(ServicesCleared());
         context.read<BranchesBloc>().add(BranchesCleared());
         context.read<ProfileBloc>().add(ProfileCleared());
+        // The next session starts on the first destination, not wherever the
+        // previous one left the shell.
+        context.read<HomeTabCubit>().show(HomeTab.home);
         appRouter.goNamed(AppRoutes.login);
     }
   }

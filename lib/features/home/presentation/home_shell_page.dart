@@ -8,7 +8,8 @@ import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/account_tab_view.dart';
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';
-import 'package:mh_salun/features/home/bloc/organization_bloc.dart';
+import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart';
+import 'package:mh_salun/features/home/bloc/organization/organization_bloc.dart';
 import 'package:mh_salun/features/home/presentation/home_tab_view.dart';
 import 'package:mh_salun/features/home/presentation/widgets/home/home_bottom_nav.dart';
 import 'package:mh_salun/features/reservations/presentation/reservations_tab_view.dart';
@@ -18,25 +19,26 @@ import 'package:mh_salun/features/services/presentation/services_tab_view.dart';
 /// Persistent shell owning the bottom nav bar and the in-place tab content.
 /// Switching destinations only swaps the current [PageView] page — it
 /// never pushes a new route.
+///
+/// The destination is not a constructor argument: it lives in [HomeTabCubit],
+/// so screens outside the shell can select one before navigating here.
 class HomeShellPage extends StatefulWidget {
-  const HomeShellPage({super.key, this.initialTab = 0});
-
-  /// Destination the shell opens on — see [AppRoutes.reservationsTab] for the
-  /// indices other screens navigate to.
-  final int initialTab;
+  const HomeShellPage({super.key});
 
   @override
   State<HomeShellPage> createState() => _HomeShellPageState();
 }
 
 class _HomeShellPageState extends State<HomeShellPage> {
-  late final _pageController = PageController(initialPage: widget.initialTab);
+  late final PageController _pageController;
   late final OrganizationBloc _organizationBloc;
-  late int _currentIndex = widget.initialTab;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(
+      initialPage: context.read<HomeTabCubit>().state.index,
+    );
     _organizationBloc = getIt<OrganizationBloc>()..add(OrganizationRequested());
     getIt<ProfileBloc>().add(ProfileRequested());
   }
@@ -48,12 +50,12 @@ class _HomeShellPageState extends State<HomeShellPage> {
     super.dispose();
   }
 
-  void _goToTab(int index) {
-    setState(() => _currentIndex = index);
-    _pageController.jumpToPage(index);
-  }
+  void _goToTab(HomeTab tab) => context.read<HomeTabCubit>().show(tab);
 
-  void _onNavSelected(int index) => _goToTab(index);
+  void _onNavSelected(int index) => context.read<HomeTabCubit>().showAt(index);
+
+  void _onTabChanged(BuildContext context, HomeTab tab) =>
+      _pageController.jumpToPage(tab.index);
 
   void _onStartBooking() => context.pushNamed(AppRoutes.newReservation);
 
@@ -91,6 +93,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
               }
             },
           ),
+          BlocListener<HomeTabCubit, HomeTab>(listener: _onTabChanged),
           BlocListener<ProfileBloc, ProfileState>(
             listener: (context, state) {
               if (state is ProfileFailure) {
@@ -104,18 +107,19 @@ class _HomeShellPageState extends State<HomeShellPage> {
           body: PageView(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),
-            onPageChanged: (index) => setState(() => _currentIndex = index),
             children: [
-              HomeTabView(onSeeAllServices: () => _goToTab(1)),
+              HomeTabView(onSeeAllServices: () => _goToTab(HomeTab.services)),
               const ServicesTabView(),
               ReservationsTabView(onStartBooking: _onStartBooking),
               const AccountTabView(),
             ],
           ),
-          bottomNavigationBar: HomeBottomNav(
-            selectedIndex: _currentIndex,
-            onDestinationSelected: _onNavSelected,
-            onAddTap: _onAddTap,
+          bottomNavigationBar: BlocBuilder<HomeTabCubit, HomeTab>(
+            builder: (context, tab) => HomeBottomNav(
+              selectedIndex: tab.index,
+              onDestinationSelected: _onNavSelected,
+              onAddTap: _onAddTap,
+            ),
           ),
         ),
       ),

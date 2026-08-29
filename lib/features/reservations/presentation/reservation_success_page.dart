@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mh_salun/core/router/app_router.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart';
 import 'package:mh_salun/features/reservations/model/booked_reservation.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/reservation_success/go_to_reservations_button.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/reservation_success/success_badge.dart';
@@ -18,8 +20,11 @@ class ReservationSuccessPage extends StatelessWidget {
 
   final BookedReservation reservation;
 
-  void _onGoToReservations(BuildContext context) =>
-      context.goNamed(AppRoutes.home, extra: AppRoutes.reservationsTab);
+  void _onGoToReservations(BuildContext context) {
+    // The shell reads its destination from the cubit as it comes up.
+    context.read<HomeTabCubit>().show(HomeTab.reservations);
+    context.goNamed(AppRoutes.home);
+  }
 
   @override
   Widget build(BuildContext context) {

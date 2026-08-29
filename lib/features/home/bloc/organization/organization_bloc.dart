@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/data/organization_repository.dart';
-import '../../../core/model/organization_response.dart';
+import '../../../../core/data/organization_repository.dart';
+import '../../../../core/model/organization_response.dart';
 
 part 'organization_event.dart';
 part 'organization_state.dart';

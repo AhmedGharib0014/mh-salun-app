@@ -6,7 +6,7 @@ import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/font_sizes.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/home/bloc/organization_bloc.dart';
+import 'package:mh_salun/features/home/bloc/organization/organization_bloc.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});

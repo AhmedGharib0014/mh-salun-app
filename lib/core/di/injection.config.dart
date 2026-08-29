@@ -25,7 +25,10 @@ import 'package:mh_salun/features/branches/data/branch_repository.dart'
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart' as _i520;
 import 'package:mh_salun/features/employees/data/employee_repository.dart'
     as _i920;
-import 'package:mh_salun/features/home/bloc/organization_bloc.dart' as _i587;
+import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart'
+    as _i898;
+import 'package:mh_salun/features/home/bloc/organization/organization_bloc.dart'
+    as _i291;
 import 'package:mh_salun/features/login/bloc/login_bloc.dart' as _i569;
 import 'package:mh_salun/features/login/data/login_repository.dart' as _i1060;
 import 'package:mh_salun/features/registration/bloc/register_bloc.dart'
@@ -57,6 +60,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i216.ReservationFlowBloc>(() => _i216.ReservationFlowBloc());
     gh.lazySingleton<_i724.TokenStorage>(() => _i724.TokenStorage());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i898.HomeTabCubit>(() => _i898.HomeTabCubit());
     gh.lazySingleton<_i445.OrganizationRepository>(
       () => _i445.OrganizationRepository(gh<_i361.Dio>()),
     );
@@ -96,8 +100,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i589.BranchesBloc>(
       () => _i589.BranchesBloc(gh<_i158.BranchRepository>()),
     );
-    gh.factory<_i587.OrganizationBloc>(
-      () => _i587.OrganizationBloc(gh<_i445.OrganizationRepository>()),
+    gh.factory<_i291.OrganizationBloc>(
+      () => _i291.OrganizationBloc(gh<_i445.OrganizationRepository>()),
     );
     gh.lazySingleton<_i835.AuthBloc>(
       () => _i835.AuthBloc(gh<_i724.TokenStorage>()),

@@ -19,10 +19,6 @@ class AppRoutes {
   static const newReservation = 'new-reservation';
   static const reservationSuccess = 'reservation-success';
   static const branchDetails = 'branch-details';
-
-  /// Index of the home shell's reservations destination, passed as the `extra`
-  /// of [home] to open the shell straight on that tab.
-  static const reservationsTab = 2;
 }
 
 final appRouter = GoRouter(
@@ -36,8 +32,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/home',
       name: AppRoutes.home,
-      builder: (context, state) =>
-          HomeShellPage(initialTab: state.extra as int? ?? 0),
+      builder: (context, state) => const HomeShellPage(),
     ),
     GoRoute(
       path: '/login',
