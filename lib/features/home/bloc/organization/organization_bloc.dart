@@ -20,7 +20,9 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
     OrganizationRequested event,
     Emitter<OrganizationState> emit,
   ) async {
-    emit(OrganizationLoading());
+    // Silent once something is on screen, so a refresh never blanks the
+    // sections that are already showing.
+    if (state is! OrganizationLoaded) emit(OrganizationLoading());
     try {
       final organization = await _repo.getOrganization();
       emit(OrganizationLoaded(organization));

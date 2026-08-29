@@ -17,12 +17,6 @@ import 'package:mh_salun/features/reservations/presentation/reservations_tab_vie
 import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 import 'package:mh_salun/features/services/presentation/services_tab_view.dart';
 
-/// Persistent shell owning the bottom nav bar and the in-place tab content.
-/// Switching destinations only swaps the current [PageView] page — it
-/// never pushes a new route.
-///
-/// The destination is not a constructor argument: it lives in [HomeTabCubit],
-/// so screens outside the shell can select one before navigating here.
 class HomeShellPage extends StatefulWidget {
   const HomeShellPage({super.key});
 
@@ -30,13 +24,15 @@ class HomeShellPage extends StatefulWidget {
   State<HomeShellPage> createState() => _HomeShellPageState();
 }
 
-class _HomeShellPageState extends State<HomeShellPage> {
+class _HomeShellPageState extends State<HomeShellPage>
+    with WidgetsBindingObserver {
   late final PageController _pageController;
   late final OrganizationBloc _organizationBloc;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _pageController = PageController(
       initialPage: context.read<HomeTabCubit>().state.index,
     );
@@ -45,13 +41,20 @@ class _HomeShellPageState extends State<HomeShellPage> {
     _refreshUpcoming();
   }
 
-  /// Reloads the upcoming list behind the home card and the upcoming tab. The
-  /// refresh is silent once something has been listed, so neither blanks out.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _organizationBloc.add(OrganizationRequested());
+      _refreshUpcoming();
+    }
+  }
+
   void _refreshUpcoming() =>
       context.read<UpcomingReservationsBloc>().add(ReservationsListRefreshed());
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _pageController.dispose();
     _organizationBloc.close();
     super.dispose();
