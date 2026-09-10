@@ -11,6 +11,7 @@ import 'package:mh_salun/core/presentation/widgets/auth_switch_link.dart';
 import 'package:mh_salun/core/presentation/widgets/email_text_field.dart';
 import 'package:mh_salun/features/registration/bloc/register_bloc.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/birth_date_field.dart';
+import 'package:mh_salun/features/registration/presentation/widgets/consent_checkbox.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/name_text_field.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/password_fields.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/register_button.dart';
@@ -102,7 +103,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     value: _birthDate,
                     onChanged: _onBirthDateChanged,
                   ),
-                  const SizedBox(height: AppSpacing.xl),
+                  const SizedBox(height: AppSpacing.md),
+                  ConsentCheckbox(),
+                  const SizedBox(height: AppSpacing.md),
                   BlocConsumer<RegisterBloc, RegisterState>(
                     listener: (context, state) {
                       if (state is RegisterSuccess) {
