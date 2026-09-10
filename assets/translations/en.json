@@ -143,5 +143,10 @@
   "logout_confirm_title": "Log out",
   "logout_confirm_message": "Are you sure you want to log out?",
   "logout_confirm_cancel": "Cancel",
-  "logout_confirm_action": "Log out"
+  "logout_confirm_action": "Log out",
+  "delete_account_button": "Delete my account",
+  "delete_account_confirm_title": "Delete account",
+  "delete_account_confirm_message": "This will permanently delete your account and all your data. This action cannot be undone.",
+  "delete_account_confirm_cancel": "Cancel",
+  "delete_account_confirm_action": "Delete"
 }

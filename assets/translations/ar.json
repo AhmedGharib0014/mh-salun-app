@@ -146,5 +146,10 @@
   "logout_confirm_title": "تسجيل الخروج",
   "logout_confirm_message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "logout_confirm_cancel": "إلغاء",
-  "logout_confirm_action": "تسجيل الخروج"
+  "logout_confirm_action": "تسجيل الخروج",
+  "delete_account_button": "حذف حسابي",
+  "delete_account_confirm_title": "حذف الحساب",
+  "delete_account_confirm_message": "سيؤدي هذا إلى حذف حسابك وجميع بياناتك نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
+  "delete_account_confirm_cancel": "إلغاء",
+  "delete_account_confirm_action": "حذف"
 }
