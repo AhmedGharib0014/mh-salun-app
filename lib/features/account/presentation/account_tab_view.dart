@@ -5,6 +5,7 @@ import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/account_header.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/account_info_section.dart';
+import 'package:mh_salun/features/account/presentation/widgets/account/delete_account_button.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/logout_button.dart';
 
 /// Fetch of the underlying `ProfileBloc` data is centralized in
@@ -31,6 +32,8 @@ class AccountTabView extends StatelessWidget {
                   AccountInfoSection(profile: profile),
                   const SizedBox(height: AppSpacing.xl),
                   const LogoutButton(),
+                  const SizedBox(height: AppSpacing.md),
+                  const DeleteAccountButton(),
                   SizedBox(
                     height: AppSpacing.bottomNavClearance +
                         MediaQuery.of(context).padding.bottom,
