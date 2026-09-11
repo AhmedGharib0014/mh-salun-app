@@ -29,7 +29,11 @@ import 'package:mh_salun/features/home/bloc/home_tab/home_tab_cubit.dart'
     as _i898;
 import 'package:mh_salun/features/home/bloc/organization/organization_bloc.dart'
     as _i291;
-import 'package:mh_salun/features/login/bloc/login_bloc.dart' as _i569;
+import 'package:mh_salun/features/login/bloc/login/login_bloc.dart' as _i520;
+import 'package:mh_salun/features/login/bloc/reset_password/reset_password_bloc.dart'
+    as _i359;
+import 'package:mh_salun/features/login/data/forgot_password_repository.dart'
+    as _i253;
 import 'package:mh_salun/features/login/data/login_repository.dart' as _i1060;
 import 'package:mh_salun/features/registration/bloc/register_bloc.dart'
     as _i377;
@@ -76,6 +80,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i920.EmployeeRepository>(
       () => _i920.EmployeeRepository(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i253.ForgotPasswordRepository>(
+      () => _i253.ForgotPasswordRepository(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i280.RegisterRepository>(
       () => _i280.RegisterRepository(gh<_i361.Dio>()),
@@ -125,8 +132,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i448.ServicesBloc>(
       () => _i448.ServicesBloc(gh<_i662.CatalogItemRepository>()),
     );
-    gh.factory<_i569.LoginBloc>(
-      () => _i569.LoginBloc(gh<_i1060.LoginRepository>()),
+    gh.factory<_i359.ResetPasswordBloc>(
+      () => _i359.ResetPasswordBloc(gh<_i253.ForgotPasswordRepository>()),
+    );
+    gh.factory<_i520.LoginBloc>(
+      () => _i520.LoginBloc(gh<_i1060.LoginRepository>()),
     );
     gh.factory<_i585.BookReservationBloc>(
       () => _i585.BookReservationBloc(gh<_i438.BookReservationRepository>()),

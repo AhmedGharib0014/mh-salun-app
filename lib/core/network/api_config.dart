@@ -7,7 +7,7 @@ class ApiConfig {
 
   // Local backend. On the Android emulator use 10.0.2.2 instead of localhost
   // to reach the host machine.
-  static const String baseUrl = 'http://localhost:8080/api/v1';
+  static const String baseUrl = 'https://api.104-155-160-167.sslip.io/api/v1';
 
   static const Duration connectTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);

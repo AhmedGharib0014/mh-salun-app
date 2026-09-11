@@ -10,7 +10,7 @@ import 'package:mh_salun/core/theme/text_styles.dart';
 import 'package:mh_salun/core/presentation/widgets/auth_switch_link.dart';
 import 'package:mh_salun/core/presentation/widgets/email_text_field.dart';
 import 'package:mh_salun/core/presentation/widgets/password_text_field.dart';
-import 'package:mh_salun/features/login/bloc/login_bloc.dart';
+import 'package:mh_salun/features/login/bloc/login/login_bloc.dart';
 import 'package:mh_salun/features/login/presentation/widgets/forgot_password_button.dart';
 import 'package:mh_salun/features/login/presentation/widgets/login_button.dart';
 
