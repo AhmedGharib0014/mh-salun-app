@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/data/auth_exception.dart';
-import '../data/login_repository.dart';
+import '../../../../core/data/auth_exception.dart';
+import '../../data/login_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
