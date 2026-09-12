@@ -156,5 +156,6 @@
   "delete_account_confirm_title": "حذف الحساب",
   "delete_account_confirm_message": "سيؤدي هذا إلى حذف حسابك وجميع بياناتك نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
   "delete_account_confirm_cancel": "إلغاء",
-  "delete_account_confirm_action": "حذف"
+  "delete_account_confirm_action": "حذف",
+  "delete_account_generic_error": "تعذر حذف حسابك. يرجى المحاولة مرة أخرى."
 }

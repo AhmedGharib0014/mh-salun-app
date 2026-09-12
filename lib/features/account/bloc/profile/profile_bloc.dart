@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data/profile_repository.dart';
-import '../model/profile.dart';
+import '../../data/profile_repository.dart';
+import '../../model/profile.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

@@ -15,7 +15,12 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:mh_salun/core/data/organization_repository.dart' as _i445;
 import 'package:mh_salun/core/data/token_storage.dart' as _i724;
 import 'package:mh_salun/core/di/register_module.dart' as _i511;
-import 'package:mh_salun/features/account/bloc/profile_bloc.dart' as _i854;
+import 'package:mh_salun/features/account/bloc/delete_account/delete_account_bloc.dart'
+    as _i125;
+import 'package:mh_salun/features/account/bloc/profile/profile_bloc.dart'
+    as _i425;
+import 'package:mh_salun/features/account/data/delete_account_repository.dart'
+    as _i896;
 import 'package:mh_salun/features/account/data/profile_repository.dart'
     as _i257;
 import 'package:mh_salun/features/auth/bloc/auth_bloc.dart' as _i835;
@@ -72,6 +77,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i445.OrganizationRepository>(
       () => _i445.OrganizationRepository(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i896.DeleteAccountRepository>(
+      () => _i896.DeleteAccountRepository(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i257.ProfileRepository>(
       () => _i257.ProfileRepository(gh<_i361.Dio>()),
     );
@@ -126,14 +134,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i835.AuthBloc>(
       () => _i835.AuthBloc(gh<_i724.TokenStorage>()),
     );
-    gh.lazySingleton<_i854.ProfileBloc>(
-      () => _i854.ProfileBloc(gh<_i257.ProfileRepository>()),
+    gh.lazySingleton<_i425.ProfileBloc>(
+      () => _i425.ProfileBloc(gh<_i257.ProfileRepository>()),
     );
     gh.lazySingleton<_i448.ServicesBloc>(
       () => _i448.ServicesBloc(gh<_i662.CatalogItemRepository>()),
     );
     gh.factory<_i359.ResetPasswordBloc>(
       () => _i359.ResetPasswordBloc(gh<_i253.ForgotPasswordRepository>()),
+    );
+    gh.factory<_i125.DeleteAccountBloc>(
+      () => _i125.DeleteAccountBloc(gh<_i896.DeleteAccountRepository>()),
     );
     gh.factory<_i520.LoginBloc>(
       () => _i520.LoginBloc(gh<_i1060.LoginRepository>()),

@@ -11,8 +11,8 @@ class CatalogItem {
     required this.name,
     required this.description,
     required this.price,
-    required this.durationUnits,
-    required this.bufferUnits,
+    required this.durationMinutes,
+    required this.bufferMinutes,
     required this.category,
     required this.active,
     required this.hasIcon,
@@ -30,8 +30,8 @@ class CatalogItem {
   final String name;
   final String description;
   final double price;
-  final int durationUnits;
-  final int bufferUnits;
+  final int durationMinutes;
+  final int bufferMinutes;
   final String category;
   final bool active;
   final bool hasIcon;

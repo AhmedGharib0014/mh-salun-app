@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
+import 'package:mh_salun/features/account/bloc/profile/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/account_header.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/account_info_section.dart';
 import 'package:mh_salun/features/account/presentation/widgets/account/delete_account_button.dart';
