@@ -13,7 +13,7 @@ extension CatalogItemX on CatalogItem {
       iconUrl: iconUrl,
       name: name,
       description: description,
-      duration: '$durationUnits min',
+      duration: '$durationMinutes min',
       price: '\$${price.toStringAsFixed(2)}',
     );
   }
