@@ -153,5 +153,6 @@
   "delete_account_confirm_title": "Delete account",
   "delete_account_confirm_message": "This will permanently delete your account and all your data. This action cannot be undone.",
   "delete_account_confirm_cancel": "Cancel",
-  "delete_account_confirm_action": "Delete"
+  "delete_account_confirm_action": "Delete",
+  "delete_account_generic_error": "We couldn't delete your account. Please try again."
 }

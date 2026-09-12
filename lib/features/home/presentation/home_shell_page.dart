@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/presentation/widgets/app_error_dialog.dart';
 import 'package:mh_salun/core/router/app_router.dart';
-import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
+import 'package:mh_salun/features/account/bloc/profile/profile_bloc.dart';
 import 'package:mh_salun/features/account/presentation/account_tab_view.dart';
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';

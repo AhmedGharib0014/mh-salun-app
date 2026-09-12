@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/router/app_router.dart';
-import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
+import 'package:mh_salun/features/account/bloc/profile/profile_bloc.dart';
 import 'package:mh_salun/features/auth/bloc/auth_bloc.dart';
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart';
 import 'package:mh_salun/features/employees/bloc/employees_bloc.dart';

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/theme/font_sizes.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
-import 'package:mh_salun/features/account/bloc/profile_bloc.dart';
+import 'package:mh_salun/features/account/bloc/profile/profile_bloc.dart';
 
 class GreetingHeader extends StatelessWidget {
   const GreetingHeader({super.key});
