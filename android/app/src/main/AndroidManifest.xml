@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Required in release builds: dio calls the backend API and google_fonts
+         fetches fonts over HTTP at runtime. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="mh_salun"
         android:name="${applicationName}"
