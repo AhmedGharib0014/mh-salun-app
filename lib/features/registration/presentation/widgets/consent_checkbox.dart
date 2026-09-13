@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:mh_salun/core/network/api_config.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Checkbox gating registration on accepting the Terms of Service and
 /// Privacy Policy. Participates in the enclosing [Form]'s validation, so
@@ -28,13 +31,26 @@ class ConsentCheckbox extends FormField<bool> {
                       activeColor: AppColors.primary,
                     ),
                     Expanded(
-                      child: GestureDetector(
-                        onTap: () => setChecked(!(state.value ?? false)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: AppSpacing.md),
-                          child: Text(
-                            'register_consent_label'.tr(),
-                            style: AppTextStyles.bodyRegular,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: AppSpacing.md),
+                        child: GestureDetector(
+                          onTap: () => setChecked(!(state.value ?? false)),
+                          child: Text.rich(
+                            TextSpan(
+                              style: AppTextStyles.bodyRegular,
+                              children: [
+                                TextSpan(text: 'register_consent_prefix'.tr()),
+                                TextSpan(
+                                  text: 'register_consent_link'.tr(),
+                                  style: AppTextStyles.bodyRegular.copyWith(
+                                    color: AppColors.primary,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = _openPrivacyPolicy,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -54,4 +70,9 @@ class ConsentCheckbox extends FormField<bool> {
             );
           },
         );
+
+  static Future<void> _openPrivacyPolicy() async {
+    final uri = Uri.parse('${ApiConfig.baseUrl}/auth/privacy-policy');
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
 }
