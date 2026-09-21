@@ -88,18 +88,11 @@ class _ServiceIcon extends StatelessWidget {
     }
     return SvgPicture.network(
       iconUrl,
-      width: AppSpacing.iconMd,
-      height: AppSpacing.iconMd,
-      placeholderBuilder: (context) => Icon(
-        service.icon,
-        size: AppSpacing.iconMd,
-        color: AppColors.primary,
-      ),
-      errorBuilder: (context, error, stackTrace) => Icon(
-        service.icon,
-        size: AppSpacing.iconMd,
-        color: AppColors.primary,
-      ),
+      fit: BoxFit.contain,
+      placeholderBuilder: (context) =>
+          Icon(service.icon, size: AppSpacing.iconMd, color: AppColors.primary),
+      errorBuilder: (context, error, stackTrace) =>
+          Icon(service.icon, size: AppSpacing.iconMd, color: AppColors.primary),
     );
   }
 }
