@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/model/service.dart';
+import 'package:mh_salun/core/utils/currency.dart';
 
 import 'catalog_item.dart';
 
@@ -14,7 +15,7 @@ extension CatalogItemX on CatalogItem {
       name: name,
       description: description,
       duration: '$durationMinutes min',
-      price: '\$${price.toStringAsFixed(2)}',
+      price: '${price.toStringAsFixed(2)} $currencySymbol',
     );
   }
 }
