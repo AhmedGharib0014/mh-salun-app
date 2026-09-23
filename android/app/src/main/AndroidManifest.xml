@@ -3,7 +3,7 @@
          fetches fonts over HTTP at runtime. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="mh_salun"
+        android:label="صالون هنيدي"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
