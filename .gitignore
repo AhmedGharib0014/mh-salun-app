@@ -52,6 +52,7 @@ app.*.map.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 /ios/build/
 *.p8
+/scripts/ios-deployment/deploy_credentials.sh
 
 # macOS
 **/macos/Pods/
