@@ -23,6 +23,10 @@ import 'package:mh_salun/features/account/data/delete_account_repository.dart'
     as _i896;
 import 'package:mh_salun/features/account/data/profile_repository.dart'
     as _i257;
+import 'package:mh_salun/features/app_version/bloc/app_version_bloc.dart'
+    as _i751;
+import 'package:mh_salun/features/app_version/data/app_version_repository.dart'
+    as _i763;
 import 'package:mh_salun/features/auth/bloc/auth_bloc.dart' as _i835;
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart' as _i589;
 import 'package:mh_salun/features/branches/data/branch_repository.dart'
@@ -83,6 +87,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i257.ProfileRepository>(
       () => _i257.ProfileRepository(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i763.AppVersionRepository>(
+      () => _i763.AppVersionRepository(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i158.BranchRepository>(
       () => _i158.BranchRepository(gh<_i361.Dio>()),
     );
@@ -133,6 +140,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i835.AuthBloc>(
       () => _i835.AuthBloc(gh<_i724.TokenStorage>()),
+    );
+    gh.factory<_i751.AppVersionBloc>(
+      () => _i751.AppVersionBloc(gh<_i763.AppVersionRepository>()),
     );
     gh.lazySingleton<_i425.ProfileBloc>(
       () => _i425.ProfileBloc(gh<_i257.ProfileRepository>()),

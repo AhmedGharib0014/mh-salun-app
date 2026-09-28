@@ -50,6 +50,7 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_svg: ^2.2.1
   url_launcher: ^6.3.2
+  package_info_plus: ^8.1.1
 
 dev_dependencies:
   flutter_test:
