@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/data/auth_exception.dart';
+import '../../../core/data/api_exception.dart';
 import '../../../core/data/token_storage.dart';
 import '../model/login_request.dart';
 import '../model/login_response.dart';
@@ -17,7 +17,7 @@ class LoginRepository {
   /// Calls `POST /auth/login`, persists the returned tokens, and returns the
   /// parsed response.
   ///
-  /// Throws [AuthException] on a failed login (e.g. invalid credentials) or
+  /// Throws [ApiException] on a failed login (e.g. invalid credentials) or
   /// when the backend is unreachable.
   Future<LoginResponse> login(String email, String password) async {
     try {
@@ -34,7 +34,7 @@ class LoginRepository {
       );
       return result;
     } on DioException catch (e) {
-      throw AuthException.fromDio(e);
+      throw ApiException.fromDio(e);
     }
   }
 }

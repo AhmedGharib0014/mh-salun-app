@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
@@ -51,13 +52,13 @@ class SelectServicesStep extends StatelessWidget {
             ),
             Expanded(
               child: switch (state) {
-                ServicesFailure(:final messageKey) => StepMessage(
+                ServicesFailure(:final message) => StepMessage(
                   icon: Icons.error_outline_rounded,
-                  messageKey: messageKey,
+                  message: message,
                 ),
-                ServicesLoaded() when offered.isEmpty => const StepMessage(
+                ServicesLoaded() when offered.isEmpty => StepMessage(
                   icon: Icons.content_cut_rounded,
-                  messageKey: 'new_reservation_service_empty',
+                  message: 'new_reservation_service_empty'.tr(),
                 ),
                 ServicesLoaded() => ListView.separated(
                   padding: const EdgeInsets.fromLTRB(

@@ -50,6 +50,9 @@ app.*.map.json
 **/ios/Flutter/Flutter.podspec
 **/ios/Flutter/Generated.xcconfig
 **/ios/Runner/GeneratedPluginRegistrant.*
+/ios/build/
+*.p8
+/scripts/ios-deployment/deploy_credentials.sh
 
 # macOS
 **/macos/Pods/

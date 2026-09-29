@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/data/auth_exception.dart';
+import '../../../../core/data/api_exception.dart';
 import '../../data/forgot_password_repository.dart';
 
 part 'reset_password_event.dart';
@@ -24,7 +24,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     try {
       await _repo.requestResetLink(event.email);
       emit(ResetPasswordSuccess());
-    } on AuthException catch (e) {
+    } on ApiException catch (e) {
       emit(ResetPasswordFailure(e.message));
     } catch (_) {
       emit(ResetPasswordFailure('login_generic_error'.tr()));

@@ -79,6 +79,8 @@ class _HomeShellPageState extends State<HomeShellPage>
       context.read<EmployeesBloc>().add(EmployeesRequested(orgId));
       context.read<ServicesBloc>().add(ServicesRequested(orgId));
       context.read<BranchesBloc>().add(BranchesRequested(orgId));
+    } else if (state is OrganizationFailure) {
+      AppErrorDialog.show(context, state.message);
     }
   }
 
@@ -94,14 +96,14 @@ class _HomeShellPageState extends State<HomeShellPage>
           BlocListener<EmployeesBloc, EmployeesState>(
             listener: (context, state) {
               if (state is EmployeesFailure) {
-                AppErrorDialog.show(context, state.messageKey);
+                AppErrorDialog.show(context, state.message);
               }
             },
           ),
           BlocListener<ServicesBloc, ServicesState>(
             listener: (context, state) {
               if (state is ServicesFailure) {
-                AppErrorDialog.show(context, state.messageKey);
+                AppErrorDialog.show(context, state.message);
               }
             },
           ),
@@ -109,7 +111,7 @@ class _HomeShellPageState extends State<HomeShellPage>
           BlocListener<ProfileBloc, ProfileState>(
             listener: (context, state) {
               if (state is ProfileFailure) {
-                AppErrorDialog.show(context, state.messageKey);
+                AppErrorDialog.show(context, state.message);
               }
             },
           ),

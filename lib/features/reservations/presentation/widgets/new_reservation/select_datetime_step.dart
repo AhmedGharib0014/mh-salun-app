@@ -157,9 +157,9 @@ class _SelectDateTimeViewState extends State<_SelectDateTimeView> {
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
           child: BlocBuilder<AvailableSlotsBloc, AvailableSlotsState>(
             builder: (context, state) => switch (state) {
-              AvailableSlotsFailure(:final messageKey) => StepMessage(
+              AvailableSlotsFailure(:final message) => StepMessage(
                 icon: Icons.error_outline_rounded,
-                messageKey: messageKey,
+                message: message,
               ),
               AvailableSlotsLoaded(:final slots) => TimeSlotGrid(
                 slots: slots,

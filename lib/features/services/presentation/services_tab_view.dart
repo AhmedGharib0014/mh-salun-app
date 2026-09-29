@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
+import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/features/services/bloc/services_bloc.dart';
 import 'package:mh_salun/features/services/model/catalog_item_x.dart';
 import 'package:mh_salun/features/services/presentation/widgets/services/all_services_grid.dart';
@@ -23,8 +24,23 @@ class ServicesTabView extends StatelessWidget {
             );
           }
           if (state is ServicesFailure) {
-            return const Center(
-              child: Icon(Icons.error_outline, color: AppColors.primary),
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.error_outline, color: AppColors.primary),
+                  const SizedBox(height: AppSpacing.md),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                    ),
+                    child: Text(
+                      state.message,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
             );
           }
           return const Center(

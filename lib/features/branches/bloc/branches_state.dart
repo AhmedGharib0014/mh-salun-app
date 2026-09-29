@@ -13,7 +13,7 @@ class BranchesLoaded extends BranchesState {
 }
 
 class BranchesFailure extends BranchesState {
-  BranchesFailure(this.messageKey);
+  BranchesFailure(this.message);
 
-  final String messageKey;
+  final String message;
 }

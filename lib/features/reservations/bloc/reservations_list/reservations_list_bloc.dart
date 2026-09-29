@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/data/api_exception.dart';
 import '../../data/reservations_repository.dart';
 import '../../model/booked_reservation.dart';
 import '../../model/reservation_filter.dart';
@@ -49,8 +51,10 @@ abstract class ReservationsListBloc
       _items = page.content;
       _nextPage = page.nextPage;
       emit(ReservationsListLoaded(items: _items, hasNext: page.hasNext));
+    } on ApiException catch (e) {
+      emit(ReservationsListFailure(e.message));
     } catch (e) {
-      emit(ReservationsListFailure(_messageKey(e)));
+      emit(ReservationsListFailure(_message(e)));
     }
   }
 
@@ -88,8 +92,9 @@ abstract class ReservationsListBloc
     emit(ReservationsListInitial());
   }
 
-  String _messageKey(Object error) =>
-      error is DioException ? 'network_error' : 'reservations_generic_error';
+  String _message(Object error) => error is DioException
+      ? 'network_error'.tr()
+      : 'reservations_generic_error'.tr();
 }
 
 /// The guest's upcoming reservations.

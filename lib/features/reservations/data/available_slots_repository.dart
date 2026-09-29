@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/data/api_exception.dart';
 import '../model/available_slots_request.dart';
 import '../model/available_slots_response.dart';
 
@@ -20,17 +21,21 @@ class AvailableSlotsRepository {
     required List<String> catalogItemIds,
     required DateTime date,
   }) async {
-    final response = await _dio.post(
-      '/reservations/available-slots',
-      data: AvailableSlotsRequest(
-        employeeId: employeeId,
-        branchId: branchId,
-        catalogItemIds: catalogItemIds,
-        date: date,
-      ).toJson(),
-    );
-    return AvailableSlotsResponse.fromJson(
-      response.data as Map<String, dynamic>,
-    );
+    try {
+      final response = await _dio.post(
+        '/reservations/available-slots',
+        data: AvailableSlotsRequest(
+          employeeId: employeeId,
+          branchId: branchId,
+          catalogItemIds: catalogItemIds,
+          date: date,
+        ).toJson(),
+      );
+      return AvailableSlotsResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
   }
 }

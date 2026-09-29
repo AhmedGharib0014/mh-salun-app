@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../model/refresh_token_request.dart';
 import '../model/refresh_token_response.dart';
-import 'auth_exception.dart';
+import 'api_exception.dart';
 import 'token_storage.dart';
 
 /// Data access for the token-refresh endpoint.
@@ -21,7 +21,7 @@ class RefreshTokenRepository {
   /// Calls `POST /auth/refresh-token`, persists the returned tokens, and
   /// returns the parsed response.
   ///
-  /// Throws [AuthException] on a failed refresh (e.g. expired refresh
+  /// Throws [ApiException] on a failed refresh (e.g. expired refresh
   /// token) or when the backend is unreachable.
   Future<RefreshTokenResponse> refresh(String refreshToken) async {
     try {
@@ -38,7 +38,7 @@ class RefreshTokenRepository {
       );
       return result;
     } on DioException catch (e) {
-      throw AuthException.fromDio(e);
+      throw ApiException.fromDio(e);
     }
   }
 }

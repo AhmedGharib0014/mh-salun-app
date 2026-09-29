@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/data/auth_exception.dart';
+import '../../../../core/data/api_exception.dart';
 import '../../data/login_repository.dart';
 
 part 'login_event.dart';
@@ -24,7 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       await _repo.login(event.email, event.password);
       emit(LoginSuccess());
-    } on AuthException catch (e) {
+    } on ApiException catch (e) {
       emit(LoginFailure(e.message));
     } catch (_) {
       emit(LoginFailure('login_generic_error'.tr()));

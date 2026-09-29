@@ -35,8 +35,6 @@ void main() async {
           BlocProvider(create: (_) => getIt<ProfileBloc>()),
           BlocProvider(create: (_) => getIt<AuthBloc>()),
           BlocProvider(create: (_) => getIt<HomeTabCubit>()),
-          // Above the router: the home card, the upcoming tab and the success
-          // page all read this one list.
           BlocProvider(create: (_) => getIt<UpcomingReservationsBloc>()),
         ],
         child: const GlobalListener(child: MyApp()),

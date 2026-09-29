@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
+import 'package:mh_salun/core/utils/currency.dart';
 import 'package:mh_salun/features/branches/model/branch.dart';
 import 'package:mh_salun/features/employees/model/employee.dart';
 import 'package:mh_salun/features/reservations/model/available_slot.dart';
@@ -100,7 +101,7 @@ class ReviewStep extends StatelessWidget {
     final digits = NumberFormat.decimalPattern(
       context.locale.toString(),
     ).format(total);
-    return '\$$digits';
+    return '$digits $currencySymbol';
   }
 
   String _dateTimeLabel(BuildContext context, DateTime time) {

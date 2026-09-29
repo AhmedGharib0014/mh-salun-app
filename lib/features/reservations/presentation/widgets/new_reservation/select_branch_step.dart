@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
@@ -42,14 +43,14 @@ class SelectBranchStep extends StatelessWidget {
             ),
             Expanded(
               child: switch (state) {
-                BranchesFailure(:final messageKey) => StepMessage(
+                BranchesFailure(:final message) => StepMessage(
                   icon: Icons.error_outline_rounded,
-                  messageKey: messageKey,
+                  message: message,
                 ),
                 BranchesLoaded(:final branches) when branches.isEmpty =>
-                  const StepMessage(
+                  StepMessage(
                     icon: Icons.store_mall_directory_outlined,
-                    messageKey: 'new_reservation_branch_empty',
+                    message: 'new_reservation_branch_empty'.tr(),
                   ),
                 BranchesLoaded(:final branches) => ListView.separated(
                   padding: const EdgeInsets.fromLTRB(

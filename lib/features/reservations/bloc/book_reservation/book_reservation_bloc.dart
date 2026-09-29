@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/data/api_exception.dart';
 import '../../data/book_reservation_repository.dart';
 import '../../model/booked_reservation.dart';
 
@@ -32,10 +33,10 @@ class BookReservationBloc
     try {
       final reservation = await _repo.book(event.timeSlotId);
       emit(BookReservationSuccess(reservation));
-    } on DioException catch (_) {
-      emit(BookReservationFailure('network_error'));
+    } on ApiException catch (e) {
+      emit(BookReservationFailure(e.message));
     } catch (_) {
-      emit(BookReservationFailure('new_reservation_book_error'));
+      emit(BookReservationFailure('new_reservation_book_error'.tr()));
     }
   }
 }

@@ -23,6 +23,10 @@ import 'package:mh_salun/features/account/data/delete_account_repository.dart'
     as _i896;
 import 'package:mh_salun/features/account/data/profile_repository.dart'
     as _i257;
+import 'package:mh_salun/features/app_version/bloc/app_version_bloc.dart'
+    as _i751;
+import 'package:mh_salun/features/app_version/data/app_version_repository.dart'
+    as _i763;
 import 'package:mh_salun/features/auth/bloc/auth_bloc.dart' as _i835;
 import 'package:mh_salun/features/branches/bloc/branches_bloc.dart' as _i589;
 import 'package:mh_salun/features/branches/data/branch_repository.dart'
@@ -42,8 +46,12 @@ import 'package:mh_salun/features/login/data/forgot_password_repository.dart'
 import 'package:mh_salun/features/login/data/login_repository.dart' as _i1060;
 import 'package:mh_salun/features/registration/bloc/register_bloc.dart'
     as _i377;
+import 'package:mh_salun/features/registration/bloc/resend_verification/resend_verification_bloc.dart'
+    as _i630;
 import 'package:mh_salun/features/registration/data/register_repository.dart'
     as _i280;
+import 'package:mh_salun/features/registration/data/resend_verification_repository.dart'
+    as _i369;
 import 'package:mh_salun/features/reservations/bloc/available_slots/available_slots_bloc.dart'
     as _i456;
 import 'package:mh_salun/features/reservations/bloc/book_reservation/book_reservation_bloc.dart'
@@ -83,6 +91,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i257.ProfileRepository>(
       () => _i257.ProfileRepository(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i763.AppVersionRepository>(
+      () => _i763.AppVersionRepository(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i158.BranchRepository>(
       () => _i158.BranchRepository(gh<_i361.Dio>()),
     );
@@ -94,6 +105,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i280.RegisterRepository>(
       () => _i280.RegisterRepository(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i369.ResendVerificationRepository>(
+      () => _i369.ResendVerificationRepository(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i7.AvailableSlotsRepository>(
       () => _i7.AvailableSlotsRepository(gh<_i361.Dio>()),
@@ -134,11 +148,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i835.AuthBloc>(
       () => _i835.AuthBloc(gh<_i724.TokenStorage>()),
     );
+    gh.factory<_i751.AppVersionBloc>(
+      () => _i751.AppVersionBloc(gh<_i763.AppVersionRepository>()),
+    );
     gh.lazySingleton<_i425.ProfileBloc>(
       () => _i425.ProfileBloc(gh<_i257.ProfileRepository>()),
     );
     gh.lazySingleton<_i448.ServicesBloc>(
       () => _i448.ServicesBloc(gh<_i662.CatalogItemRepository>()),
+    );
+    gh.factory<_i630.ResendVerificationBloc>(
+      () => _i630.ResendVerificationBloc(
+        gh<_i369.ResendVerificationRepository>(),
+      ),
     );
     gh.factory<_i359.ResetPasswordBloc>(
       () => _i359.ResetPasswordBloc(gh<_i253.ForgotPasswordRepository>()),

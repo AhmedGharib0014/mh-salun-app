@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/data/api_exception.dart';
 import '../data/catalog_item_repository.dart';
 import '../model/catalog_item.dart';
 
@@ -35,10 +36,10 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       );
       _items = items;
       emit(ServicesLoaded(items));
-    } on DioException catch (_) {
-      emit(ServicesFailure('network_error'));
+    } on ApiException catch (e) {
+      emit(ServicesFailure(e.message));
     } catch (_) {
-      emit(ServicesFailure('services_generic_error'));
+      emit(ServicesFailure('services_generic_error'.tr()));
     }
   }
 

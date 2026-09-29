@@ -13,7 +13,7 @@ class EmployeesLoaded extends EmployeesState {
 }
 
 class EmployeesFailure extends EmployeesState {
-  EmployeesFailure(this.messageKey);
+  EmployeesFailure(this.message);
 
-  final String messageKey;
+  final String message;
 }

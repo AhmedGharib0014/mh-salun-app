@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
@@ -42,14 +43,14 @@ class SelectBarberStep extends StatelessWidget {
             ),
             Expanded(
               child: switch (state) {
-                EmployeesFailure(:final messageKey) => StepMessage(
+                EmployeesFailure(:final message) => StepMessage(
                   icon: Icons.error_outline_rounded,
-                  messageKey: messageKey,
+                  message: message,
                 ),
                 EmployeesLoaded(:final employees) when employees.isEmpty =>
-                  const StepMessage(
+                  StepMessage(
                     icon: Icons.person_off_outlined,
-                    messageKey: 'new_reservation_barber_empty',
+                    message: 'new_reservation_barber_empty'.tr(),
                   ),
                 EmployeesLoaded(:final employees) => GridView.builder(
                   padding: const EdgeInsets.fromLTRB(

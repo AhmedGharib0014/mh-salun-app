@@ -42,6 +42,9 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onRegisterTap() => context.goNamed(AppRoutes.register);
 
+  void _onResendVerification() =>
+      context.pushNamed(AppRoutes.resendVerification);
+
   void _submit(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<LoginBloc>().add(
@@ -114,6 +117,12 @@ class _LoginPageState extends State<LoginPage> {
                     promptKey: 'auth_no_account',
                     actionKey: 'auth_register_action',
                     onTap: _onRegisterTap,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  AuthSwitchLink(
+                    promptKey: 'auth_not_verified',
+                    actionKey: 'auth_resend_verification_action',
+                    onTap: _onResendVerification,
                   ),
                 ],
               ),

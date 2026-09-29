@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/data/api_exception.dart';
 import '../model/catalog_item.dart';
 
 /// Data access for the catalog items endpoint.
@@ -15,13 +16,17 @@ class CatalogItemRepository {
   Future<List<CatalogItem>> getCatalogItems({
     required String organizationId,
   }) async {
-    final response = await _dio.get(
-      '/catalog-items',
-      queryParameters: {'organizationId': organizationId},
-    );
-    final data = response.data as List<dynamic>;
-    return data
-        .map((item) => CatalogItem.fromJson(item as Map<String, dynamic>))
-        .toList();
+    try {
+      final response = await _dio.get(
+        '/catalog-items',
+        queryParameters: {'organizationId': organizationId},
+      );
+      final data = response.data as List<dynamic>;
+      return data
+          .map((item) => CatalogItem.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
   }
 }

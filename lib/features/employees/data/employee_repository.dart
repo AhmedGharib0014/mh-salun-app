@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/data/api_exception.dart';
 import '../model/employee.dart';
 
 /// Data access for the workforce employees endpoint.
@@ -13,13 +14,17 @@ class EmployeeRepository {
   /// Calls `GET /workforce/employees` for the given organization and returns
   /// the parsed list of employees.
   Future<List<Employee>> getEmployees({required String orgId}) async {
-    final response = await _dio.get(
-      '/workforce/employees',
-      queryParameters: {'orgId': orgId},
-    );
-    final data = response.data as List<dynamic>;
-    return data
-        .map((item) => Employee.fromJson(item as Map<String, dynamic>))
-        .toList();
+    try {
+      final response = await _dio.get(
+        '/workforce/employees',
+        queryParameters: {'orgId': orgId},
+      );
+      final data = response.data as List<dynamic>;
+      return data
+          .map((item) => Employee.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
   }
 }

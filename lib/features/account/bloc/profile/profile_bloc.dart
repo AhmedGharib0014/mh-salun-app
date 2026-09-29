@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/data/api_exception.dart';
 import '../../data/profile_repository.dart';
 import '../../model/profile.dart';
 
@@ -27,10 +28,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       final profile = await _repo.getMyProfile();
       emit(ProfileLoaded(profile));
-    } on DioException catch (_) {
-      emit(ProfileFailure('network_error'));
+    } on ApiException catch (e) {
+      emit(ProfileFailure(e.message));
     } catch (_) {
-      emit(ProfileFailure('profile_generic_error'));
+      emit(ProfileFailure('profile_generic_error'.tr()));
     }
   }
 

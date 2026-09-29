@@ -4,8 +4,8 @@ part 'page_response.g.dart';
 
 /// One page of a paginated backend response.
 ///
-/// The backend returns Spring's page envelope — this keeps the fields the app
-/// actually paginates on and ignores the rest (`pageable`, `sort`).
+/// The envelope is `{content, page, size, hasNext}` — the backend does not send
+/// totals, so whether more pages exist is only known through [hasNext].
 ///
 /// [T] is the element type of [content]; parse it with the element's own
 /// `fromJson`:
@@ -20,14 +20,9 @@ part 'page_response.g.dart';
 class PageResponse<T> {
   const PageResponse({
     required this.content,
-    required this.number,
+    required this.page,
     required this.size,
-    required this.totalElements,
-    required this.totalPages,
-    required this.first,
-    required this.last,
-    required this.numberOfElements,
-    required this.empty,
+    required this.hasNext,
   });
 
   factory PageResponse.fromJson(
@@ -38,26 +33,16 @@ class PageResponse<T> {
   final List<T> content;
 
   /// Zero-based index of this page — the `page` query parameter that produced it.
-  final int number;
+  final int page;
 
   /// Requested page size — the `size` query parameter.
   final int size;
 
-  final int totalElements;
-  final int totalPages;
-  final bool first;
-  final bool last;
-
-  /// How many elements this page actually carries, which is at most [size].
-  final int numberOfElements;
-
-  final bool empty;
-
   /// Whether another page can be requested after this one.
-  bool get hasNext => !last;
+  final bool hasNext;
 
   /// Page index to request next, or `null` when this is the last page.
-  int? get nextPage => hasNext ? number + 1 : null;
+  int? get nextPage => hasNext ? page + 1 : null;
 
   Map<String, dynamic> toJson(Object? Function(T value) toJsonT) =>
       _$PageResponseToJson(this, toJsonT);

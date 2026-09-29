@@ -4,6 +4,7 @@ import 'package:mh_salun/features/branches/presentation/branch_details_page.dart
 import 'package:mh_salun/features/login/presentation/login_page.dart';
 import 'package:mh_salun/features/login/presentation/reset_password_page.dart';
 import 'package:mh_salun/features/registration/presentation/register_page.dart';
+import 'package:mh_salun/features/registration/presentation/resend_verification_page.dart';
 import 'package:mh_salun/features/home/presentation/home_shell_page.dart';
 import 'package:mh_salun/features/reservations/model/booked_reservation.dart';
 import 'package:mh_salun/features/reservations/presentation/new_reservation_flow_page.dart';
@@ -16,6 +17,7 @@ class AppRoutes {
   static const login = 'login';
   static const register = 'register';
   static const resetPassword = 'reset-password';
+  static const resendVerification = 'resend-verification';
   static const newReservation = 'new-reservation';
   static const reservationSuccess = 'reservation-success';
   static const branchDetails = 'branch-details';
@@ -48,6 +50,11 @@ final appRouter = GoRouter(
       path: '/reset-password',
       name: AppRoutes.resetPassword,
       builder: (context, state) => const ResetPasswordPage(),
+    ),
+    GoRoute(
+      path: '/resend-verification',
+      name: AppRoutes.resendVerification,
+      builder: (context, state) => const ResendVerificationPage(),
     ),
     GoRoute(
       path: '/new-reservation',

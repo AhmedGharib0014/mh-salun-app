@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
@@ -7,10 +6,10 @@ import 'package:mh_salun/core/theme/text_styles.dart';
 /// Centered icon + message filling the step body when there is nothing to pick
 /// from — either the branches failed to load or the salon has none.
 class StepMessage extends StatelessWidget {
-  const StepMessage({super.key, required this.icon, required this.messageKey});
+  const StepMessage({super.key, required this.icon, required this.message});
 
   final IconData icon;
-  final String messageKey;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class StepMessage extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              messageKey.tr(),
+              message,
               textAlign: TextAlign.center,
               style: AppTextStyles.bodySecondary,
             ),

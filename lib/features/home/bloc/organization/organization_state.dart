@@ -13,7 +13,7 @@ class OrganizationLoaded extends OrganizationState {
 }
 
 class OrganizationFailure extends OrganizationState {
-  OrganizationFailure(this.messageKey);
+  OrganizationFailure(this.message);
 
-  final String messageKey;
+  final String message;
 }

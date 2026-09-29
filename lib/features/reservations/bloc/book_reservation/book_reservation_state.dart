@@ -13,7 +13,8 @@ class BookReservationSuccess extends BookReservationState {
 }
 
 class BookReservationFailure extends BookReservationState {
-  BookReservationFailure(this.messageKey);
+  BookReservationFailure(this.message);
 
-  final String messageKey;
+  /// User-facing, display-ready text for the error dialog.
+  final String message;
 }
