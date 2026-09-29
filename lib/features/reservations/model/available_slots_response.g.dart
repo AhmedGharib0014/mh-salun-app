@@ -9,7 +9,7 @@ part of 'available_slots_response.dart';
 AvailableSlotsResponse _$AvailableSlotsResponseFromJson(
   Map<String, dynamic> json,
 ) => AvailableSlotsResponse(
-  offerId: json['offerId'] as String,
+  offerId: json['offerId'] as String?,
   employeeId: json['employeeId'] as String,
   date: DateTime.parse(json['date'] as String),
   slots: (json['slots'] as List<dynamic>)

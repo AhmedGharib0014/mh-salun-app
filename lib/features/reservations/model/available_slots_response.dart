@@ -20,7 +20,7 @@ class AvailableSlotsResponse {
   factory AvailableSlotsResponse.fromJson(Map<String, dynamic> json) =>
       _$AvailableSlotsResponseFromJson(json);
 
-  final String offerId;
+  final String? offerId;
   final String employeeId;
   final DateTime date;
   final List<AvailableSlot> slots;

@@ -11,7 +11,7 @@ class AvailableSlotsLoaded extends AvailableSlotsState {
 
   /// The offer the returned [slots] belong to — what the booking call refers
   /// back to once the guest confirms.
-  final String offerId;
+  final String? offerId;
   final List<AvailableSlot> slots;
 }
 
