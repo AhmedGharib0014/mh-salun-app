@@ -18,6 +18,7 @@ Dio createDioClient() {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Accept-Language': 'ar',
       },
     ),
   );
@@ -51,7 +52,12 @@ class TokenRefreshInterceptor extends QueuedInterceptorsWrapper {
   TokenRefreshInterceptor(this._dio, TokenStorage tokenStorage)
     : _tokenStorage = tokenStorage,
       _refreshTokenRepository = RefreshTokenRepository(
-        Dio(BaseOptions(baseUrl: ApiConfig.baseUrl))
+        Dio(
+            BaseOptions(
+              baseUrl: ApiConfig.baseUrl,
+              headers: {'Accept-Language': 'ar'},
+            ),
+          )
           ..interceptors.add(DioLogInterceptor()),
         tokenStorage,
       );
