@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/data/api_exception.dart';
 import '../../../core/storage/local_storage.dart';
 import '../model/profile.dart';
 
@@ -21,10 +22,17 @@ class ProfileRepository {
     final cached = cachedProfile;
     if (cached != null) return cached;
 
-    final response = await _dio.get('/profiles/me');
-    final result = Profile.fromJson(response.data as Map<String, dynamic>);
-    await LocalStorage.prefs.setString(_cacheKey, jsonEncode(result.toJson()));
-    return result;
+    try {
+      final response = await _dio.get('/profiles/me');
+      final result = Profile.fromJson(response.data as Map<String, dynamic>);
+      await LocalStorage.prefs.setString(
+        _cacheKey,
+        jsonEncode(result.toJson()),
+      );
+      return result;
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
   }
 
   /// The last cached profile, or `null` if none has been fetched yet.

@@ -50,7 +50,7 @@ class ReservationsTabView extends StatelessWidget {
                       emptyState: EmptyReservationsState(
                         icon: Icons.event_available_outlined,
                         titleKey: 'reservations_empty_upcoming_title',
-                        subtitleKey: 'reservations_empty_upcoming_subtitle',
+                        subtitle: 'reservations_empty_upcoming_subtitle'.tr(),
                         actionKey: 'home_book_button',
                         onActionTap: onStartBooking,
                       ),

@@ -13,7 +13,7 @@ class ServicesLoaded extends ServicesState {
 }
 
 class ServicesFailure extends ServicesState {
-  ServicesFailure(this.messageKey);
+  ServicesFailure(this.message);
 
-  final String messageKey;
+  final String message;
 }

@@ -34,11 +34,11 @@ class ReservationsTab<B extends ReservationsListBloc> extends StatelessWidget {
         switch (state) {
           case ReservationsListInitial() || ReservationsListLoading():
             return const SectionLoading(height: double.infinity);
-          case ReservationsListFailure(:final messageKey):
+          case ReservationsListFailure(:final message):
             return EmptyReservationsState(
               icon: Icons.error_outline,
               titleKey: 'common_error_title',
-              subtitleKey: messageKey,
+              subtitle: message,
               actionKey: 'reservations_retry',
               onActionTap: () =>
                   context.read<B>().add(ReservationsListRefreshed()),

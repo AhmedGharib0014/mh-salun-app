@@ -12,7 +12,7 @@ class EmptyReservationsState extends StatelessWidget {
     super.key,
     required this.icon,
     required this.titleKey,
-    this.subtitleKey,
+    this.subtitle,
     this.actionKey,
     this.onActionTap,
   }) : assert(
@@ -22,7 +22,7 @@ class EmptyReservationsState extends StatelessWidget {
 
   final IconData icon;
   final String titleKey;
-  final String? subtitleKey;
+  final String? subtitle;
   final String? actionKey;
   final VoidCallback? onActionTap;
 
@@ -57,10 +57,10 @@ class EmptyReservationsState extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.titleMedium,
             ),
-            if (subtitleKey != null) ...[
+            if (subtitle != null) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                subtitleKey!.tr(),
+                subtitle!,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodySecondary,
               ),

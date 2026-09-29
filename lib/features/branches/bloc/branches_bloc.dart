@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../core/data/api_exception.dart';
 import '../data/branch_repository.dart';
 import '../model/branch.dart';
 
@@ -27,10 +28,10 @@ class BranchesBloc extends Bloc<BranchesEvent, BranchesState> {
     try {
       final branches = await _repo.getBranches(orgId: event.orgId);
       emit(BranchesLoaded(branches));
-    } on DioException catch (_) {
-      emit(BranchesFailure('network_error'));
+    } on ApiException catch (e) {
+      emit(BranchesFailure(e.message));
     } catch (_) {
-      emit(BranchesFailure('branches_generic_error'));
+      emit(BranchesFailure('branches_generic_error'.tr()));
     }
   }
 

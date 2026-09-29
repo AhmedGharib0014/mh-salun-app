@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../features/auth/bloc/auth_bloc.dart';
-import '../data/auth_exception.dart';
+import '../data/api_exception.dart';
 import '../data/refresh_token_repository.dart';
 import '../data/token_storage.dart';
 import '../di/injection.dart';
@@ -88,7 +88,7 @@ class TokenRefreshInterceptor extends QueuedInterceptorsWrapper {
       retryOptions.headers['Authorization'] = 'Bearer ${result.accessToken}';
       final retryResponse = await _dio.fetch(retryOptions);
       handler.resolve(retryResponse);
-    } on AuthException catch (e) {
+    } on ApiException catch (e) {
       appLogger.w(
         '[TOKEN REFRESH] Refresh failed (${e.runtimeType}) — logging out.',
       );

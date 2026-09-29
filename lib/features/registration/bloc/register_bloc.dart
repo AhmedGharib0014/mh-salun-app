@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/data/auth_exception.dart';
+import '../../../core/data/api_exception.dart';
 import '../data/register_repository.dart';
 
 part 'register_event.dart';
@@ -30,7 +30,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         dateOfBirth: event.dateOfBirth,
       );
       emit(RegisterSuccess());
-    } on AuthException catch (e) {
+    } on ApiException catch (e) {
       emit(RegisterFailure(e.message));
     } catch (_) {
       emit(RegisterFailure('register_generic_error'.tr()));

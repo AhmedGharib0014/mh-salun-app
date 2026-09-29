@@ -82,8 +82,8 @@ class _NewReservationFlowViewState extends State<_NewReservationFlowView> {
           AppRoutes.reservationSuccess,
           extra: reservation,
         );
-      case BookReservationFailure(:final messageKey):
-        AppErrorDialog.show(context, messageKey);
+      case BookReservationFailure(:final message):
+        AppErrorDialog.show(context, message);
       case BookReservationInitial():
       case BookReservationLoading():
         break;

@@ -16,7 +16,8 @@ class AvailableSlotsLoaded extends AvailableSlotsState {
 }
 
 class AvailableSlotsFailure extends AvailableSlotsState {
-  AvailableSlotsFailure(this.messageKey);
+  AvailableSlotsFailure(this.message);
 
-  final String messageKey;
+  /// User-facing, display-ready text for the step message.
+  final String message;
 }

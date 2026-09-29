@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../model/organization_response.dart';
 import '../storage/local_storage.dart';
+import 'api_exception.dart';
 
 /// Data access for the organization endpoint.
 @lazySingleton
@@ -18,12 +19,19 @@ class OrganizationRepository {
   /// Calls `GET /organizations`, caches the result locally, and returns the
   /// parsed response.
   Future<OrganizationResponse> getOrganization() async {
-    final response = await _dio.get('/organizations');
-    final result = OrganizationResponse.fromJson(
-      response.data as Map<String, dynamic>,
-    );
-    await LocalStorage.prefs.setString(_cacheKey, jsonEncode(result.toJson()));
-    return result;
+    try {
+      final response = await _dio.get('/organizations');
+      final result = OrganizationResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      await LocalStorage.prefs.setString(
+        _cacheKey,
+        jsonEncode(result.toJson()),
+      );
+      return result;
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
   }
 
   /// The last cached organization, or `null` if none has been fetched yet.

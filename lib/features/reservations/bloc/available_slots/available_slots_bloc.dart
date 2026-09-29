@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/data/api_exception.dart';
 import '../../data/available_slots_repository.dart';
 import '../../model/available_slot.dart';
 
@@ -32,10 +33,10 @@ class AvailableSlotsBloc extends Bloc<AvailableSlotsEvent, AvailableSlotsState> 
         date: event.date,
       );
       emit(AvailableSlotsLoaded(offerId: result.offerId, slots: result.slots));
-    } on DioException catch (_) {
-      emit(AvailableSlotsFailure('network_error'));
+    } on ApiException catch (e) {
+      emit(AvailableSlotsFailure(e.message));
     } catch (_) {
-      emit(AvailableSlotsFailure('new_reservation_slots_error'));
+      emit(AvailableSlotsFailure('new_reservation_slots_error'.tr()));
     }
   }
 }

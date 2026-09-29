@@ -39,7 +39,8 @@ class ReservationsListLoaded extends ReservationsListState {
 
 /// The first page failed — nothing is listed.
 class ReservationsListFailure extends ReservationsListState {
-  ReservationsListFailure(this.messageKey);
+  ReservationsListFailure(this.message);
 
-  final String messageKey;
+  /// User-facing, display-ready text for the error state.
+  final String message;
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/data/auth_exception.dart';
+import '../../../core/data/api_exception.dart';
 import '../model/resend_verification_request.dart';
 
 /// Data access for the resend-verification endpoint.
@@ -14,7 +14,7 @@ class ResendVerificationRepository {
   /// Calls `POST /auth/resend-verification` to re-send the verification email.
   ///
   /// The endpoint answers `204 No Content` on success, so nothing is returned.
-  /// Throws [AuthException] when the request fails or the backend is
+  /// Throws [ApiException] when the request fails or the backend is
   /// unreachable.
   Future<void> resendVerification(String email) async {
     try {
@@ -23,7 +23,7 @@ class ResendVerificationRepository {
         data: ResendVerificationRequest(email: email).toJson(),
       );
     } on DioException catch (e) {
-      throw AuthException.fromDio(e);
+      throw ApiException.fromDio(e);
     }
   }
 }

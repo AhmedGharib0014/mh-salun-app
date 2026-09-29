@@ -13,7 +13,7 @@ class ProfileLoaded extends ProfileState {
 }
 
 class ProfileFailure extends ProfileState {
-  ProfileFailure(this.messageKey);
+  ProfileFailure(this.message);
 
-  final String messageKey;
+  final String message;
 }

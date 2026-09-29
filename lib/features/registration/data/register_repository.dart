@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/data/auth_exception.dart';
+import '../../../core/data/api_exception.dart';
 import '../model/register_request.dart';
 import '../model/register_response.dart';
 
@@ -14,7 +14,7 @@ class RegisterRepository {
 
   /// Calls `POST /auth/register` and returns the parsed response.
   ///
-  /// Throws [AuthException] when the email is already registered (HTTP 409) or
+  /// Throws [ApiException] when the email is already registered (HTTP 409) or
   /// when the backend is unreachable.
   Future<RegisterResponse> register({
     required String email,
@@ -37,7 +37,7 @@ class RegisterRepository {
       );
       return RegisterResponse.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
-      throw AuthException.fromDio(e);
+      throw ApiException.fromDio(e);
     }
   }
 

@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/data/api_exception.dart';
 import '../../../../core/data/organization_repository.dart';
 import '../../../../core/model/organization_response.dart';
 
@@ -26,22 +27,22 @@ class OrganizationBloc extends Bloc<OrganizationEvent, OrganizationState> {
     try {
       final organization = await _repo.getOrganization();
       emit(OrganizationLoaded(organization));
-    } on DioException catch (_) {
-      _emitCachedOrFailure(emit, 'network_error');
+    } on ApiException catch (e) {
+      _emitCachedOrFailure(emit, e.message);
     } catch (_) {
-      _emitCachedOrFailure(emit, 'organization_generic_error');
+      _emitCachedOrFailure(emit, 'organization_generic_error'.tr());
     }
   }
 
   void _emitCachedOrFailure(
     Emitter<OrganizationState> emit,
-    String messageKey,
+    String message,
   ) {
     final cached = _repo.cachedOrganization;
     if (cached != null) {
       emit(OrganizationLoaded(cached));
     } else {
-      emit(OrganizationFailure(messageKey));
+      emit(OrganizationFailure(message));
     }
   }
 }
