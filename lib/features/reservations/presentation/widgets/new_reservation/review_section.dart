@@ -6,19 +6,22 @@ import 'package:mh_salun/features/reservations/presentation/widgets/new_reservat
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_section_icon.dart';
 
 /// A titled, elevated panel holding one group of the recap. Its header pairs a
-/// gradient icon badge with the section label and a gold "Edit" button.
+/// gradient icon badge with the section label and, when the section is
+/// editable, a gold "Edit" button.
 class ReviewSection extends StatelessWidget {
   const ReviewSection({
     super.key,
     required this.icon,
     required this.title,
-    required this.onEdit,
     required this.child,
+    this.onEdit,
   });
 
   final IconData icon;
   final String title;
-  final VoidCallback onEdit;
+
+  /// Omitted for sections with nothing to go back and change.
+  final VoidCallback? onEdit;
   final Widget child;
 
   @override
@@ -60,7 +63,7 @@ class ReviewSection extends StatelessWidget {
                     ),
                   ),
                 ),
-                ReviewEditButton(onTap: onEdit),
+                if (onEdit case final onEdit?) ReviewEditButton(onTap: onEdit),
               ],
             ),
           ),

@@ -63,6 +63,8 @@ import 'package:mh_salun/features/reservations/bloc/reservation_flow/reservation
     as _i216;
 import 'package:mh_salun/features/reservations/bloc/reservations_list/reservations_list_bloc.dart'
     as _i131;
+import 'package:mh_salun/features/reservations/bloc/slot_price/slot_price_bloc.dart'
+    as _i787;
 import 'package:mh_salun/features/reservations/data/available_slots_repository.dart'
     as _i7;
 import 'package:mh_salun/features/reservations/data/book_reservation_repository.dart'
@@ -139,6 +141,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i456.AvailableSlotsBloc>(
       () => _i456.AvailableSlotsBloc(gh<_i7.AvailableSlotsRepository>()),
+    );
+    gh.factory<_i787.SlotPriceBloc>(
+      () => _i787.SlotPriceBloc(gh<_i7.AvailableSlotsRepository>()),
     );
     gh.lazySingleton<_i1060.LoginRepository>(
       () => _i1060.LoginRepository(gh<_i361.Dio>(), gh<_i724.TokenStorage>()),

@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../../../core/data/api_exception.dart';
 import '../model/available_slots_request.dart';
 import '../model/available_slots_response.dart';
+import '../model/slot_price.dart';
 
 /// Data access for the reservation available-slots endpoint.
 @lazySingleton
@@ -34,6 +35,19 @@ class AvailableSlotsRepository {
       return AvailableSlotsResponse.fromJson(
         response.data as Map<String, dynamic>,
       );
+    } on DioException catch (e) {
+      throw ApiException.fromDio(e);
+    }
+  }
+
+  /// Calls `GET /reservations/available-slots/{timeSlotId}/price` and returns
+  /// the price breakdown of the slot the customer is about to book.
+  Future<SlotPrice> getSlotPrice({required String timeSlotId}) async {
+    try {
+      final response = await _dio.get(
+        '/reservations/available-slots/$timeSlotId/price',
+      );
+      return SlotPrice.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
       throw ApiException.fromDio(e);
     }
