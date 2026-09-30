@@ -4,6 +4,7 @@ import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/font_sizes.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/core/utils/currency.dart';
 import 'package:mh_salun/features/reservations/model/booked_reservation.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/home_related/info_chip.dart';
 
@@ -32,6 +33,14 @@ class ReservationCard extends StatelessWidget {
     return names.isEmpty
         ? 'reservations_services_pending'.tr()
         : names.join(' · ');
+  }
+
+  /// Price formatted with the active locale's digits and the app's currency.
+  String _price(BuildContext context, num amount) {
+    final digits = NumberFormat.decimalPattern(
+      context.locale.toString(),
+    ).format(amount);
+    return '$digits $currencySymbol';
   }
 
   ({String key, Color color}) get _statusStyle {
@@ -153,6 +162,43 @@ class ReservationCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                // Pricing, once the backend's enrichment step has filled it in.
+                if (reservation.totalPrice != null) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  const Divider(height: 1, color: AppColors.divider),
+                  const SizedBox(height: AppSpacing.sm),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'reservations_total_label'.tr(),
+                              style: AppTextStyles.bodySecondary,
+                            ),
+                            if (reservation.servicesCost != null &&
+                                reservation.appFee != null)
+                              Text(
+                                'reservations_price_breakdown'.tr(
+                                  args: [
+                                    _price(context, reservation.servicesCost!),
+                                    _price(context, reservation.appFee!),
+                                  ],
+                                ),
+                                style: AppTextStyles.caption,
+                              ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Text(
+                        _price(context, reservation.totalPrice!),
+                        style: AppTextStyles.titleGold,
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),

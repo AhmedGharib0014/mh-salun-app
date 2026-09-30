@@ -104,6 +104,8 @@
   "reservations_barber_fallback": "الحلاق",
   "reservations_services_pending": "جارٍ تجهيز تفاصيل الحجز",
   "reservations_duration_minutes": "{} د",
+  "reservations_total_label": "الإجمالي",
+  "reservations_price_breakdown": "الخدمات {} + رسوم {}",
   "reservations_empty_previous_title": "لا توجد حجوزات سابقة",
   "new_reservation_title": "حجز جديد",
   "new_reservation_branch_title": "اختر الفرع",

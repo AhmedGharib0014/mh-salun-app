@@ -9,9 +9,12 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:device_info_plus/device_info_plus.dart' as _i833;
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:mh_salun/core/data/device_id_storage.dart' as _i325;
 import 'package:mh_salun/core/data/organization_repository.dart' as _i445;
 import 'package:mh_salun/core/data/token_storage.dart' as _i724;
 import 'package:mh_salun/core/di/register_module.dart' as _i511;
@@ -81,7 +84,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i216.ReservationFlowBloc>(() => _i216.ReservationFlowBloc());
     gh.lazySingleton<_i724.TokenStorage>(() => _i724.TokenStorage());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i833.DeviceInfoPlugin>(() => registerModule.deviceInfo);
+    gh.lazySingleton<_i558.FlutterSecureStorage>(
+      () => registerModule.secureStorage,
+    );
     gh.lazySingleton<_i898.HomeTabCubit>(() => _i898.HomeTabCubit());
+    gh.lazySingleton<_i325.DeviceIdStorage>(
+      () => _i325.DeviceIdStorage(
+        gh<_i833.DeviceInfoPlugin>(),
+        gh<_i558.FlutterSecureStorage>(),
+      ),
+    );
     gh.lazySingleton<_i445.OrganizationRepository>(
       () => _i445.OrganizationRepository(gh<_i361.Dio>()),
     );
@@ -111,9 +124,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i7.AvailableSlotsRepository>(
       () => _i7.AvailableSlotsRepository(gh<_i361.Dio>()),
-    );
-    gh.lazySingleton<_i438.BookReservationRepository>(
-      () => _i438.BookReservationRepository(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i492.ReservationsRepository>(
       () => _i492.ReservationsRepository(gh<_i361.Dio>()),
@@ -160,6 +170,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i630.ResendVerificationBloc>(
       () => _i630.ResendVerificationBloc(
         gh<_i369.ResendVerificationRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i438.BookReservationRepository>(
+      () => _i438.BookReservationRepository(
+        gh<_i361.Dio>(),
+        gh<_i325.DeviceIdStorage>(),
       ),
     );
     gh.factory<_i359.ResetPasswordBloc>(

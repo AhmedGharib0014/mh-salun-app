@@ -104,6 +104,8 @@
   "reservations_barber_fallback": "Your barber",
   "reservations_services_pending": "Preparing your booking details",
   "reservations_duration_minutes": "{} min",
+  "reservations_total_label": "Total",
+  "reservations_price_breakdown": "Services {} + fee {}",
   "reservations_empty_previous_title": "You have no previous reservations",
   "new_reservation_title": "New booking",
   "new_reservation_branch_title": "Choose a branch",
