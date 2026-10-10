@@ -8,6 +8,11 @@ import 'package:mh_salun/core/model/service.dart';
 class ServiceCard extends StatelessWidget {
   const ServiceCard({super.key, required this.service});
 
+  /// Line height every text in the card renders at. Pinned (instead of
+  /// left to the font's default) so a grid can compute the card's height
+  /// up front — see `AllServicesGrid`.
+  static const lineHeight = 1.3;
+
   final Service service;
 
   @override
@@ -40,6 +45,7 @@ class ServiceCard extends StatelessWidget {
             service.name,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.w700,
+              height: lineHeight,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -47,7 +53,7 @@ class ServiceCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Text(
             service.description,
-            style: AppTextStyles.caption,
+            style: AppTextStyles.caption.copyWith(height: lineHeight),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -56,11 +62,15 @@ class ServiceCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(service.duration, style: AppTextStyles.caption),
+              Text(
+                service.duration,
+                style: AppTextStyles.caption.copyWith(height: lineHeight),
+              ),
               Text(
                 service.price,
                 style: AppTextStyles.titleGold.copyWith(
                   fontWeight: FontWeight.w700,
+                  height: lineHeight,
                 ),
               ),
             ],

@@ -32,19 +32,20 @@ class EmployeeAvatar extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: AppSpacing.xs),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                employee.ratingAvg.toStringAsFixed(1),
-                style: AppTextStyles.bodyGold.copyWith(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(width: 2),
-              const Icon(Icons.star, size: AppSpacing.iconSm - 4, color: AppColors.primary),
-            ],
-          ),
+          // Rating is not supported by the backend in this version.
+          // const SizedBox(height: AppSpacing.xs),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: [
+          //     Text(
+          //       employee.ratingAvg.toStringAsFixed(1),
+          //       style: AppTextStyles.bodyGold.copyWith(fontWeight: FontWeight.w600),
+          //     ),
+          //     const SizedBox(width: 2),
+          //     const Icon(Icons.star, size: AppSpacing.iconSm - 4, color: AppColors.primary),
+          //   ],
+          // ),
         ],
       ),
     );

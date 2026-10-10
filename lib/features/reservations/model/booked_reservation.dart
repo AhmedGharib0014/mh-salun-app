@@ -12,7 +12,8 @@ part 'booked_reservation.g.dart';
 ///
 /// [employee] and [items] are filled in by the backend's enrichment step —
 /// both are absent while [enrichmentStatus] is still `PENDING`, and the
-/// booking response never carries [employee] at all.
+/// booking response never carries [employee] at all. The pricing fields
+/// ([servicesCost], [appFee], [totalPrice]) are filled in by the same step.
 @JsonSerializable()
 class BookedReservation {
   const BookedReservation({
@@ -23,6 +24,9 @@ class BookedReservation {
     required this.endsAt,
     required this.status,
     required this.enrichmentStatus,
+    this.servicesCost,
+    this.appFee,
+    this.totalPrice,
     this.items = const [],
     this.employee,
   });
@@ -42,6 +46,18 @@ class BookedReservation {
   /// Whether the backend has finished filling in the item details, e.g.
   /// `PENDING` — see [BookedReservationItem].
   final String enrichmentStatus;
+
+  /// Sum of the booked services' prices, or null before enrichment fills the
+  /// pricing in.
+  final num? servicesCost;
+
+  /// The platform fee added on top of [servicesCost], or null before
+  /// enrichment fills the pricing in.
+  final num? appFee;
+
+  /// What the guest pays — [servicesCost] plus [appFee] — or null before
+  /// enrichment fills the pricing in.
+  final num? totalPrice;
 
   /// The booked services. Null in the payload until the backend finishes
   /// enriching the reservation, which reads here as an empty list.
