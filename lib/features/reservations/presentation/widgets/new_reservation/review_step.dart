@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
-import 'package:mh_salun/core/utils/currency.dart';
 import 'package:mh_salun/features/branches/model/branch.dart';
 import 'package:mh_salun/features/employees/model/employee.dart';
 import 'package:mh_salun/features/reservations/model/available_slot.dart';
@@ -13,7 +12,6 @@ import 'package:mh_salun/features/reservations/presentation/widgets/new_reservat
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_row_divider.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_section.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/service_row.dart';
-import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/total_card.dart';
 import 'package:mh_salun/features/services/model/catalog_item.dart';
 import 'package:mh_salun/features/services/model/catalog_item_x.dart';
 
@@ -89,19 +87,8 @@ class ReviewStep extends StatelessWidget {
           onEdit: () => onEditStep(ReservationStep.dateTime),
           child: DateTimeRow(dateTimeLabel: _dateTimeLabel(context, slot.startsAt)),
         ),
-        const SizedBox(height: AppSpacing.lg),
-        TotalCard(totalLabel: _totalLabel(context, services)),
       ],
     );
-  }
-
-  /// Sum of [services] prices, formatted with the active locale's digits.
-  String _totalLabel(BuildContext context, Iterable<CatalogItem> services) {
-    final total = services.fold<double>(0, (sum, item) => sum + item.price);
-    final digits = NumberFormat.decimalPattern(
-      context.locale.toString(),
-    ).format(total);
-    return '$digits $currencySymbol';
   }
 
   String _dateTimeLabel(BuildContext context, DateTime time) {
