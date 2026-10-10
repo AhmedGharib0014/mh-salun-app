@@ -8,7 +8,6 @@ import 'package:mh_salun/features/reservations/model/reservation_step.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/barber_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/branch_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/date_time_row.dart';
-import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/price_summary.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_header.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_row_divider.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/review_section.dart';
@@ -16,9 +15,7 @@ import 'package:mh_salun/features/reservations/presentation/widgets/new_reservat
 import 'package:mh_salun/features/services/model/catalog_item.dart';
 import 'package:mh_salun/features/services/model/catalog_item_x.dart';
 
-/// Last step of the new-reservation flow: a read-only recap of every pick,
-/// closed by the backend-priced breakdown in [PriceSummary] — the app never
-/// sums the prices itself.
+/// Last step of the new-reservation flow: a read-only recap of every pick.
 class ReviewStep extends StatelessWidget {
   const ReviewStep({
     super.key,
@@ -93,8 +90,6 @@ class ReviewStep extends StatelessWidget {
             dateTimeLabel: _dateTimeLabel(context, slot.startsAt),
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
-        PriceSummary(timeSlotId: slot.id),
       ],
     );
   }

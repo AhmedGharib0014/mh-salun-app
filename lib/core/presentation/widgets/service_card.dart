@@ -59,21 +59,9 @@ class ServiceCard extends StatelessWidget {
           ),
           const Spacer(),
           const SizedBox(height: AppSpacing.sm),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                service.duration,
-                style: AppTextStyles.caption.copyWith(height: lineHeight),
-              ),
-              Text(
-                service.price,
-                style: AppTextStyles.titleGold.copyWith(
-                  fontWeight: FontWeight.w700,
-                  height: lineHeight,
-                ),
-              ),
-            ],
+          Text(
+            service.duration,
+            style: AppTextStyles.caption.copyWith(height: lineHeight),
           ),
         ],
       ),

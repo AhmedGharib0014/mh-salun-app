@@ -4,8 +4,8 @@ import 'package:mh_salun/core/theme/app_colors.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
 
-/// Read-only service summary shown in the review step: icon badge, name,
-/// duration and price.
+/// Read-only service summary shown in the review step: icon badge, name
+/// and duration.
 class ServiceRow extends StatelessWidget {
   const ServiceRow({super.key, required this.service});
 
@@ -56,11 +56,6 @@ class ServiceRow extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        Text(
-          service.price,
-          style: AppTextStyles.bodyGold.copyWith(fontWeight: FontWeight.w700),
         ),
       ],
     );
