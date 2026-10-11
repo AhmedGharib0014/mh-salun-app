@@ -12,13 +12,13 @@ import 'package:mh_salun/features/branches/presentation/widgets/branch_special_n
 import 'package:mh_salun/features/branches/presentation/widgets/branch_working_hours_row.dart';
 
 const _weekOrder = [
+  'SATURDAY',
+  'SUNDAY',
   'MONDAY',
   'TUESDAY',
   'WEDNESDAY',
   'THURSDAY',
   'FRIDAY',
-  'SATURDAY',
-  'SUNDAY',
 ];
 
 class BranchDetailsPage extends StatelessWidget {

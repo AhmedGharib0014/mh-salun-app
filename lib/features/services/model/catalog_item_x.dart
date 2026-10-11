@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mh_salun/core/model/service.dart';
 import 'package:mh_salun/core/utils/currency.dart';
@@ -14,7 +15,7 @@ extension CatalogItemX on CatalogItem {
       iconUrl: iconUrl,
       name: name,
       description: description,
-      duration: '$durationMinutes min',
+      duration: 'reservations_duration_minutes'.tr(args: ['$durationMinutes']),
       price: '${price.toStringAsFixed(2)} $currencySymbol',
     );
   }
