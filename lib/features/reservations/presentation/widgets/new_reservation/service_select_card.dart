@@ -87,13 +87,6 @@ class ServiceSelectCard extends StatelessWidget {
                       ),
                       const SizedBox(width: AppSpacing.xs),
                       Text(service.duration, style: AppTextStyles.caption),
-                      const SizedBox(width: AppSpacing.md),
-                      Text(
-                        service.price,
-                        style: AppTextStyles.bodyGold.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
                     ],
                   ),
                 ],

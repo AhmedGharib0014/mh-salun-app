@@ -26,7 +26,7 @@ class AllServicesGrid extends StatelessWidget {
       AppSpacing.xxl + // icon badge
       AppSpacing.md + // gap under the badge
       AppSpacing.xs + // gap between title and description
-      AppSpacing.sm + // gap above the price row
+      AppSpacing.sm + // gap above the duration row
       AppSpacing.sm; // breathing room
 
   final List<Service> services;
@@ -35,8 +35,8 @@ class AllServicesGrid extends StatelessWidget {
     final textScaler = MediaQuery.textScalerOf(context);
     final titleLine = textScaler.scale(AppFontSize.title) * ServiceCard.lineHeight;
     final captionLine = textScaler.scale(AppFontSize.caption) * ServiceCard.lineHeight;
-    // 2 title lines + 2 description lines + 1 price row.
-    return _fixedCardHeight + titleLine * 3 + captionLine * 2;
+    // 2 title lines + 2 description lines + 1 duration row.
+    return _fixedCardHeight + titleLine * 2 + captionLine * 3;
   }
 
   @override
