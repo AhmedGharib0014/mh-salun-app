@@ -14,6 +14,7 @@ import 'package:mh_salun/features/registration/presentation/widgets/birth_date_f
 import 'package:mh_salun/features/registration/presentation/widgets/consent_checkbox.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/name_text_field.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/password_fields.dart';
+import 'package:mh_salun/features/registration/presentation/widgets/phone_text_field.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/register_button.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/register_error_dialog.dart';
 import 'package:mh_salun/features/registration/presentation/widgets/register_success_dialog.dart';
@@ -30,6 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   DateTime? _birthDate;
 
@@ -38,6 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -57,6 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
             password: _passwordController.text,
             firstName: _firstNameController.text.trim(),
             lastName: _lastNameController.text.trim(),
+            phoneNumber: _phoneController.text.trim(),
             dateOfBirth: _birthDate,
           ),
         );
@@ -96,6 +100,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: AppSpacing.md),
                   EmailTextField(controller: _emailController),
+                  const SizedBox(height: AppSpacing.md),
+                  PhoneTextField(controller: _phoneController),
                   const SizedBox(height: AppSpacing.md),
                   PasswordFields(passwordController: _passwordController),
                   const SizedBox(height: AppSpacing.md),

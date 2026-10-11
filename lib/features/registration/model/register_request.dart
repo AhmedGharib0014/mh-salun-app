@@ -10,6 +10,7 @@ class RegisterRequest {
     required this.password,
     required this.firstName,
     required this.lastName,
+    required this.phoneNumber,
     this.dateOfBirth,
   });
 
@@ -20,6 +21,9 @@ class RegisterRequest {
   final String password;
   final String firstName;
   final String lastName;
+
+  /// Egyptian mobile number, e.g. `01012345678` or `+201012345678`.
+  final String phoneNumber;
 
   /// Optional ISO-8601 date (`yyyy-MM-dd`), e.g. `1994-05-21`.
   /// Omitted from the request body when null.

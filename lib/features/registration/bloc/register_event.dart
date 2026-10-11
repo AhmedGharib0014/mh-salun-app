@@ -9,6 +9,7 @@ class RegisterSubmitted extends RegisterEvent {
     required this.password,
     required this.firstName,
     required this.lastName,
+    required this.phoneNumber,
     this.dateOfBirth,
   });
 
@@ -16,5 +17,6 @@ class RegisterSubmitted extends RegisterEvent {
   final String password;
   final String firstName;
   final String lastName;
+  final String phoneNumber;
   final DateTime? dateOfBirth;
 }

@@ -47,6 +47,16 @@ class ApiException implements Exception {
             .toList();
         if (messages.isNotEmpty) return messages.join('\n');
       }
+      final errors = data['errors'];
+      if (errors is Map) {
+        final messages = errors.values
+            .map((v) => v is List ? v.join(', ') : v)
+            .whereType<String>()
+            .map((msg) => msg.trim())
+            .where((msg) => msg.isNotEmpty)
+            .toList();
+        if (messages.isNotEmpty) return messages.join('\n');
+      }
       for (final key in const ['message', 'error']) {
         final value = data[key];
         if (value is String && value.trim().isNotEmpty) return value.trim();

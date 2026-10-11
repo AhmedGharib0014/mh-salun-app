@@ -21,6 +21,7 @@ class RegisterRepository {
     required String password,
     required String firstName,
     required String lastName,
+    required String phoneNumber,
     DateTime? dateOfBirth,
   }) async {
     try {
@@ -31,6 +32,7 @@ class RegisterRepository {
           password: password,
           firstName: firstName,
           lastName: lastName,
+          phoneNumber: phoneNumber,
           dateOfBirth:
               dateOfBirth == null ? null : _formatDate(dateOfBirth),
         ).toJson(),
