@@ -14,14 +14,13 @@ class BranchWorkingHoursRow extends StatelessWidget {
   final String day;
   final BranchWorkingHours? hours;
 
-  String get _dayLabel =>
-      '${day.substring(0, 1)}${day.substring(1).toLowerCase()}';
+  String get _dayLabel => 'day_${day.toLowerCase()}'.tr();
 
   String _formatTime(String time) {
     final parts = time.split(':');
     final hour = int.parse(parts[0]);
     final minute = parts[1];
-    final period = hour >= 12 ? 'PM' : 'AM';
+    final period = hour >= 12 ? 'time_pm'.tr() : 'time_am'.tr();
     final hour12 = hour % 12 == 0 ? 12 : hour % 12;
     return '$hour12:$minute $period';
   }
