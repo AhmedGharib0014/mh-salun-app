@@ -7,7 +7,7 @@ import 'package:mh_salun/core/theme/text_styles.dart';
 import 'package:mh_salun/features/employees/model/employee.dart';
 
 /// Read-only barber summary shown in the review step: ringed initial avatar,
-/// name, role and rating pill.
+/// name and role.
 class BarberRow extends StatelessWidget {
   const BarberRow({super.key, required this.employee});
 
@@ -53,35 +53,6 @@ class BarberRow extends StatelessWidget {
               Text(
                 'new_reservation_review_barber_role'.tr(),
                 style: AppTextStyles.caption,
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        // Rating pill.
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm,
-            vertical: AppSpacing.xs,
-          ),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.star_rounded,
-                size: AppSpacing.iconSm - 3,
-                color: AppColors.primary,
-              ),
-              const SizedBox(width: 2),
-              Text(
-                employee.ratingAvg.toStringAsFixed(1),
-                style: AppTextStyles.bodyGold.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
               ),
             ],
           ),

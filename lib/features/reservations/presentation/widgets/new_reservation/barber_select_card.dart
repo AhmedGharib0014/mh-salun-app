@@ -88,25 +88,6 @@ class BarberSelectCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: AppSpacing.xs),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.star,
-                  size: AppSpacing.iconSm - 4,
-                  color: AppColors.primary,
-                ),
-                const SizedBox(width: 2),
-                Text(
-                  employee.ratingAvg.toStringAsFixed(1),
-                  style: AppTextStyles.bodyGold.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
