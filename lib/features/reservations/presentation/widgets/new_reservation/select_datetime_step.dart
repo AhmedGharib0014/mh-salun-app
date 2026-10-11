@@ -5,6 +5,7 @@ import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/presentation/widgets/section_loading.dart';
 import 'package:mh_salun/core/theme/spacing.dart';
 import 'package:mh_salun/core/theme/text_styles.dart';
+import 'package:mh_salun/features/branches/model/branch_working_hours.dart';
 import 'package:mh_salun/features/reservations/bloc/available_slots/available_slots_bloc.dart';
 import 'package:mh_salun/features/reservations/bloc/reservation_flow/reservation_flow_bloc.dart';
 import 'package:mh_salun/features/reservations/model/available_slot.dart';
@@ -49,6 +50,7 @@ class SelectDateTimeStep extends StatelessWidget {
         branchId: branch.id,
         employeeId: barber.id,
         catalogItemIds: catalogItemIds,
+        workingHours: branch.workingHours,
       ),
     );
   }
@@ -59,11 +61,13 @@ class _SelectDateTimeView extends StatefulWidget {
     required this.branchId,
     required this.employeeId,
     required this.catalogItemIds,
+    required this.workingHours,
   });
 
   final String branchId;
   final String employeeId;
   final List<String> catalogItemIds;
+  final Map<String, BranchWorkingHours> workingHours;
 
   @override
   State<_SelectDateTimeView> createState() => _SelectDateTimeViewState();
@@ -100,6 +104,7 @@ class _SelectDateTimeViewState extends State<_SelectDateTimeView> {
         branchId: widget.branchId,
         catalogItemIds: widget.catalogItemIds,
         date: _selectedDate,
+        workingHours: widget.workingHours,
       ),
     );
   }
@@ -161,11 +166,13 @@ class _SelectDateTimeViewState extends State<_SelectDateTimeView> {
                 icon: Icons.error_outline_rounded,
                 message: message,
               ),
-              AvailableSlotsLoaded(:final slots) => TimeSlotGrid(
-                slots: slots,
-                selectedSlot: selectedSlot,
-                onSlotSelected: _selectSlot,
-              ),
+              AvailableSlotsLoaded(:final slots, :final overnightSlots) =>
+                TimeSlotGrid(
+                  slots: slots,
+                  overnightSlots: overnightSlots,
+                  selectedSlot: selectedSlot,
+                  onSlotSelected: _selectSlot,
+                ),
               AvailableSlotsInitial() ||
               AvailableSlotsLoading() => const SectionLoading(height: 120),
             },

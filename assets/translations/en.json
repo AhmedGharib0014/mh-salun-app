@@ -135,6 +135,7 @@
   "new_reservation_datetime_title": "Pick date & time",
   "new_reservation_datetime_subtitle": "Choose a day, then an available slot",
   "new_reservation_times_label": "Available times",
+  "new_reservation_next_day_label": "Next day · {}",
   "new_reservation_no_slots": "No available slots for this day",
   "new_reservation_no_slots_hint": "Try another day, or go back and change the branch, barber or services and check this day again.",
   "new_reservation_slots_error": "We couldn't load the available times. Please try again.",

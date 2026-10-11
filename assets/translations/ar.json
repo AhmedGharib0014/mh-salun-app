@@ -138,6 +138,7 @@
   "new_reservation_datetime_title": "اختر التاريخ والوقت",
   "new_reservation_datetime_subtitle": "اختر يومًا ثم موعدًا متاحًا",
   "new_reservation_times_label": "المواعيد المتاحة",
+  "new_reservation_next_day_label": "اليوم التالي · {}",
   "new_reservation_no_slots": "لا توجد مواعيد متاحة في هذا اليوم",
   "new_reservation_no_slots_hint": "جرّب يومًا آخر، أو ارجع وغيّر الفرع أو الحلاق أو الخدمات ثم تحقق من هذا اليوم مرة أخرى.",
   "new_reservation_slots_error": "تعذر تحميل المواعيد المتاحة. يرجى المحاولة مرة أخرى.",
