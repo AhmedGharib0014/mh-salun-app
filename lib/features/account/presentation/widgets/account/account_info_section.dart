@@ -31,11 +31,16 @@ class AccountInfoSection extends StatelessWidget {
           InfoRow(labelKey: 'account_last_name_label', value: profile.lastName),
           const Divider(color: AppColors.divider, height: AppSpacing.lg),
           InfoRow(
-            labelKey: 'account_dob_label',
-            value: profile.dateOfBirth == null
-                ? 'account_not_provided'.tr()
-                : DateFormat('yyyy-MM-dd').format(profile.dateOfBirth!),
+            labelKey: 'account_phone_label',
+            value: profile.phoneNumber ?? 'account_not_provided'.tr(),
           ),
+          if (profile.dateOfBirth != null) ...[
+            const Divider(color: AppColors.divider, height: AppSpacing.lg),
+            InfoRow(
+              labelKey: 'account_dob_label',
+              value: DateFormat('yyyy-MM-dd').format(profile.dateOfBirth!),
+            ),
+          ],
         ],
       ),
     );

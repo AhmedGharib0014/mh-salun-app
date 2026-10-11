@@ -11,21 +11,21 @@ class DeleteAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-      child: OutlinedButton.icon(
+    return Align(
+      alignment: AlignmentDirectional.centerEnd,
+      child: TextButton(
         onPressed: () => DeleteAccountConfirmDialog.show(context),
-        icon: const Icon(Icons.delete_forever_outlined, size: 20),
-        label: Text('delete_account_button'.tr()),
-        style: OutlinedButton.styleFrom(
+        style: TextButton.styleFrom(
           foregroundColor: AppColors.error,
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-          side: const BorderSide(color: AppColors.error),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.sm,
           ),
-          textStyle: AppTextStyles.buttonPrimary,
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          textStyle: AppTextStyles.buttonPrimary.copyWith(fontSize: 14),
         ),
+        child: Text('delete_account_button'.tr()),
       ),
     );
   }

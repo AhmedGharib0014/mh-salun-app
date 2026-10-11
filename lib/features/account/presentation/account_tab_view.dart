@@ -32,7 +32,7 @@ class AccountTabView extends StatelessWidget {
                   AccountInfoSection(profile: profile),
                   const SizedBox(height: AppSpacing.xl),
                   const LogoutButton(),
-                  const SizedBox(height: AppSpacing.md),
+                  const SizedBox(height: AppSpacing.sm),
                   const DeleteAccountButton(),
                   SizedBox(
                     height: AppSpacing.bottomNavClearance +
