@@ -151,6 +151,7 @@
   "new_reservation_review_price_label": "Price details",
   "new_reservation_review_services_cost_label": "Services",
   "new_reservation_review_app_fee_label": "App fee",
+  "new_reservation_review_app_fee_note": "An app fee of {} will be added to the total price of the services.",
   "new_reservation_review_price_error": "We couldn't load the price. Please try again.",
   "new_reservation_review_edit": "Edit",
   "new_reservation_booked": "Your booking is confirmed. See you soon!",

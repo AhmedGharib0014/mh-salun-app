@@ -12,7 +12,6 @@ class CatalogItem {
     required this.description,
     required this.price,
     required this.durationMinutes,
-    required this.bufferMinutes,
     required this.category,
     required this.active,
     required this.hasIcon,
@@ -31,7 +30,6 @@ class CatalogItem {
   final String description;
   final double price;
   final int durationMinutes;
-  final int bufferMinutes;
   final String category;
   final bool active;
   final bool hasIcon;

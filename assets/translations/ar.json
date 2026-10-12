@@ -154,6 +154,7 @@
   "new_reservation_review_price_label": "تفاصيل السعر",
   "new_reservation_review_services_cost_label": "الخدمات",
   "new_reservation_review_app_fee_label": "رسوم التطبيق",
+  "new_reservation_review_app_fee_note": "سيتم إضافة رسوم تطبيق بقيمة {} إلى إجمالي سعر الخدمات.",
   "new_reservation_review_price_error": "تعذر تحميل السعر. يرجى المحاولة مرة أخرى.",
   "new_reservation_review_edit": "تعديل",
   "new_reservation_booked": "تم تأكيد حجزك. نراك قريبًا!",

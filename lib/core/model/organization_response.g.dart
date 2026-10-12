@@ -16,6 +16,9 @@ OrganizationResponse _$OrganizationResponseFromJson(
   createdAt: DateTime.parse(json['createdAt'] as String),
   logoUploadUrl: json['logoUploadUrl'] as String?,
   logoUrl: json['logoUrl'] as String?,
+  appFee: json['appFee'] == null
+      ? null
+      : AppFee.fromJson(json['appFee'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$OrganizationResponseToJson(
@@ -28,4 +31,5 @@ Map<String, dynamic> _$OrganizationResponseToJson(
   'createdAt': instance.createdAt.toIso8601String(),
   'logoUploadUrl': instance.logoUploadUrl,
   'logoUrl': instance.logoUrl,
+  'appFee': instance.appFee,
 };

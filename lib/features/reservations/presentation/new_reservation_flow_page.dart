@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mh_salun/core/data/organization_repository.dart';
 import 'package:mh_salun/core/di/injection.dart';
 import 'package:mh_salun/core/presentation/widgets/app_error_dialog.dart';
 import 'package:mh_salun/core/router/app_router.dart';
@@ -140,6 +141,10 @@ class _NewReservationFlowViewState extends State<_NewReservationFlowView> {
                   barber: selection.barber,
                   services: selection.services,
                   slot: selection.slot,
+                  appFee: getIt<OrganizationRepository>()
+                      .cachedOrganization
+                      ?.appFee
+                      ?.fixed,
                   onEditStep: _goToStep,
                 ),
               ],

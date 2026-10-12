@@ -5,6 +5,7 @@ import 'package:mh_salun/features/branches/model/branch.dart';
 import 'package:mh_salun/features/employees/model/employee.dart';
 import 'package:mh_salun/features/reservations/model/available_slot.dart';
 import 'package:mh_salun/features/reservations/model/reservation_step.dart';
+import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/app_fee_note.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/barber_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/branch_row.dart';
 import 'package:mh_salun/features/reservations/presentation/widgets/new_reservation/date_time_row.dart';
@@ -23,6 +24,7 @@ class ReviewStep extends StatelessWidget {
     required this.barber,
     required this.services,
     required this.slot,
+    required this.appFee,
     required this.onEditStep,
   });
 
@@ -30,6 +32,9 @@ class ReviewStep extends StatelessWidget {
   final Employee? barber;
   final Set<CatalogItem> services;
   final AvailableSlot? slot;
+
+  /// The organization's fixed app fee; the note is hidden when null.
+  final num? appFee;
 
   /// Called with the step to return to when a section's "Edit" is tapped.
   final ValueChanged<ReservationStep> onEditStep;
@@ -39,6 +44,7 @@ class ReviewStep extends StatelessWidget {
     final branch = this.branch;
     final barber = this.barber;
     final slot = this.slot;
+    final appFee = this.appFee;
     if (branch == null || barber == null || slot == null) {
       return const SizedBox.shrink();
     }
@@ -90,6 +96,10 @@ class ReviewStep extends StatelessWidget {
             dateTimeLabel: _dateTimeLabel(context, slot.startsAt),
           ),
         ),
+        if (appFee != null) ...[
+          const SizedBox(height: AppSpacing.md),
+          AppFeeNote(fee: appFee),
+        ],
       ],
     );
   }
